@@ -1,5 +1,7 @@
 import { LucideIcon } from 'lucide-react';
 
+export type UserRole = 'siswa' | 'guru' | 'admin';
+
 export interface Auth {
     user: User;
 }
@@ -32,9 +34,9 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    avatar?: string;
+    role: 'admin' | 'guru' | 'siswa';
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
+    [key: string]: unknown;
 }
