@@ -1,3 +1,4 @@
+import Header from '@/components/header';
 import Sidebar from '@/components/sidebar';
 import { Auth, UserRole } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
@@ -11,13 +12,14 @@ export default function AuthLayout({ children, title }: PropsWithChildren<AuthLa
     const { auth } = usePage().props as { auth?: Auth };
 
     const userRole: UserRole = auth?.user.role ?? 'siswa';
+    const userName: string = auth?.user.name ? auth.user.name.split(' ').slice(0, 2).join(' ') : 'Not Authenticated';
 
     return (
         <React.Fragment>
             <Head title={title} />
             <div className="min-h-screen bg-gray-200">
                 <Sidebar userRole={userRole} />
-                <header className="h-16 w-full bg-white"></header>
+                <Header userName={userName} />
                 <main className="pl-80">
                     <div className="p-4">{children}</div>
                 </main>
