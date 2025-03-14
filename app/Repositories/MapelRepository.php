@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\DB;
 
 class MapelRepository
 {
+    public function getAll()
+    {
+        return DB::table('mapels')->get();
+    }
+
     public function create(array $data)
     {
         return DB::table('mapels')->insertGetId($data);

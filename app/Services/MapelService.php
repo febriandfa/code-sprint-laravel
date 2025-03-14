@@ -30,6 +30,11 @@ class MapelService
         ]);
     }
 
+    public function getAll()
+    {
+        return $this->mapelRepository->getAll();
+    }
+
     public function create(Request $request)
     {
         try {

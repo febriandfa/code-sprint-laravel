@@ -14,6 +14,16 @@ export type Kelas = {
     updated_at: string;
 };
 
+export type Mapel = {
+    id: number;
+    nama: string;
+    deskripsi: string;
+    semester: 'ganjil' | 'genap';
+    tahun_ajaran: string;
+    created_at: string;
+    updated_at: string;
+};
+
 export interface BreadcrumbItem {
     title: string;
     link: string;

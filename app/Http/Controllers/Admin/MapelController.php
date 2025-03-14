@@ -18,7 +18,9 @@ class MapelController extends Controller
 
     public function index()
     {
-        return Inertia::render('admin/mapel/index');
+        $mapels = $this->mapelService->getAll();
+
+        return Inertia::render('admin/mapel/index', compact('mapels'));
     }
 
     public function create()
