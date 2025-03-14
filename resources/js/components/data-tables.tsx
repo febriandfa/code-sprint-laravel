@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import Button from './ui/button';
 
 type DataTableProps = {
-    columns: any[];
+    columns: { title: string; data: string }[];
     data: any[];
     routeShow?: (id: string) => string;
     routeEdit?: (id: string) => string;
@@ -71,11 +71,9 @@ export default function DataTables({ columns, data, routeShow, routeEdit, routeD
                                     </Link>
                                 )}
                                 {routeDelete && (
-                                    // <Link method="delete" href={routeDelete(rowId)} as="button">
                                     <Button variant="danger" size="small" onClick={() => handleDeleteOnClick(rowId)}>
                                         <TrashIcon size="16px" />
                                     </Button>
-                                    // </Link>
                                 )}
                             </div>
                         );

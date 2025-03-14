@@ -16,7 +16,7 @@ export type Kelas = {
 
 export interface BreadcrumbItem {
     title: string;
-    href: string;
+    link: string;
 }
 
 export interface NavGroup {

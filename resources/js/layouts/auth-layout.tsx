@@ -1,14 +1,17 @@
 import Header from '@/components/header';
 import Sidebar from '@/components/sidebar';
-import { Auth, UserRole } from '@/types';
+import Breadcrumb from '@/components/ui/breadcrumb';
+import { Auth, BreadcrumbItem, UserRole } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
 import React, { PropsWithChildren } from 'react';
 
 interface AuthLayoutProps {
     title: string;
+    breadcrumbs?: BreadcrumbItem[];
+    index?: boolean;
 }
 
-export default function AuthLayout({ children, title }: PropsWithChildren<AuthLayoutProps>) {
+export default function AuthLayout({ children, title, breadcrumbs, index = false }: PropsWithChildren<AuthLayoutProps>) {
     const { auth } = usePage().props as { auth?: Auth };
 
     const userRole: UserRole = auth?.user.role ?? 'siswa';
@@ -22,6 +25,8 @@ export default function AuthLayout({ children, title }: PropsWithChildren<AuthLa
                 <Header userName={userName} />
                 <main className="pl-80">
                     <div className="p-4">
+                        {!index && <h1 className="text-2xl font-medium">{title}</h1>}
+                        <Breadcrumb items={breadcrumbs} />
                         <div className="rounded-lg bg-white p-8">{children}</div>
                     </div>
                 </main>
