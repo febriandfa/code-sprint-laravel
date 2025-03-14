@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\SemesterEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->longText('deskripsi');
-            $table->enum('semester', ['ganjil', 'genap']);
+            $table->enum('semester', SemesterEnum::values());
             $table->string('tahun_ajaran');
             $table->timestamps();
         });

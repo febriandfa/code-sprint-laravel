@@ -1,4 +1,4 @@
-import Category from '@/components/icons/Category';
+import Category from '@/components/icons/category';
 import { UserRole } from '@/types';
 
 export const sidebarMenus = (userRole: UserRole) => {
@@ -8,6 +8,26 @@ export const sidebarMenus = (userRole: UserRole) => {
                 name: 'Dashboard',
                 icon: <Category />,
                 link: '/admin/dashboard',
+            },
+            {
+                name: 'Guru',
+                icon: <Category />,
+                link: '/admin/guru',
+            },
+            {
+                name: 'Siswa',
+                icon: <Category />,
+                link: '/admin/siswa',
+            },
+            {
+                name: 'Mata Pelajaran',
+                icon: <Category />,
+                link: route('admin.mapel.index'),
+            },
+            {
+                name: 'Kelas',
+                icon: <Category />,
+                link: route('admin.kelas.index'),
             },
         ],
         guru: [

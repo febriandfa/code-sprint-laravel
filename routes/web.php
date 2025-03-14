@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\KelasController;
+use App\Http\Controllers\Admin\MapelController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,6 +11,11 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('admin')->name('admin.')->middleware('role:admin')->group(function () {
+        Route::resources([
+            'kelas' => KelasController::class,
+            'mapel' => MapelController::class,
+        ]);
+
         Route::get('dashboard', function () {
             return Inertia::render('admin/dashboard-admin');
         })->name('dashboard');
