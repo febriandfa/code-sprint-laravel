@@ -1,6 +1,6 @@
 import AppLogo from '@/components/app-logo';
+import InputField from '@/components/input-field';
 import Button from '@/components/ui/button';
-import InputText from '@/components/ui/input-text';
 import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
@@ -45,7 +45,7 @@ export default function Login() {
                             <br /> dan mulai pembelajaran
                         </p>
                         <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
-                            <InputText
+                            <InputField
                                 id="email"
                                 type="email"
                                 label="Email"
@@ -57,7 +57,7 @@ export default function Login() {
                                 onChange={(e) => setData('email', e.target.value)}
                                 error={errors.email}
                             />
-                            <InputText
+                            <InputField
                                 id="password"
                                 type="password"
                                 label="Password"

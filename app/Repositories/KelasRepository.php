@@ -14,6 +14,11 @@ class KelasRepository
             ->get();
     }
 
+    public function getWaliKelas()
+    {
+        return DB::table('users')->where('role', 'guru')->get();
+    }
+
     public function create(array $data)
     {
         return DB::table('kelases')->insertGetId($data);

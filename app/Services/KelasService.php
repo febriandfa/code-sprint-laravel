@@ -44,7 +44,7 @@ class KelasService
 
             $this->kelasRepository->create($validatedData);
 
-            return to_route('kelas.index')->with('success', 'Kelas berhasil ditambahkan');
+            return back()->with('success', 'Kelas berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

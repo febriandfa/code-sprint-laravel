@@ -1,4 +1,5 @@
 import { LucideIcon } from 'lucide-react';
+import React from 'react';
 
 export type UserRole = 'siswa' | 'guru' | 'admin';
 
@@ -27,6 +28,23 @@ export type Mapel = {
 export interface BreadcrumbItem {
     title: string;
     link: string;
+}
+
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    id: string;
+    label: string;
+    error?: string;
+}
+
+export interface InputFieldProps extends InputProps {
+    type?: 'email' | 'text' | 'password';
+}
+
+export interface SelectProps {
+    id: string;
+    label: string;
+    error?: string;
+    options?: { value: string; label: string }[];
 }
 
 export interface NavGroup {

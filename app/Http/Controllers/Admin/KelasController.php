@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\KelasRepository;
 use App\Services\KelasService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,10 +11,12 @@ use Inertia\Inertia;
 class KelasController extends Controller
 {
     protected $kelasService;
+    protected $kelasRepository;
 
-    public function __construct(KelasService $kelasService)
+    public function __construct(KelasService $kelasService, KelasRepository $kelasRepository)
     {
         $this->kelasService = $kelasService;
+        $this->kelasRepository = $kelasRepository;
     }
 
     public function index()
@@ -25,7 +28,9 @@ class KelasController extends Controller
 
     public function create()
     {
-        return Inertia::render('admin/kelas/create');
+        $waliKelases = $this->kelasRepository->getWaliKelas();
+
+        return Inertia::render('admin/kelas/create', compact('waliKelases'));
     }
 
     public function store(Request $request)

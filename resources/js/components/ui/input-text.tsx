@@ -1,19 +1,12 @@
+import { InputProps } from '@/types';
 import { Eye, EyeOff } from 'lucide-react';
-import { useState } from 'react';
-import InputError from './input-error';
+import React, { useState } from 'react';
 
-type InputTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
-    id: string;
-    label: string;
-    type?: 'email' | 'text' | 'password';
-    error?: string;
-};
-
-export default function InputText({ id, placeholder, label, type = 'text', error, ...props }: InputTextProps) {
+export default function InputText({ id, placeholder, label, type, ...props }: InputProps) {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <div className="relative">
+        <React.Fragment>
             <label htmlFor={id} className="text-lg capitalize">
                 {label}
             </label>
@@ -35,7 +28,6 @@ export default function InputText({ id, placeholder, label, type = 'text', error
                     </button>
                 )}
             </div>
-            <InputError message={error} />
-        </div>
+        </React.Fragment>
     );
 }

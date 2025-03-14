@@ -1,4 +1,15 @@
+import InputField from '@/components/input-field';
+import InputSelect from '@/components/input-select';
+import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
+import { useForm, usePage } from '@inertiajs/react';
+import { LoaderCircle } from 'lucide-react';
+import Swal from 'sweetalert2';
+
+type KelasForm = {
+    nama: string;
+    guru_id: string;
+};
 
 export default function CreateKelas() {
     const breadcrumbs = [
@@ -6,5 +17,66 @@ export default function CreateKelas() {
         { title: 'Tambah Kelas', link: '/' },
     ];
 
-    return <AuthLayout title="Tambah Kelas" breadcrumbs={breadcrumbs}></AuthLayout>;
+    const { waliKelases } = usePage().props as { waliKelases?: { id: string; name: string }[] };
+
+    const waliKelasOptions = waliKelases?.map((wali) => ({
+        value: wali.id,
+        label: wali.name,
+    }));
+
+    const { data, setData, post, processing, errors, reset } = useForm<Required<KelasForm>>({
+        nama: '',
+        guru_id: '',
+    });
+
+    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        post(route('admin.kelas.store'), {
+            onSuccess: () => {
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Kelas berhasil ditambahkan',
+                    icon: 'success',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                });
+                reset('nama', 'guru_id');
+            },
+        });
+    };
+
+    return (
+        <AuthLayout title="Tambah Kelas" breadcrumbs={breadcrumbs}>
+            <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
+                <InputField
+                    id="nama"
+                    label="Nama Kelas"
+                    placeholder="Masukkan nama kelas"
+                    required
+                    autoFocus
+                    autoComplete="nama"
+                    value={data.nama}
+                    onChange={(e) => setData('nama', e.target.value)}
+                    error={errors.nama}
+                />
+                <InputSelect
+                    id={'guru_id'}
+                    label={'Wali Kelas'}
+                    placeholder={'Pilih wali kelas'}
+                    required
+                    options={waliKelasOptions}
+                    value={data.guru_id}
+                    onChange={(e) => setData('guru_id', e.value)}
+                    error={errors.guru_id}
+                />
+                <div className="mt-3 w-fit">
+                    <Button type="submit" disabled={processing} className="w-full">
+                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                        Tambah Kelas
+                    </Button>
+                </div>
+            </form>
+        </AuthLayout>
+    );
 }
