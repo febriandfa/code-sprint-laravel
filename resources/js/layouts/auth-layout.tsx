@@ -21,7 +21,9 @@ export default function AuthLayout({ children, title }: PropsWithChildren<AuthLa
                 <Sidebar userRole={userRole} />
                 <Header userName={userName} />
                 <main className="pl-80">
-                    <div className="p-4">{children}</div>
+                    <div className="p-4">
+                        <div className="rounded-lg bg-white p-8">{children}</div>
+                    </div>
                 </main>
             </div>
         </React.Fragment>

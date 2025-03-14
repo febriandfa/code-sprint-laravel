@@ -27,6 +27,11 @@ class KelasService
         ]);
     }
 
+    public function getAll()
+    {
+        return $this->kelasRepository->getAll();
+    }
+
     public function create(Request $request)
     {
         try {

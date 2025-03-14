@@ -18,7 +18,9 @@ class KelasController extends Controller
 
     public function index()
     {
-        return Inertia::render('admin/kelas/index');
+        $kelases = $this->kelasService->getAll();
+
+        return Inertia::render('admin/kelas/index', compact('kelases'));
     }
 
     public function create()

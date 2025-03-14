@@ -6,6 +6,14 @@ export interface Auth {
     user: User;
 }
 
+export type Kelas = {
+    id: number;
+    nama: string;
+    wali_kelas: string;
+    created_at: string;
+    updated_at: string;
+};
+
 export interface BreadcrumbItem {
     title: string;
     href: string;

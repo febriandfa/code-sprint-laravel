@@ -68,7 +68,7 @@ export default function Login() {
                                 error={errors.password}
                             />
                             <div className="mt-3 w-full">
-                                <Button type="submit" disabled={processing}>
+                                <Button type="submit" disabled={processing} className="w-full">
                                     {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                                     Login
                                 </Button>
