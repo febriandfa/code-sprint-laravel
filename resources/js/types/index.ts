@@ -10,6 +10,7 @@ export interface Auth {
 export type Kelas = {
     id: number;
     nama: string;
+    guru_id: string;
     wali_kelas: string;
     created_at: string;
     updated_at: string;

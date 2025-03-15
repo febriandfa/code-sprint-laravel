@@ -1,4 +1,4 @@
-import Category from '@/components/icons/category';
+import Category from '@/components/icons/category-icon';
 import { UserRole } from '@/types';
 
 export const sidebarMenus = (userRole: UserRole) => {

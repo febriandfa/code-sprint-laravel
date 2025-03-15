@@ -44,7 +44,7 @@ class KelasService
 
             $this->kelasRepository->create($validatedData);
 
-            return back()->with('success', 'Kelas berhasil ditambahkan');
+            return redirect()->back()->with('success', 'Kelas berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -62,7 +62,7 @@ class KelasService
 
             $this->kelasRepository->update($validatedData, $id);
 
-            return to_route('kelas.index')->with('success', 'Kelas berhasil diubah');
+            return to_route('admin.kelas.index')->with('success', 'Kelas berhasil diubah');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -73,7 +73,7 @@ class KelasService
         try {
             $this->kelasRepository->delete($id);
 
-            return to_route('kelas.index')->with('success', 'Kelas berhasil dihapus');
+            return redirect()->back()->with('success', 'Kelas berhasil dihapus');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

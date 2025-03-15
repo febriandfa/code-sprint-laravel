@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\MapelRepository;
 use App\Services\MapelService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,10 +11,12 @@ use Inertia\Inertia;
 class MapelController extends Controller
 {
     protected $mapelService;
+    protected $mapelRepository;
 
-    public function __construct(MapelService $mapelService)
+    public function __construct(MapelService $mapelService, MapelRepository $mapelRepository)
     {
         $this->mapelService = $mapelService;
+        $this->mapelRepository = $mapelRepository;
     }
 
     public function index()
@@ -35,7 +38,9 @@ class MapelController extends Controller
 
     public function edit(string $id)
     {
-        return Inertia::render('admin/mapel/edit');
+        $mapel = $this->mapelRepository->getById($id);
+
+        return Inertia::render('admin/mapel/edit', compact('mapel'));
     }
 
     public function update(Request $request, string $id)

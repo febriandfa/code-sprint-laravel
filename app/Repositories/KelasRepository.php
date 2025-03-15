@@ -24,6 +24,11 @@ class KelasRepository
         return DB::table('kelases')->insertGetId($data);
     }
 
+    public function getById(string $id)
+    {
+        return DB::table('kelases')->where('id', $id)->first();
+    }
+
     public function update(array $data, string $id)
     {
         return DB::table('kelases')->where('id', $id)->update($data);

@@ -2,9 +2,9 @@ import InputField from '@/components/input-field';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
+import { SwalSuccess } from '@/lib/swal';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import Swal from 'sweetalert2';
 
 type KelasForm = {
     nama: string;
@@ -33,15 +33,8 @@ export default function CreateKelas() {
         e.preventDefault();
         post(route('admin.kelas.store'), {
             onSuccess: () => {
-                Swal.fire({
-                    title: 'Berhasil!',
-                    text: 'Kelas berhasil ditambahkan',
-                    icon: 'success',
-                    timer: 1500,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                });
-                reset('nama', 'guru_id');
+                SwalSuccess({ title: 'Berhasil', text: 'Kelas berhasil ditambahkan' });
+                reset();
             },
         });
     };
@@ -55,7 +48,7 @@ export default function CreateKelas() {
                     placeholder="Masukkan nama kelas"
                     required
                     autoFocus
-                    autoComplete="nama"
+                    autoComplete="nama-kelas"
                     value={data.nama}
                     onChange={(e) => setData('nama', e.target.value)}
                     error={errors.nama}

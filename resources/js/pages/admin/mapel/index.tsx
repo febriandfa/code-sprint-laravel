@@ -1,6 +1,7 @@
 import ActionButton from '@/components/action-button';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
+import { stripHtml } from '@/lib/helper';
 import { Mapel } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import DT from 'datatables.net-dt';
@@ -10,6 +11,7 @@ import 'datatables.net-select-dt';
 
 export default function MapelIndex() {
     DataTable.use(DT);
+
     const { mapels } = usePage().props as { mapels?: Mapel[] };
 
     const columns = [{ title: 'Mata Pelajaran' }, { title: 'Deskripsi' }, { title: 'Semester' }, { title: 'Tahun Ajaran' }, { title: 'Aksi' }];
@@ -35,7 +37,7 @@ export default function MapelIndex() {
                         return (
                             <tr key={mapel.id}>
                                 <td>{mapel.nama}</td>
-                                <td>{mapel.deskripsi}</td>
+                                <td>{stripHtml(mapel.deskripsi)}</td>
                                 <td>{mapel.semester}</td>
                                 <td>{mapel.tahun_ajaran}</td>
                                 <td>

@@ -47,7 +47,7 @@ class MapelService
 
             $this->mapelRepository->create($validatedData);
 
-            return to_route('kelas.index')->with('success', 'Mata pelajaran berhasil ditambahkan');
+            return redirect()->back()->with('success', 'Mata pelajaran berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -65,7 +65,7 @@ class MapelService
 
             $this->mapelRepository->update($validatedData, $id);
 
-            return to_route('kelas.index')->with('success', 'Mata pelajaran berhasil diubah');
+            return to_route('admin.mapel.index')->with('success', 'Mata pelajaran berhasil diubah');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -76,7 +76,7 @@ class MapelService
         try {
             $this->mapelRepository->delete($id);
 
-            return to_route('kelas.index')->with('success', 'Mata pelajaran berhasil dihapus');
+            return redirect()->back()->with('success', 'Mata pelajaran berhasil dihapus');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

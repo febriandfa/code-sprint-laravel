@@ -1,3 +1,4 @@
+import { SwalSuccess } from '@/lib/swal';
 import { Link, router } from '@inertiajs/react';
 import { Eye, PenIcon, TrashIcon } from 'lucide-react';
 import Swal from 'sweetalert2';
@@ -23,14 +24,7 @@ export default function ActionButton({ routeShow, routeEdit, routeDelete }: Acti
             if (result.isConfirmed && routeDelete) {
                 router.delete(routeDelete, {
                     onSuccess: () => {
-                        Swal.fire({
-                            title: 'Berhasil!',
-                            text: 'Data berhasil dihapus',
-                            icon: 'success',
-                            timer: 1500,
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                        });
+                        SwalSuccess({ title: 'Berhasil', text: 'Data berhasil dihapus' });
                     },
                 });
             }

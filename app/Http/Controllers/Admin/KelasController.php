@@ -40,7 +40,10 @@ class KelasController extends Controller
 
     public function edit(string $id)
     {
-        return Inertia::render('admin/kelas/edit');
+        $kelas = $this->kelasRepository->getById($id);
+        $waliKelases = $this->kelasRepository->getWaliKelas();
+
+        return Inertia::render('admin/kelas/edit', compact('kelas', 'waliKelases'));
     }
 
     public function update(Request $request, string $id)
