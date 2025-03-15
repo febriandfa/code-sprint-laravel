@@ -26,6 +26,16 @@ export type Mapel = {
     updated_at: string;
 };
 
+export type Materi = {
+    id: number;
+    judul: string;
+    deskripsi: string;
+    file_materi: string;
+    file_modul: string;
+    created_at: string;
+    updated_at: string;
+};
+
 export interface BreadcrumbItem {
     title: string;
     link: string;
@@ -37,8 +47,11 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
     error?: string;
 }
 
-export interface InputFieldProps extends InputProps {
-    type?: 'email' | 'text' | 'password';
+export interface InputFieldProps extends React.ComponentPropsWithRef<'input'> {
+    id: string;
+    label: string;
+    error?: string;
+    type?: 'email' | 'text' | 'password' | 'file';
 }
 
 export interface SelectProps {

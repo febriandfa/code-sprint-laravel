@@ -21,8 +21,6 @@ export default function EditSiswa() {
 
     const { siswa, kelases } = usePage().props as { siswa?: User; kelases?: { id: string; nama: string }[] };
 
-    console.log(siswa);
-
     const kelasOptions = kelases?.map((kelas) => ({
         value: kelas.id,
         label: kelas.nama,

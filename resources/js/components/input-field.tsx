@@ -1,12 +1,19 @@
-import { InputFieldProps } from '@/types';
+import { forwardRef } from 'react';
+import Input from './ui/input';
 import InputError from './ui/input-error';
-import InputText from './ui/input-text';
+import { InputFieldProps } from '@/types';
 
-export default function InputField({ id, label, type = 'text', error, ...props }: InputFieldProps) {
+const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
+  ({ id, label, type = 'text', error, ...props }, ref) => {
     return (
-        <div className="relative">
-            <InputText id={id} label={label} type={type} {...props} />
-            <InputError message={error} />
-        </div>
+      <div className="relative">
+        <Input id={id} label={label} type={type} {...props} ref={ref} />
+        <InputError message={error} />
+      </div>
     );
-}
+  }
+);
+
+InputField.displayName = 'InputField';
+
+export default InputField;

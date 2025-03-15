@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\MateriRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class MateriService
@@ -24,8 +25,8 @@ class MateriService
         return Validator::make($data, [
             'judul' => 'required|string',
             'deskripsi' => 'required|string',
-            'file_materi' => 'required|file|mimes:pdf|max:2048',
-            'file_modul' => 'required|file|mimes:pdf|max:2048',
+            'file_materi' => 'nullable|file|mimes:pdf|max:2048',
+            'file_modul' => 'nullable|file|mimes:pdf|max:2048',
         ]);
     }
 
@@ -88,6 +89,14 @@ class MateriService
                 $fileMateri = $request->file('file_materi');
                 $extension = $fileMateri->getClientOriginalName();
                 $materiName = date('YmdHis') . "." . $extension;
+
+                if ($materi->file_materi) {
+                    $oldPath = storage_path('app/public') . str_replace('/storage', '', $materi->file_materi);
+                    if (file_exists($oldPath)) {
+                        unlink($oldPath);
+                    }
+                }
+
                 $fileMateri->move(storage_path('app/public/materi'), $materiName);
                 $materiPath = '/storage/materi/' . $materiName;
             } else {
@@ -98,6 +107,14 @@ class MateriService
                 $fileModul = $request->file('file_modul');
                 $extension = $fileModul->getClientOriginalName();
                 $modulName = date('YmdHis') . "." . $extension;
+
+                if ($materi->file_modul) {
+                    $oldPath = storage_path('app/public') . str_replace('/storage', '', $materi->file_modul);
+                    if (file_exists($oldPath)) {
+                        unlink($oldPath);
+                    }
+                }
+
                 $fileModul->move(storage_path('app/public/modul'), $modulName);
                 $modulPath = '/storage/modul/' . $modulName;
             } else {
@@ -120,6 +137,22 @@ class MateriService
     public function delete(string $id)
     {
         try {
+            $materi = $this->materiRepository->getById($id);
+
+            if ($materi->file_materi) {
+                $oldPath = storage_path('app/public') . str_replace('/storage', '', $materi->file_materi);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+
+            if ($materi->file_modul) {
+                $oldPath = storage_path('app/public') . str_replace('/storage', '', $materi->file_modul);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+
             $this->materiRepository->delete($id);
 
             return redirect()->back()->with('success', 'Materi berhasil dihapus');

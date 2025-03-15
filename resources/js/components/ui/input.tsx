@@ -1,8 +1,12 @@
-import { InputProps } from '@/types';
 import { Eye, EyeOff } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 
-export default function InputText({ id, placeholder, label, type, ...props }: InputProps) {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    id: string;
+    label: string;
+}
+
+const Input = forwardRef<HTMLInputElement, InputProps>(({ id, placeholder, label, type, value, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -14,8 +18,12 @@ export default function InputText({ id, placeholder, label, type, ...props }: In
                 <input
                     id={id}
                     type={type === 'password' && showPassword ? 'text' : type}
-                    className="w-full rounded-md border border-gray-200 bg-white px-4 py-2"
+                    className={`w-full rounded-md border border-gray-200 bg-white file:mr-3 file:rounded-l-md file:bg-gray-600 file:px-4 file:py-2 file:text-white ${
+                        type === 'file' ? 'cursor-pointer pr-4' : 'px-4 py-2'
+                    }`}
                     placeholder={placeholder}
+                    ref={ref}
+                    value={type !== 'file' ? value : undefined}
                     {...props}
                 />
                 {type === 'password' && (
@@ -28,6 +36,11 @@ export default function InputText({ id, placeholder, label, type, ...props }: In
                     </button>
                 )}
             </div>
+            {type === "file" && <p className="text-sm text-slate-400">File: {value}</p>}
         </React.Fragment>
     );
-}
+});
+
+Input.displayName = 'Input';
+
+export default Input;

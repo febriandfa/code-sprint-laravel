@@ -18,7 +18,7 @@ export default function IndexMapel() {
         },
         {
             name: 'Deskripsi',
-            selector: (row: Mapel) => stripHtml(row.deskripsi),
+            cell: (row: Mapel) => <span className="line-clamp-2">{stripHtml(row.deskripsi)}</span>,
             sortable: true,
             wrap: true,
         },

@@ -38,6 +38,13 @@ class MateriController extends Controller
         return $this->materiService->create($request);
     }
 
+    public function show($id)
+    {
+        $materi = $this->materiRepository->getById($id);
+
+        return Inertia::render('guru/materi/show', compact('materi'));
+    }
+
     public function edit($id)
     {
         $materi = $this->materiRepository->getById($id);
