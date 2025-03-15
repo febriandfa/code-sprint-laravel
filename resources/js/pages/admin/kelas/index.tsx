@@ -1,19 +1,41 @@
 import ActionButton from '@/components/action-button';
+import DataTables from '@/components/data-tables';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { Kelas } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import DT from 'datatables.net-dt';
-import DataTable from 'datatables.net-react';
-import 'datatables.net-responsive-dt';
-import 'datatables.net-select-dt';
 
 export default function KelasIndex() {
-    DataTable.use(DT);
-
     const { kelases } = usePage().props as { kelases?: Kelas[] };
 
-    const columns = [{ title: 'Nama Kelas' }, { title: 'Wali Kelas' }, { title: 'Aksi' }];
+    const columns = [
+        {
+            name: 'Nama Kelas',
+            selector: (row: Kelas) => row.nama,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: 'Wali Kelas',
+            cell: (row: Kelas) => row.wali_kelas,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: 'Aksi',
+            cell: (row: Kelas) => <ActionButton routeEdit={route('admin.kelas.edit', row.id)} routeDelete={route('admin.kelas.destroy', row.id)} />,
+            width: '11rem',
+        },
+    ];
+
+    const data = kelases?.map((kelas) => ({
+        id: kelas.id,
+        guru_id: kelas.guru_id,
+        nama: kelas.nama,
+        wali_kelas: kelas.wali_kelas,
+    }));
+
+    const searchBy = ['nama', 'wali_kelas'];
 
     return (
         <AuthLayout title="Kelas" index>
@@ -23,31 +45,7 @@ export default function KelasIndex() {
                     <Button>Tambah Kelas</Button>
                 </Link>
             </div>
-            <DataTable>
-                <thead>
-                    <tr>
-                        {columns.map((column) => (
-                            <th key={column.title}>{column.title}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {kelases?.map((kelas) => {
-                        return (
-                            <tr key={kelas.id}>
-                                <td>{kelas.nama}</td>
-                                <td>{kelas.wali_kelas}</td>
-                                <td>
-                                    <ActionButton
-                                        routeEdit={route('admin.kelas.edit', kelas.id)}
-                                        routeDelete={route('admin.kelas.destroy', kelas.id)}
-                                    />
-                                </td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </DataTable>
+            <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
         </AuthLayout>
     );
 }

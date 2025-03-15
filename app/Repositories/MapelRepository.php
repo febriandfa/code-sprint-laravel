@@ -8,11 +8,7 @@ class MapelRepository
 {
     public function getAll()
     {
-        return DB::table('mapels')
-            ->select('id', 'nama',
-                DB::raw("SUBSTRING_INDEX(deskripsi, ' ', 30) AS deskripsi")
-            )
-            ->get();
+        return DB::table('mapels')->get();
     }
 
     public function create(array $data)

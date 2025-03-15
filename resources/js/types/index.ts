@@ -12,8 +12,8 @@ export type Kelas = {
     nama: string;
     guru_id: string;
     wali_kelas: string;
-    created_at: string;
-    updated_at: string;
+    created_at?: string;
+    updated_at?: string;
 };
 
 export type Mapel = {

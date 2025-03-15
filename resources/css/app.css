@@ -7,10 +7,6 @@
 @source "../views";
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
-@import 'datatables.net-dt';
-@import 'datatables.net-responsive-dt';
-@import 'datatables.net-select-dt';
-
 @custom-variant dark (&:is(.dark *));
 
 @theme {
