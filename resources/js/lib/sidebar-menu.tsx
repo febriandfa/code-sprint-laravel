@@ -12,12 +12,12 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Guru',
                 icon: <Category />,
-                link: '/admin/guru',
+                link: route('admin.guru.index'),
             },
             {
                 name: 'Siswa',
                 icon: <Category />,
-                link: '/admin/siswa',
+                link: route('admin.siswa.index'),
             },
             {
                 name: 'Mata Pelajaran',

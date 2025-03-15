@@ -18,14 +18,12 @@ export default function EditKelas() {
         { title: 'Edit Kelas', link: '/' },
     ];
 
-    const { waliKelases } = usePage().props as { waliKelases?: { id: string; name: string }[] };
+    const { kelas, waliKelases } = usePage().props as { kelas?: Kelas; waliKelases?: { id: string; name: string }[] };
 
     const waliKelasOptions = waliKelases?.map((wali) => ({
         value: wali.id,
         label: wali.name,
     }));
-
-    const { kelas } = usePage().props as { kelas?: Kelas };
 
     const { data, setData, patch, processing, errors } = useForm<Required<KelasForm>>({
         nama: kelas?.nama ?? '',

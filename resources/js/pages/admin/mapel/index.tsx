@@ -6,7 +6,7 @@ import { stripHtml } from '@/lib/helper';
 import { Mapel } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
-export default function MapelIndex() {
+export default function IndexMapel() {
     const { mapels } = usePage().props as { mapels?: Mapel[] };
 
     const columns = [
@@ -54,7 +54,6 @@ export default function MapelIndex() {
 
     return (
         <AuthLayout title="Mata Pelajaran" index>
-            <h1 className="text-2xl font-semibold text-gray-600">Data Mata Pelajaran</h1>
             <div className="my-6 flex justify-end">
                 <Link href={route('admin.mapel.create')}>
                     <Button>Tambah Mata Pelajaran</Button>

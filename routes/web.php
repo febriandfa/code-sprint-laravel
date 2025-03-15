@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\MapelController;
+use App\Http\Controllers\Admin\SiswaController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -14,6 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resources([
             'kelas' => KelasController::class,
             'mapel' => MapelController::class,
+            'siswa' => SiswaController::class,
+            'guru' => GuruController::class,
         ]);
 
         Route::get('dashboard', function () {

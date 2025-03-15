@@ -5,7 +5,7 @@ import AuthLayout from '@/layouts/auth-layout';
 import { Kelas } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
-export default function KelasIndex() {
+export default function IndexKelas() {
     const { kelases } = usePage().props as { kelases?: Kelas[] };
 
     const columns = [
@@ -39,7 +39,6 @@ export default function KelasIndex() {
 
     return (
         <AuthLayout title="Kelas" index>
-            <h1 className="text-2xl font-semibold text-gray-600">Data Kelas</h1>
             <div className="my-6 flex justify-end">
                 <Link href={route('admin.kelas.create')}>
                     <Button>Tambah Kelas</Button>

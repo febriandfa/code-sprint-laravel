@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Repositories\MapelRepository;
+use App\Repositories\UserRepository;
+use App\Services\GuruService;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class GuruController extends Controller
+{
+    protected $guruService;
+    protected $userRepository;
+    protected $mapelRepository;
+
+    public function __construct(GuruService $guruService, UserRepository $userRepository, MapelRepository $mapelRepository)
+    {
+        $this->guruService = $guruService;
+        $this->userRepository = $userRepository;
+        $this->mapelRepository = $mapelRepository;
+    }
+
+    public function index()
+    {
+        $gurus = $this->userRepository->getGuru();
+
+        return Inertia::render('admin/guru/index', compact('gurus'));
+    }
+
+    public function create()
+    {
+        $mapels = $this->mapelRepository->getAll();
+
+        return Inertia::render('admin/guru/create', compact('mapels'));
+    }
+
+    public function store(Request $request)
+    {
+        return $this->guruService->create($request);
+    }
+
+    public function edit(string $id)
+    {
+        $guru = $this->userRepository->getById($id);
+        $mapels = $this->mapelRepository->getAll();
+
+        return Inertia::render('admin/guru/edit', compact('guru', 'mapels'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        return $this->guruService->update($request, $id);
+    }
+
+    public function destroy(string $id)
+    {
+        return $this->guruService->delete($id);
+    }
+}
