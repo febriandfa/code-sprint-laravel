@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\Guru\MateriController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -26,6 +27,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('guru')->name('guru.')->middleware('role:guru')->group(function () {
+        Route::resources([
+            'materi' => MateriController::class,
+        ]);
+
         Route::get('dashboard', function () {
             return Inertia::render('guru/dashboard-guru');
         })->name('dashboard');

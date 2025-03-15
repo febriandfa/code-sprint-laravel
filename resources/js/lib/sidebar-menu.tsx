@@ -39,7 +39,7 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Materi',
                 icon: <Category />,
-                // link: route('guru.materi.index'),
+                link: route('guru.materi.index'),
             },
             {
                 name: 'Kuis',
