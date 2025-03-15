@@ -19,13 +19,18 @@ export default function IndexGuru() {
         },
         {
             name: 'Email',
-            cell: (row: User) => row.email,
+            selector: (row: User) => row.email,
             sortable: true,
             wrap: true,
         },
         {
+            name: 'Password',
+            selector: (row: User) => row.password,
+            wrap: true,
+        },
+        {
             name: 'Mata Pelajaran',
-            cell: (row: User) => row.mapel,
+            selector: (row: User) => row.mapel,
             sortable: true,
             wrap: true,
         },
@@ -39,6 +44,7 @@ export default function IndexGuru() {
     const data = gurus?.map((guru) => ({
         id: guru.id,
         name: guru.name,
+        password: guru.combination,
         email: guru.email,
         mapel: guru.mapel,
     }));

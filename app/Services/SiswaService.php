@@ -24,7 +24,7 @@ class SiswaService
     {
         return Validator::make($data, [
             'name' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'kelas_id' => 'required|exists:kelases,id'
         ]);
     }
@@ -40,10 +40,11 @@ class SiswaService
             $validatedData = $validator->validated();
 
             $firstName = strtolower(explode(' ', $validatedData['name'])[0]);
-            $noAbsen = $this->userRepository->getSiswaCount($validatedData['kelas_id']) + 1;
+            $noAbsen = $this->userRepository->getUserCount(RoleType::SISWA, $validatedData['kelas_id']) + 1;
             $noAbsenFormatted = str_pad($noAbsen, 3, '0', STR_PAD_LEFT);
 
             $password = $firstName . $noAbsenFormatted;
+            $combination = substr($password, 0, 1) . str_repeat('*', strlen($password) - 2) . substr($password, -1);
 
             $this->userRepository->create([
                 'name' => $validatedData['name'],
@@ -51,6 +52,7 @@ class SiswaService
                 'kelas_id' => $validatedData['kelas_id'],
                 'no_absen' => $noAbsen,
                 'password' => $password,
+                'combination' => $combination,
                 'role' => RoleType::SISWA
             ]);
 
@@ -73,12 +75,14 @@ class SiswaService
             $existingUser = $this->userRepository->getById($id);
             if ($validatedData['name'] != $existingUser->name && $validatedData['kelas_id'] != $existingUser->kelas_id) {
                 $firstName = strtolower(explode(' ', $validatedData['name'])[0]);
-                $noAbsen = $this->userRepository->getSiswaCount($validatedData['kelas_id']) + 1;
+                $noAbsen = $this->userRepository->getUserCount(RoleType::SISWA ,$validatedData['kelas_id']) + 1;
                 $noAbsenFormatted = str_pad($noAbsen, 3, '0', STR_PAD_LEFT);
 
                 $password = $firstName . $noAbsenFormatted;
+                $combination = substr($password, 0, 1) . str_repeat('*', strlen($password) - 2) . substr($password, -1);
             } else {
                 $password = null;
+                $combination = null;
             }
 
             $this->userRepository->update([
@@ -87,6 +91,7 @@ class SiswaService
                 'kelas_id' => $validatedData['kelas_id'],
                 'no_absen' => $noAbsen,
                 'password' => $password,
+                'combination' => $combination,
                 'role' => RoleType::SISWA
             ], $id);
 

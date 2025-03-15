@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\RoleType;
 use App\Http\Controllers\Controller;
 use App\Repositories\KelasRepository;
 use App\Repositories\UserRepository;
@@ -24,7 +25,7 @@ class SiswaController extends Controller
 
     public function index()
     {
-        $siswas = $this->userRepository->getSiswa();
+        $siswas = $this->userRepository->getAll(RoleType::SISWA);
 
         return Inertia::render('admin/siswa/index', compact('siswas'));
     }

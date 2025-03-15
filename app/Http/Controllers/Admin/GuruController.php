@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\RoleType;
 use App\Http\Controllers\Controller;
 use App\Repositories\MapelRepository;
 use App\Repositories\UserRepository;
@@ -24,7 +25,7 @@ class GuruController extends Controller
 
     public function index()
     {
-        $gurus = $this->userRepository->getGuru();
+        $gurus = $this->userRepository->getAll(RoleType::GURU);
 
         return Inertia::render('admin/guru/index', compact('gurus'));
     }

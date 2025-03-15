@@ -7,7 +7,7 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Dashboard',
                 icon: <Category />,
-                link: '/admin/dashboard',
+                link: route('admin.dashboard'),
             },
             {
                 name: 'Guru',
@@ -34,14 +34,34 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Dashboard',
                 icon: <Category />,
-                link: '/guru/dashboard',
+                link: route('guru.dashboard'),
+            },
+            {
+                name: 'Materi',
+                icon: <Category />,
+                // link: route('guru.materi.index'),
+            },
+            {
+                name: 'Kuis',
+                icon: <Category />,
+                // link: route('guru.kuis.index'),
+            },
+            {
+                name: 'Project Based Learning',
+                icon: <Category />,
+                // link: route('guru.pjbl.index'),
+            },
+            {
+                name: 'Nilai',
+                icon: <Category />,
+                // link: route('guru.nilai.index'),
             },
         ],
         siswa: [
             {
                 name: 'Dashboard',
                 icon: <Category />,
-                link: '/siswa/dashboard',
+                link: route('siswa.dashboard'),
             },
         ],
     };

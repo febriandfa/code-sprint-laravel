@@ -7,41 +7,33 @@ use Illuminate\Support\Facades\DB;
 
 class UserRepository
 {
-    public function getSiswa()
+    public function getAll(string $role)
     {
         return DB::table('users')
-            ->where('users.role', RoleType::SISWA)
+            ->where('users.role', $role)
             ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
             ->leftJoin('kelases', 'user_details.kelas_id', '=', 'kelases.id')
-            ->select('users.*', 'user_details.kelas_id', 'user_details.no_absen', 'kelases.nama as kelas')
-            ->get();
-    }
-
-    public function getSiswaCount(string $kelasId)
-    {
-        return DB::table('users')
-            ->where('users.role', RoleType::SISWA)
-            ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
-            ->where('user_details.kelas_id', $kelasId)
-            ->count();
-    }
-
-    public function getGuru()
-    {
-        return DB::table('users')
-            ->where('users.role', RoleType::GURU)
-            ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
             ->leftJoin('mapels', 'user_details.mapel_id', '=', 'mapels.id')
-            ->select('users.*', 'user_details.mapel_id', 'mapels.nama as mapel')
+            ->select(
+                'users.*',
+                'user_details.kelas_id',
+                'user_details.no_absen',
+                'user_details.combination',
+                'kelases.nama as kelas',
+                'user_details.mapel_id',
+                'mapels.nama as mapel'
+            )
             ->get();
     }
 
-    public function getGuruCount(string $mapelId)
+    public function getUserCount(string $role, string $referenceId)
     {
+        $column = $role === RoleType::GURU ? 'mapel_id' : 'kelas_id';
+
         return DB::table('users')
-            ->where('users.role', RoleType::GURU)
+            ->where('users.role', $role)
             ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
-            ->where('user_details.mapel_id', $mapelId)
+            ->where("user_details.{$column}", $referenceId)
             ->count();
     }
 
@@ -59,12 +51,14 @@ class UserRepository
                 DB::table('user_details')->insert([
                     'user_id' => $user->id,
                     'no_absen' => $data['no_absen'],
+                    'combination' => $data['combination'],
                     'kelas_id' => $data['kelas_id']
                 ]);
                 $user->assignRole(RoleType::SISWA);
             } elseif ($data['role'] === RoleType::GURU) {
                 DB::table('user_details')->insert([
                     'user_id' => $user->id,
+                    'combination' => $data['combination'],
                     'mapel_id' => $data['mapel_id']
                 ]);
                 $user->assignRole(RoleType::GURU);
@@ -93,6 +87,10 @@ class UserRepository
                 $userData['password'] = bcrypt($data['password']);
             }
 
+            if (!empty($data['combination'])) {
+                $combination = $data['combination'];
+            }
+
             DB::table('users')->where('id', $id)->update(array_filter($userData));
 
             if ($data['role'] === RoleType::SISWA) {
@@ -100,13 +98,17 @@ class UserRepository
                     ['user_id' => $id],
                     [
                         'no_absen' => $data['no_absen'] ?? null,
-                        'kelas_id' => $data['kelas_id'] ?? null
+                        'kelas_id' => $data['kelas_id'] ?? null,
+                        'combination' => $combination
                     ]
                 );
             } elseif ($data['role'] === RoleType::GURU) {
                 DB::table('user_details')->updateOrInsert(
                     ['user_id' => $id],
-                    ['mapel_id' => $data['mapel_id'] ?? null]
+                    [
+                        'mapel_id' => $data['mapel_id'] ?? null,
+                        'combination' => $combination
+                    ],
                 );
             }
         });

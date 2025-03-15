@@ -30,6 +30,11 @@ export default function IndexSiswa() {
             wrap: true,
         },
         {
+            name: 'Password',
+            selector: (row: User) => row.password,
+            wrap: true,
+        },
+        {
             name: 'Kelas',
             selector: (row: User) => row.kelas,
             sortable: true,
@@ -47,6 +52,7 @@ export default function IndexSiswa() {
         no_absen: siswa.no_absen,
         name: siswa.name,
         email: siswa.email,
+        password: siswa.combination,
         kelas: siswa.kelas,
     }));
 

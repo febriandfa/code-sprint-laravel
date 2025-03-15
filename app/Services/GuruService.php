@@ -24,7 +24,7 @@ class GuruService
     {
         return Validator::make($data, [
             'name' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'mapel_id' => 'required|exists:mapels,id'
         ]);
     }
@@ -40,16 +40,18 @@ class GuruService
             $validatedData = $validator->validated();
 
             $firstName = strtolower(explode(' ', $validatedData['name'])[0]);
-            $noUrut = $this->userRepository->getGuruCount($validatedData['mapel_id']) + 1;
+            $noUrut = $this->userRepository->getUserCount(RoleType::GURU, $validatedData['mapel_id']) + 1;
             $noUrutFormatted = str_pad($noUrut, 3, '0', STR_PAD_LEFT);
 
             $password = $firstName . $noUrutFormatted;
+            $combination = substr($password, 0, 1) . str_repeat('*', strlen($password) - 2) . substr($password, -1);
 
             $this->userRepository->create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
                 'mapel_id' => $validatedData['mapel_id'],
                 'password' => $password,
+                'combination' => $combination,
                 'role' => RoleType::GURU
             ]);
 
@@ -72,12 +74,14 @@ class GuruService
             $existingUser = $this->userRepository->getById($id);
             if ($validatedData['name'] != $existingUser->name && $validatedData['mapel_id'] != $existingUser->mapel_id) {
                 $firstName = strtolower(explode(' ', $validatedData['name'])[0]);
-                $noUrut = $this->userRepository->getGuruCount($validatedData['mapel_id']) + 1;
+                $noUrut = $this->userRepository->getUserCount(RoleType::GURU, $validatedData['mapel_id']) + 1;
                 $noUrutFormatted = str_pad($noUrut, 3, '0', STR_PAD_LEFT);
 
                 $password = $firstName . $noUrutFormatted;
+                $combination = substr($password, 0, 1) . str_repeat('*', strlen($password) - 2) . substr($password, -1);
             } else {
                 $password = null;
+                $combination = null;
             }
 
             $this->userRepository->update([
@@ -85,6 +89,7 @@ class GuruService
                 'email' => $validatedData['email'],
                 'mapel_id' => $validatedData['mapel_id'],
                 'password' => $password,
+                'combination' => $combination,
                 'role' => RoleType::GURU
             ], $id);
 
