@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('materis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kelas_id')->constrained('kelases')->onDelete('cascade');
+            $table->foreignId('mapel_id')->constrained('mapels')->onDelete('cascade');
             $table->string('judul');
             $table->longText('deskripsi');
             $table->string('file_materi');

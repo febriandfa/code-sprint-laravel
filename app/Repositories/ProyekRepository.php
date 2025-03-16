@@ -11,22 +11,22 @@ class ProyekRepository
         return DB::table('proyeks')->get();
     }
 
-    public function getById($id)
+    public function getById(string $id)
     {
         return DB::table('proyeks')->where('id', $id)->first();
     }
 
-    public function create($data)
+    public function create(array $data)
     {
         return DB::table('proyeks')->insertGetId($data);
     }
 
-    public function update($id, $data)
+    public function update(array $data, string $id)
     {
         return DB::table('proyeks')->where('id', $id)->update($data);
     }
 
-    public function delete($id)
+    public function delete(string $id)
     {
         return DB::table('proyeks')->where('id', $id)->delete();
     }

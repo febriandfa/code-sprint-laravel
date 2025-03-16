@@ -14,6 +14,8 @@ return new class extends Migration
     {
         Schema::create('proyeks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kelas_id')->constrained('kelases')->onDelete('cascade');
+            $table->foreignId('mapel_id')->constrained('mapels')->onDelete('cascade');
             $table->string('nama');
             $table->longText('deskripsi');
             $table->dateTime('tenggat');

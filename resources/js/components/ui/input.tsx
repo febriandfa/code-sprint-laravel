@@ -36,7 +36,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ id, placeholder, label
                     </button>
                 )}
             </div>
-            {type === "file" && <p className="text-sm text-slate-400">File: {value}</p>}
+            {type === "file" && value && <p className="text-sm text-slate-400">File: {value}</p>}
         </React.Fragment>
     );
 });

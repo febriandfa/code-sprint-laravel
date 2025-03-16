@@ -57,7 +57,7 @@ export default function IndexKuis() {
         tanggal_selesai: kuis.tanggal_selesai,
     }));
 
-    const searchBy = ['judul'];
+    const searchBy = ['judul', 'materi', 'tanggal_mulai', 'tanggal_selesai'];
 
     return (
         <AuthLayout title="Kuis" index>
