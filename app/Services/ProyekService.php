@@ -23,6 +23,8 @@ class ProyekService
     public function validateInput(array $data)
     {
         return Validator::make($data, [
+            'kelas_id' => 'required|exists:kelases,id',
+            'mapel_id' => 'required|exists:mapels,id',
             'nama' => 'required|string',
             'deskripsi' => 'required|string',
             'tenggat' => 'required|date',
@@ -58,7 +60,7 @@ class ProyekService
             }
             $validatedData = $validator->validated();
 
-            $this->proyekRepository->update($id, $validatedData);
+            $this->proyekRepository->update($validatedData, $id);
 
             return redirect()->back()->with('success', 'Proyek berhasil diperbarui');
         } catch (\Exception $e) {

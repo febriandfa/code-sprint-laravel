@@ -10,11 +10,23 @@ type InputSelectProps = {
     value?: string | number | (string | number)[];
     onChange?: (e: any) => void;
     required?: boolean;
+    disabled?: boolean;
     multi?: boolean;
     options?: OptionItem[];
 };
 
-export default function InputSelect({ id, label, placeholder, multi = false, options, error, value, onChange, required }: InputSelectProps) {
+export default function InputSelect({
+    id,
+    label,
+    placeholder,
+    multi = false,
+    options,
+    error,
+    value,
+    onChange,
+    required,
+    disabled = false,
+}: InputSelectProps) {
     const styles: StylesConfig = {
         control: (styles, { isFocused }) => ({
             ...styles,
@@ -70,6 +82,7 @@ export default function InputSelect({ id, label, placeholder, multi = false, opt
                 value={getSelectedValue()}
                 onChange={onChange}
                 required={required}
+                isDisabled={disabled}
             />
             <InputError message={error} />
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\GuruRepository;
 use App\Repositories\MateriRepository;
 use App\Services\MateriService;
 use Illuminate\Http\Request;
@@ -14,23 +15,28 @@ class MateriController extends Controller
 {
     protected $materiService;
     protected $materiRepository;
+    protected $guruRepository;
 
-    public function __construct(MateriService $materiService, MateriRepository $materiRepository)
+    public function __construct(MateriService $materiService, MateriRepository $materiRepository, GuruRepository $guruRepository)
     {
         $this->materiService = $materiService;
         $this->materiRepository = $materiRepository;
+        $this->guruRepository = $guruRepository;
     }
 
     public function index()
     {
-        $materis = $this->materiRepository->getAll();
+        $materis = $this->materiRepository->getByGuru();
 
         return Inertia::render('guru/materi/index', compact('materis'));
     }
 
     public function create()
     {
-        return Inertia::render('guru/materi/create');
+        $mapels = $this->guruRepository->getMapelGuru();
+        $kelases = $this->guruRepository->getKelasGuru();
+
+        return Inertia::render('guru/materi/create', compact('mapels', 'kelases'));
     }
 
     public function store(Request $request)
@@ -48,8 +54,10 @@ class MateriController extends Controller
     public function edit($id)
     {
         $materi = $this->materiRepository->getById($id);
+        $mapels = $this->guruRepository->getMapelGuru();
+        $kelases = $this->guruRepository->getKelasGuru();
 
-        return Inertia::render('guru/materi/edit', compact('materi'));
+        return Inertia::render('guru/materi/edit', compact('materi', 'mapels', 'kelases'));
     }
 
     public function update(Request $request, $id)

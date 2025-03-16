@@ -28,6 +28,10 @@ export type Mapel = {
 
 export type Materi = {
     id: number;
+    kelas_id: string;
+    kelas: string;
+    mapel_id: string;
+    mapel: string;
     judul: string;
     deskripsi: string;
     file_materi: string;

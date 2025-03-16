@@ -1,15 +1,18 @@
 import InputField from '@/components/input-field';
 import InputQuill from '@/components/input-quill';
+import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Materi } from '@/types';
+import { Kelas, Mapel, Materi } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 type MateriForm = {
     _method: 'PATCH';
+    kelas_id: string;
+    mapel_id: string;
     judul: string;
     deskripsi: string;
     file_materi: File | null;
@@ -31,10 +34,22 @@ export default function EditMateri() {
     const fileMateriRef = useRef<HTMLInputElement | null>(null);
     const fileModulRef = useRef<HTMLInputElement | null>(null);
 
-    const { materi } = usePage().props as { materi?: Materi };
+    const { materi, kelases, mapels } = usePage().props as { materi?: Materi; kelases?: Kelas[]; mapels?: Mapel[] };
+
+    const kelasOptions = kelases?.map((kelas) => ({
+        value: kelas.id,
+        label: kelas.nama,
+    }));
+
+    const mapelOptions = mapels?.map((mapel) => ({
+        value: mapel.id,
+        label: mapel.nama,
+    }));
 
     const { data, setData, post, processing, errors } = useForm<Required<MateriForm>>({
         _method: 'PATCH',
+        kelas_id: materi?.kelas_id.toString() ?? '',
+        mapel_id: materi?.mapel_id.toString() ?? '',
         judul: materi?.judul ?? '',
         deskripsi: materi?.deskripsi ?? '',
         file_materi: null,
@@ -59,6 +74,26 @@ export default function EditMateri() {
     return (
         <AuthLayout title="Edit Materi" breadcrumbs={breadcrumbs}>
             <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
+                <InputSelect
+                    id={'kelas_id'}
+                    label={'Kelas'}
+                    placeholder={'Pilih kelas'}
+                    required
+                    options={kelasOptions}
+                    value={data.kelas_id}
+                    onChange={(e) => setData('kelas_id', e.value)}
+                    error={errors.kelas_id}
+                />
+                <InputSelect
+                    id={'mapel_id'}
+                    label={'Mata Pelajaran'}
+                    placeholder={'Pilih mata pelajaran'}
+                    required
+                    options={mapelOptions}
+                    value={data.mapel_id}
+                    onChange={(e) => setData('mapel_id', e.value)}
+                    error={errors.mapel_id}
+                />
                 <InputField
                     id="judul"
                     label="Nama Materi"

@@ -24,14 +24,14 @@ class KuisController extends Controller
 
     public function index()
     {
-        $kuises = $this->kuisRepository->getAll();
+        $kuises = $this->kuisRepository->getByGuru();
 
         return Inertia::render('guru/kuis/index', compact('kuises'));
     }
 
     public function create()
     {
-        $materis = $this->materiRepository->getAll();
+        $materis = $this->materiRepository->getByGuru();
 
         return Inertia::render('guru/kuis/create', compact('materis'));
     }

@@ -23,6 +23,8 @@ class MateriService
     public function validateInput(array $data)
     {
         return Validator::make($data, [
+            'kelas_id' => 'required|exists:kelases,id',
+            'mapel_id' => 'required|exists:mapels,id',
             'judul' => 'required|string',
             'deskripsi' => 'required|string',
             'file_materi' => 'nullable|file|mimes:pdf|max:2048',
@@ -59,6 +61,8 @@ class MateriService
             };
 
             $this->materiRepository->create([
+                'kelas_id' => $validatedData['kelas_id'],
+                'mapel_id' => $validatedData['mapel_id'],
                 'judul' => $validatedData['judul'],
                 'deskripsi' => $validatedData['deskripsi'],
                 'file_materi' => $materiPath,
@@ -122,6 +126,8 @@ class MateriService
             };
 
             $this->materiRepository->update([
+                'kelas_id' => $validatedData['kelas_id'],
+                'mapel_id' => $validatedData['mapel_id'],
                 'judul' => $validatedData['judul'],
                 'deskripsi' => $validatedData['deskripsi'],
                 'file_materi' => $materiPath,

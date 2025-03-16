@@ -9,6 +9,8 @@ import { Link, usePage } from '@inertiajs/react';
 export default function IndexMateri() {
     const { materis } = usePage().props as { materis?: Materi[] };
 
+    console.log(materis);
+
     const columns = [
         {
             name: 'Judul',
@@ -19,6 +21,18 @@ export default function IndexMateri() {
         {
             name: 'Deskripsi',
             cell: (row: Materi) => <span className="line-clamp-2">{stripHtml(row.deskripsi)}</span>,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: 'Kelas',
+            selector: (row: Materi) => row.kelas,
+            sortable: true,
+            wrap: true,
+        },
+        {
+            name: 'Mata Pelajaran',
+            selector: (row: Materi) => row.mapel,
             sortable: true,
             wrap: true,
         },
@@ -49,6 +63,8 @@ export default function IndexMateri() {
         id: materi.id,
         judul: materi.judul,
         deskripsi: materi.deskripsi,
+        kelas: materi.kelas,
+        mapel: materi.mapel,
         file_materi: materi.file_materi,
         file_modul: materi.file_modul,
     }));

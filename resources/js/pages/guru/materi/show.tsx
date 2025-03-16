@@ -23,6 +23,8 @@ export default function ShowMateri() {
     return (
         <AuthLayout title="Edit Materi" breadcrumbs={breadcrumbs}>
             <div className="flex flex-col gap-6">
+                <InputField id="kelas" label="Kelas" value={materi?.kelas} disabled />
+                <InputField id="mapel" label="Mata Pelajaran" value={materi?.mapel} disabled />
                 <InputField id="judul" label="Nama Materi" value={materi?.judul} disabled />
                 <RichTextView label="Deskripsi" value={materi?.deskripsi} />
                 <Embed label="File Materi" src={materi?.file_materi} />
