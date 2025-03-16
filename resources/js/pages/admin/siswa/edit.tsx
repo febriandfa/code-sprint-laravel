@@ -3,7 +3,7 @@ import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { User } from '@/types';
+import { Kelas, UserDetail } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
@@ -16,10 +16,10 @@ type SiswaForm = {
 export default function EditSiswa() {
     const breadcrumbs = [
         { title: 'Siswa', link: route('admin.siswa.index') },
-        { title: 'Edit Siswa', link: '/' },
+        { title: 'Edit Siswa', link: '#' },
     ];
 
-    const { siswa, kelases } = usePage().props as { siswa?: User; kelases?: { id: string; nama: string }[] };
+    const { siswa, kelases } = usePage().props as { siswa?: UserDetail; kelases?: Kelas[] };
 
     const kelasOptions = kelases?.map((kelas) => ({
         value: kelas.id,

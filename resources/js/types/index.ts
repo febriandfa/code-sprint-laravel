@@ -36,9 +36,26 @@ export type Materi = {
     updated_at: string;
 };
 
+export type Kuis = {
+    id: number;
+    materi_id: string;
+    materi: string;
+    judul: string;
+    durasi: number;
+    tanggal_mulai: string;
+    tanggal_selesai: string;
+    created_at: string;
+    updated_at: string;
+};
+
 export interface BreadcrumbItem {
     title: string;
     link: string;
+}
+
+export interface OptionItem {
+    value: string | number;
+    label: string;
 }
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -51,7 +68,7 @@ export interface InputFieldProps extends React.ComponentPropsWithRef<'input'> {
     id: string;
     label: string;
     error?: string;
-    type?: 'email' | 'text' | 'password' | 'file';
+    type?: 'email' | 'text' | 'password' | 'file' | 'number' | 'date' | 'datetime-local';
 }
 
 export interface SelectProps {
@@ -89,4 +106,12 @@ export interface User {
     created_at: string;
     updated_at: string;
     [key: string]: unknown;
+}
+
+export interface UserDetail extends User {
+    no_absen?: number;
+    kelas_id?: string;
+    kelas?: string;
+    mapel_id?: string;
+    mapel?: string;
 }

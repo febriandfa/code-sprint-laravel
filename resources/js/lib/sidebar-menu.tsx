@@ -44,7 +44,7 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Kuis',
                 icon: <Category />,
-                // link: route('guru.kuis.index'),
+                link: route('guru.kuis.index'),
             },
             {
                 name: 'Project Based Learning',

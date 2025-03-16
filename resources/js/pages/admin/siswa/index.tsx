@@ -2,47 +2,49 @@ import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { User } from '@/types';
+import { UserDetail } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function IndexSiswa() {
-    const { siswas } = usePage().props as { siswas?: User[] };
+    const { siswas } = usePage().props as { siswas?: UserDetail[] };
 
     console.log(siswas);
 
     const columns = [
         {
             name: 'Nomor',
-            selector: (row: User) => row.no_absen,
+            selector: (row: UserDetail) => row.no_absen,
             sortable: true,
             width: '7rem',
         },
         {
             name: 'Nama Siswa',
-            selector: (row: User) => row.name,
+            selector: (row: UserDetail) => row.name,
             sortable: true,
             wrap: true,
         },
         {
             name: 'Email',
-            selector: (row: User) => row.email,
+            selector: (row: UserDetail) => row.email,
             sortable: true,
             wrap: true,
         },
         {
             name: 'Password',
-            selector: (row: User) => row.password,
+            selector: (row: UserDetail) => row.password,
             wrap: true,
         },
         {
             name: 'Kelas',
-            selector: (row: User) => row.kelas,
+            selector: (row: UserDetail) => row.kelas,
             sortable: true,
             wrap: true,
         },
         {
             name: 'Aksi',
-            cell: (row: User) => <ActionButton routeEdit={route('admin.siswa.edit', row.id)} routeDelete={route('admin.siswa.destroy', row.id)} />,
+            cell: (row: UserDetail) => (
+                <ActionButton routeEdit={route('admin.siswa.edit', row.id)} routeDelete={route('admin.siswa.destroy', row.id)} />
+            ),
             width: '11rem',
         },
     ];

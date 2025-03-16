@@ -3,6 +3,7 @@ import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
+import { Kelas } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
@@ -15,10 +16,10 @@ type SiswaForm = {
 export default function CreateSiswa() {
     const breadcrumbs = [
         { title: 'Siswa', link: route('admin.siswa.index') },
-        { title: 'Tambah Siswa', link: '/' },
+        { title: 'Tambah Siswa', link: '#' },
     ];
 
-    const { kelases } = usePage().props as { kelases?: { id: string; nama: string }[] };
+    const { kelases } = usePage().props as { kelases?: Kelas[] };
 
     const kelasOptions = kelases?.map((kelas) => ({
         value: kelas.id,

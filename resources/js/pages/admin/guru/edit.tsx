@@ -3,7 +3,7 @@ import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { User } from '@/types';
+import { Mapel, UserDetail } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
@@ -16,10 +16,10 @@ type GuruForm = {
 export default function EditSiswa() {
     const breadcrumbs = [
         { title: 'Guru', link: route('admin.guru.index') },
-        { title: 'Edit Guru', link: '/' },
+        { title: 'Edit Guru', link: '#' },
     ];
 
-    const { guru, mapels } = usePage().props as { guru?: User; mapels?: { id: string; nama: string }[] };
+    const { guru, mapels } = usePage().props as { guru?: UserDetail; mapels?: Mapel[] };
 
     console.log(guru);
 
@@ -31,7 +31,7 @@ export default function EditSiswa() {
     const { data, setData, patch, processing, errors } = useForm<Required<GuruForm>>({
         name: guru?.name ?? '',
         email: guru?.email ?? '',
-        mapel_id: guru?.mapel_id ?? '',
+        mapel_id: guru?.mapel_id?.toString() ?? '',
     });
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {

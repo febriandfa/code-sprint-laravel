@@ -5,6 +5,7 @@ import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
+import { Mapel } from '@/types';
 
 type GuruForm = {
     name: string;
@@ -15,10 +16,10 @@ type GuruForm = {
 export default function CreateSiswa() {
     const breadcrumbs = [
         { title: 'Guru', link: route('admin.guru.index') },
-        { title: 'Tambah Guru', link: '/' },
+        { title: 'Tambah Guru', link: '#' },
     ];
 
-    const { mapels } = usePage().props as { mapels?: { id: string; nama: string }[] };
+    const { mapels } = usePage().props as { mapels?: Mapel[] };
 
     const mapelOptions = mapels?.map((mapel) => ({
         value: mapel.id,

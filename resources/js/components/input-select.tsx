@@ -1,3 +1,4 @@
+import { OptionItem } from '@/types';
 import Select, { StylesConfig } from 'react-select';
 import InputError from './ui/input-error';
 
@@ -6,10 +7,10 @@ type InputSelectProps = {
     label: string;
     placeholder?: string;
     error?: string;
-    value?: string;
+    value?: string | number;
     onChange?: (e: any) => void;
     required?: boolean;
-    options?: { value: string; label: string }[];
+    options?: OptionItem[];
 };
 
 export default function InputSelect({ id, label, placeholder, options, error, value, onChange, required }: InputSelectProps) {
@@ -51,7 +52,7 @@ export default function InputSelect({ id, label, placeholder, options, error, va
                 classNamePrefix="select"
                 isSearchable
                 options={options}
-                value={options?.find((option) => option.value === value) || null}
+                value={options?.find((option) => option.value == value) || null}
                 onChange={onChange}
                 required={required}
             />

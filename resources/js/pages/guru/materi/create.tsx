@@ -57,7 +57,7 @@ export default function CreateMateri() {
             <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
                 <InputField
                     id="judul"
-                    label="Nama Mata Pelajaran"
+                    label="Nama Materi"
                     placeholder="Masukkan judul materi"
                     required
                     autoFocus

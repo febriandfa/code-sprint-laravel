@@ -2,41 +2,43 @@ import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { User } from '@/types';
+import { UserDetail } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function IndexGuru() {
-    const { gurus } = usePage().props as { gurus?: User[] };
+    const { gurus } = usePage().props as { gurus?: UserDetail[] };
 
     console.log(gurus);
 
     const columns = [
         {
             name: 'Nama Guru',
-            selector: (row: User) => row.name,
+            selector: (row: UserDetail) => row.name,
             sortable: true,
             wrap: true,
         },
         {
             name: 'Email',
-            selector: (row: User) => row.email,
+            selector: (row: UserDetail) => row.email,
             sortable: true,
             wrap: true,
         },
         {
             name: 'Password',
-            selector: (row: User) => row.password,
+            selector: (row: UserDetail) => row.password,
             wrap: true,
         },
         {
             name: 'Mata Pelajaran',
-            selector: (row: User) => row.mapel,
+            selector: (row: UserDetail) => row.mapel,
             sortable: true,
             wrap: true,
         },
         {
             name: 'Aksi',
-            cell: (row: User) => <ActionButton routeEdit={route('admin.guru.edit', row.id)} routeDelete={route('admin.guru.destroy', row.id)} />,
+            cell: (row: UserDetail) => (
+                <ActionButton routeEdit={route('admin.guru.edit', row.id)} routeDelete={route('admin.guru.destroy', row.id)} />
+            ),
             width: '11rem',
         },
     ];

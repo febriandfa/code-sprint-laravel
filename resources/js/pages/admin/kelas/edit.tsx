@@ -3,7 +3,7 @@ import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Kelas } from '@/types';
+import { Kelas, UserDetail } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
@@ -15,10 +15,10 @@ type KelasForm = {
 export default function EditKelas() {
     const breadcrumbs = [
         { title: 'Kelas', link: route('admin.kelas.index') },
-        { title: 'Edit Kelas', link: '/' },
+        { title: 'Edit Kelas', link: '#' },
     ];
 
-    const { kelas, waliKelases } = usePage().props as { kelas?: Kelas; waliKelases?: { id: string; name: string }[] };
+    const { kelas, waliKelases } = usePage().props as { kelas?: Kelas; waliKelases?: UserDetail[] };
 
     const waliKelasOptions = waliKelases?.map((wali) => ({
         value: wali.id,
