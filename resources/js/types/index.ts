@@ -110,8 +110,8 @@ export interface User {
 
 export interface UserDetail extends User {
     no_absen?: number;
-    kelas_id?: string;
-    kelas?: string;
+    kelas_id: string;
+    kelas: string;
     mapel_id?: string;
     mapel?: string;
 }

@@ -14,10 +14,12 @@ class GuruService
      */
 
     protected $userRepository;
+    protected $generateService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, GenerateService $generateService)
     {
         $this->userRepository = $userRepository;
+        $this->generateService = $generateService;
     }
 
     public function validateInput(array $data)
@@ -25,7 +27,8 @@ class GuruService
         return Validator::make($data, [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
-            'mapel_id' => 'required|exists:mapels,id'
+            'mapel_id' => 'required|exists:mapels,id',
+            'kelas_id' => 'required|exists:kelases,id',
         ]);
     }
 
@@ -39,17 +42,18 @@ class GuruService
             }
             $validatedData = $validator->validated();
 
-            $firstName = strtolower(explode(' ', $validatedData['name'])[0]);
-            $noUrut = $this->userRepository->getUserCount(RoleType::GURU, $validatedData['mapel_id']) + 1;
-            $noUrutFormatted = str_pad($noUrut, 3, '0', STR_PAD_LEFT);
-
-            $password = $firstName . $noUrutFormatted;
-            $combination = substr($password, 0, 1) . str_repeat('*', strlen($password) - 2) . substr($password, -1);
+            $password = $this->generateService->generatePasswordCombination(
+                $validatedData['name'],
+                RoleType::GURU,
+                $validatedData['kelas_id']
+            );
+            $combination = $this->generateService->hidePasswordCombination($password);
 
             $this->userRepository->create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
                 'mapel_id' => $validatedData['mapel_id'],
+                'kelas_id' => $validatedData['kelas_id'],
                 'password' => $password,
                 'combination' => $combination,
                 'role' => RoleType::GURU
@@ -73,12 +77,12 @@ class GuruService
 
             $existingUser = $this->userRepository->getById($id);
             if ($validatedData['name'] != $existingUser->name && $validatedData['mapel_id'] != $existingUser->mapel_id) {
-                $firstName = strtolower(explode(' ', $validatedData['name'])[0]);
-                $noUrut = $this->userRepository->getUserCount(RoleType::GURU, $validatedData['mapel_id']) + 1;
-                $noUrutFormatted = str_pad($noUrut, 3, '0', STR_PAD_LEFT);
-
-                $password = $firstName . $noUrutFormatted;
-                $combination = substr($password, 0, 1) . str_repeat('*', strlen($password) - 2) . substr($password, -1);
+                $password = $this->generateService->generatePasswordCombination(
+                    $validatedData['name'],
+                    RoleType::GURU,
+                    $validatedData['kelas_id']
+                );
+                $combination = $this->generateService->hidePasswordCombination($password);
             } else {
                 $password = null;
                 $combination = null;
@@ -88,6 +92,7 @@ class GuruService
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
                 'mapel_id' => $validatedData['mapel_id'],
+                'kelas_id' => $validatedData['kelas_id'],
                 'password' => $password,
                 'combination' => $combination,
                 'role' => RoleType::GURU

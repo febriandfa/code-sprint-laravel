@@ -14,10 +14,12 @@ class SiswaService
      */
 
     protected $userRepository;
+    protected $generateService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, GenerateService $generateService)
     {
         $this->userRepository = $userRepository;
+        $this->generateService = $generateService;
     }
 
     public function validateInput(array $data)
@@ -39,12 +41,13 @@ class SiswaService
             }
             $validatedData = $validator->validated();
 
-            $firstName = strtolower(explode(' ', $validatedData['name'])[0]);
             $noAbsen = $this->userRepository->getUserCount(RoleType::SISWA, $validatedData['kelas_id']) + 1;
-            $noAbsenFormatted = str_pad($noAbsen, 3, '0', STR_PAD_LEFT);
-
-            $password = $firstName . $noAbsenFormatted;
-            $combination = substr($password, 0, 1) . str_repeat('*', strlen($password) - 2) . substr($password, -1);
+            $password = $this->generateService->generatePasswordCombination(
+                $validatedData['name'],
+                RoleType::SISWA,
+                $validatedData['kelas_id']
+            );
+            $combination = $this->generateService->hidePasswordCombination($password);
 
             $this->userRepository->create([
                 'name' => $validatedData['name'],
@@ -74,12 +77,13 @@ class SiswaService
 
             $existingUser = $this->userRepository->getById($id);
             if ($validatedData['name'] != $existingUser->name && $validatedData['kelas_id'] != $existingUser->kelas_id) {
-                $firstName = strtolower(explode(' ', $validatedData['name'])[0]);
-                $noAbsen = $this->userRepository->getUserCount(RoleType::SISWA ,$validatedData['kelas_id']) + 1;
-                $noAbsenFormatted = str_pad($noAbsen, 3, '0', STR_PAD_LEFT);
-
-                $password = $firstName . $noAbsenFormatted;
-                $combination = substr($password, 0, 1) . str_repeat('*', strlen($password) - 2) . substr($password, -1);
+                $noAbsen = $this->userRepository->getUserCount(RoleType::SISWA, $validatedData['kelas_id']) + 1;
+                $password = $this->generateService->generatePasswordCombination(
+                    $validatedData['name'],
+                    RoleType::SISWA,
+                    $validatedData['kelas_id']
+                );
+                $combination = $this->generateService->hidePasswordCombination($password);
             } else {
                 $password = null;
                 $combination = null;

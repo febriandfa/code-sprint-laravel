@@ -3,13 +3,14 @@ import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Mapel, UserDetail } from '@/types';
+import { Kelas, Mapel, UserDetail } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 type GuruForm = {
     name: string;
     email: string;
+    kelas_id: string;
     mapel_id: string;
 };
 
@@ -19,9 +20,12 @@ export default function EditSiswa() {
         { title: 'Edit Guru', link: '#' },
     ];
 
-    const { guru, mapels } = usePage().props as { guru?: UserDetail; mapels?: Mapel[] };
+    const { guru, kelases, mapels } = usePage().props as { guru?: UserDetail; kelases?: Kelas[]; mapels?: Mapel[] };
 
-    console.log(guru);
+    const kelasOptions = kelases?.map((kelas) => ({
+        value: kelas.id,
+        label: kelas.nama,
+    }));
 
     const mapelOptions = mapels?.map((mapel) => ({
         value: mapel.id,
@@ -31,6 +35,7 @@ export default function EditSiswa() {
     const { data, setData, patch, processing, errors } = useForm<Required<GuruForm>>({
         name: guru?.name ?? '',
         email: guru?.email ?? '',
+        kelas_id: guru?.kelas_id?.toString() ?? '',
         mapel_id: guru?.mapel_id?.toString() ?? '',
     });
 
@@ -67,6 +72,16 @@ export default function EditSiswa() {
                     value={data.email}
                     onChange={(e) => setData('email', e.target.value)}
                     error={errors.email}
+                />
+                <InputSelect
+                    id={'kelas_id'}
+                    label={'Kelas'}
+                    placeholder={'Pilih kelas'}
+                    required
+                    options={kelasOptions}
+                    value={data.kelas_id}
+                    onChange={(e) => setData('kelas_id', e.value)}
+                    error={errors.kelas_id}
                 />
                 <InputSelect
                     id={'kelas_id'}

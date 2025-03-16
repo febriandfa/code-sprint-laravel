@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\RoleType;
 use App\Http\Controllers\Controller;
+use App\Repositories\KelasRepository;
 use App\Repositories\MapelRepository;
 use App\Repositories\UserRepository;
 use App\Services\GuruService;
@@ -15,12 +16,14 @@ class GuruController extends Controller
     protected $guruService;
     protected $userRepository;
     protected $mapelRepository;
+    protected $kelasRepository;
 
-    public function __construct(GuruService $guruService, UserRepository $userRepository, MapelRepository $mapelRepository)
+    public function __construct(GuruService $guruService, UserRepository $userRepository, MapelRepository $mapelRepository, KelasRepository $kelasRepository)
     {
         $this->guruService = $guruService;
         $this->userRepository = $userRepository;
         $this->mapelRepository = $mapelRepository;
+        $this->kelasRepository = $kelasRepository;
     }
 
     public function index()
@@ -32,9 +35,10 @@ class GuruController extends Controller
 
     public function create()
     {
+        $kelases = $this->kelasRepository->getAll();
         $mapels = $this->mapelRepository->getAll();
 
-        return Inertia::render('admin/guru/create', compact('mapels'));
+        return Inertia::render('admin/guru/create', compact('kelases', 'mapels'));
     }
 
     public function store(Request $request)
@@ -45,9 +49,10 @@ class GuruController extends Controller
     public function edit(string $id)
     {
         $guru = $this->userRepository->getById($id);
+        $kelases = $this->kelasRepository->getAll();
         $mapels = $this->mapelRepository->getAll();
 
-        return Inertia::render('admin/guru/edit', compact('guru', 'mapels'));
+        return Inertia::render('admin/guru/edit', compact('guru', 'kelases', 'mapels'));
     }
 
     public function update(Request $request, string $id)

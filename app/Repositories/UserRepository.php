@@ -26,14 +26,12 @@ class UserRepository
             ->get();
     }
 
-    public function getUserCount(string $role, string $referenceId)
+    public function getUserCount(string $role, string $kelasId)
     {
-        $column = $role === RoleType::GURU ? 'mapel_id' : 'kelas_id';
-
         return DB::table('users')
             ->where('users.role', $role)
             ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
-            ->where("user_details.{$column}", $referenceId)
+            ->where("user_details.kelas_id", $kelasId)
             ->count();
     }
 
@@ -47,22 +45,21 @@ class UserRepository
                 'role' => $data['role']
             ]);
 
+            $userDetails = [
+                'user_id' => $user->id,
+                'combination' => $data['combination'],
+                'kelas_id' => $data['kelas_id']
+            ];
+
             if ($data['role'] === RoleType::SISWA) {
-                DB::table('user_details')->insert([
-                    'user_id' => $user->id,
-                    'no_absen' => $data['no_absen'],
-                    'combination' => $data['combination'],
-                    'kelas_id' => $data['kelas_id']
-                ]);
-                $user->assignRole(RoleType::SISWA);
+                $userDetails['no_absen'] = $data['no_absen'];
             } elseif ($data['role'] === RoleType::GURU) {
-                DB::table('user_details')->insert([
-                    'user_id' => $user->id,
-                    'combination' => $data['combination'],
-                    'mapel_id' => $data['mapel_id']
-                ]);
-                $user->assignRole(RoleType::GURU);
+                $userDetails['mapel_id'] = $data['mapel_id'];
             }
+
+            DB::table('user_details')->insert($userDetails);
+
+            $user->assignRole($data['role']);
         });
     }
 
@@ -78,39 +75,26 @@ class UserRepository
     public function update(array $data, string $id)
     {
         return DB::transaction(function () use ($data, $id) {
-            $userData = [
+            $userData = array_filter([
                 'name' => $data['name'] ?? null,
-                'email' => $data['email'] ?? null
-            ];
+                'email' => $data['email'] ?? null,
+                'password' => !empty($data['password']) ? bcrypt($data['password']) : null
+            ]);
 
-            if (!empty($data['password'])) {
-                $userData['password'] = bcrypt($data['password']);
-            }
+            DB::table('users')->where('id', $id)->update($userData);
 
-            if (!empty($data['combination'])) {
-                $combination = $data['combination'];
-            }
-
-            DB::table('users')->where('id', $id)->update(array_filter($userData));
+            $userDetails = array_filter([
+                'kelas_id' => $data['kelas_id'] ?? null,
+                'combination' => $data['combination'] ?? null
+            ]);
 
             if ($data['role'] === RoleType::SISWA) {
-                DB::table('user_details')->updateOrInsert(
-                    ['user_id' => $id],
-                    [
-                        'no_absen' => $data['no_absen'] ?? null,
-                        'kelas_id' => $data['kelas_id'] ?? null,
-                        'combination' => $combination
-                    ]
-                );
+                $userDetails['no_absen'] = $data['no_absen'] ?? null;
             } elseif ($data['role'] === RoleType::GURU) {
-                DB::table('user_details')->updateOrInsert(
-                    ['user_id' => $id],
-                    [
-                        'mapel_id' => $data['mapel_id'] ?? null,
-                        'combination' => $combination
-                    ],
-                );
+                $userDetails['mapel_id'] = $data['mapel_id'] ?? null;
             }
+
+            DB::table('user_details')->updateOrInsert(['user_id' => $id], $userDetails);
         });
     }
 

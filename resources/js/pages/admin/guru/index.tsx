@@ -29,6 +29,12 @@ export default function IndexGuru() {
             wrap: true,
         },
         {
+            name: 'Kelas',
+            selector: (row: UserDetail) => row.kelas,
+            sortable: true,
+            wrap: true,
+        },
+        {
             name: 'Mata Pelajaran',
             selector: (row: UserDetail) => row.mapel,
             sortable: true,
@@ -48,6 +54,7 @@ export default function IndexGuru() {
         name: guru.name,
         password: guru.combination,
         email: guru.email,
+        kelas: guru.kelas,
         mapel: guru.mapel,
     }));
 
