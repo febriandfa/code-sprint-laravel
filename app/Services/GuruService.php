@@ -22,11 +22,11 @@ class GuruService
         $this->generateService = $generateService;
     }
 
-    public function validateInput(array $data)
+    public function validateInput(array $data, string $id = null)
     {
         return Validator::make($data, [
             'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users,email,' . $id,
             'mapel_id' => 'required|exists:mapels,id',
             'kelas_id' => 'required|exists:kelases,id',
         ]);
@@ -68,7 +68,7 @@ class GuruService
     public function update(Request $request, string $id)
     {
         try {
-            $validator = $this->validateInput($request->all());
+            $validator = $this->validateInput($request->all(), $id);
 
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
@@ -76,7 +76,7 @@ class GuruService
             $validatedData = $validator->validated();
 
             $existingUser = $this->userRepository->getById($id);
-            if ($validatedData['name'] != $existingUser->name && $validatedData['mapel_id'] != $existingUser->mapel_id) {
+            if ($validatedData['name'] != $existingUser->name || $validatedData['kelas_id'] != $existingUser->kelas_id) {
                 $password = $this->generateService->generatePasswordCombination(
                     $validatedData['name'],
                     RoleType::GURU,

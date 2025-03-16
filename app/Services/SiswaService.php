@@ -22,11 +22,11 @@ class SiswaService
         $this->generateService = $generateService;
     }
 
-    public function validateInput(array $data)
+    public function validateInput(array $data, string $id = null)
     {
         return Validator::make($data, [
             'name' => 'required|string',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:users,email,' . $id,
             'kelas_id' => 'required|exists:kelases,id'
         ]);
     }
@@ -68,7 +68,7 @@ class SiswaService
     public function update(Request $request, string $id)
     {
         try {
-            $validator = $this->validateInput($request->all());
+            $validator = $this->validateInput($request->all(), $id);
 
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
@@ -76,7 +76,7 @@ class SiswaService
             $validatedData = $validator->validated();
 
             $existingUser = $this->userRepository->getById($id);
-            if ($validatedData['name'] != $existingUser->name && $validatedData['kelas_id'] != $existingUser->kelas_id) {
+            if ($validatedData['name'] != $existingUser->name || $validatedData['kelas_id'] != $existingUser->kelas_id) {
                 $noAbsen = $this->userRepository->getUserCount(RoleType::SISWA, $validatedData['kelas_id']) + 1;
                 $password = $this->generateService->generatePasswordCombination(
                     $validatedData['name'],
