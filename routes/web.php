@@ -4,8 +4,10 @@ use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\Guru\KelompokController;
 use App\Http\Controllers\Guru\KuisController;
 use App\Http\Controllers\Guru\MateriController;
+use App\Http\Controllers\Guru\ProyekController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -31,6 +33,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resources([
             'materi' => MateriController::class,
             'kuis' => KuisController::class,
+            'proyek' => ProyekController::class,
+            'kelompok' => KelompokController::class,
         ]);
 
         Route::get('dashboard', function () {

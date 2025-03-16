@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProyekStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->longText('deskripsi');
-            $table->dateTime('tenggat_waktu');
+            $table->dateTime('tenggat');
+            $table->enum('status', ProyekStatus::values())->default(ProyekStatus::BELUM);
             $table->timestamps();
         });
     }

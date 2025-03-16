@@ -49,7 +49,7 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Project Based Learning',
                 icon: <Category />,
-                // link: route('guru.pjbl.index'),
+                link: route('guru.proyek.index'),
             },
             {
                 name: 'Nilai',
