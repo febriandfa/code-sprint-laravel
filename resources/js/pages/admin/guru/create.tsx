@@ -3,15 +3,16 @@ import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Kelas, Mapel } from '@/types';
+import { Kelas, Mapel, OptionItem } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
+import { useEffect } from 'react';
 
 type GuruForm = {
     name: string;
     email: string;
-    kelas_id: string;
-    mapel_id: string;
+    kelas_id: string[];
+    mapel_id: string[];
 };
 
 export default function CreateSiswa() {
@@ -35,8 +36,8 @@ export default function CreateSiswa() {
     const { data, setData, post, processing, errors, reset } = useForm<Required<GuruForm>>({
         name: '',
         email: '',
-        kelas_id: '',
-        mapel_id: '',
+        kelas_id: [],
+        mapel_id: [],
     });
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,6 +49,10 @@ export default function CreateSiswa() {
             },
         });
     };
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
 
     return (
         <AuthLayout title="Tambah Guru" breadcrumbs={breadcrumbs}>
@@ -79,9 +84,15 @@ export default function CreateSiswa() {
                     label={'Kelas'}
                     placeholder={'Pilih kelas'}
                     required
+                    multi
                     options={kelasOptions}
                     value={data.kelas_id}
-                    onChange={(e) => setData('kelas_id', e.value)}
+                    onChange={(e) =>
+                        setData(
+                            'kelas_id',
+                            e.map((item: OptionItem) => item.value),
+                        )
+                    }
                     error={errors.kelas_id}
                 />
                 <InputSelect
@@ -89,9 +100,15 @@ export default function CreateSiswa() {
                     label={'Mata Pelajaran'}
                     placeholder={'Pilih mata pelajaran'}
                     required
+                    multi
                     options={mapelOptions}
                     value={data.mapel_id}
-                    onChange={(e) => setData('mapel_id', e.value)}
+                    onChange={(e) =>
+                        setData(
+                            'mapel_id',
+                            e.map((item: OptionItem) => item.value),
+                        )
+                    }
                     error={errors.mapel_id}
                 />
                 <div className="mt-3 w-fit">

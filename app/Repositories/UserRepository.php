@@ -9,21 +9,36 @@ class UserRepository
 {
     public function getAll(string $role)
     {
-        return DB::table('users')
+        $users = DB::table('users')
             ->where('users.role', $role)
             ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
             ->leftJoin('kelases', 'user_details.kelas_id', '=', 'kelases.id')
-            ->leftJoin('mapels', 'user_details.mapel_id', '=', 'mapels.id')
             ->select(
                 'users.*',
                 'user_details.kelas_id',
                 'user_details.no_absen',
                 'user_details.combination',
                 'kelases.nama as kelas',
-                'user_details.mapel_id',
-                'mapels.nama as mapel'
             )
             ->get();
+
+            if ($role === RoleType::GURU) {
+                $users->map(function ($user) {
+                    $user->kelases = DB::table('user_kelases as uk')
+                        ->where('uk.guru_id', $user->id)
+                        ->leftJoin('kelases', 'uk.kelas_id', '=', 'kelases.id')
+                        ->select('uk.*', 'kelases.nama')
+                        ->get();
+
+                    $user->mapels = DB::table('user_mapels as um')
+                        ->where('um.guru_id', $user->id)
+                        ->leftJoin('mapels', 'um.mapel_id', '=', 'mapels.id')
+                        ->select('um.*', 'mapels.nama')
+                        ->get();
+                });
+            }
+
+        return $users;
     }
 
     public function getUserCount(string $role, string $kelasId)
@@ -48,16 +63,38 @@ class UserRepository
             $userDetails = [
                 'user_id' => $user->id,
                 'combination' => $data['combination'],
-                'kelas_id' => $data['kelas_id']
             ];
 
             if ($data['role'] === RoleType::SISWA) {
+                $userDetails['kelas_id'] = $data['kelas_id'];
                 $userDetails['no_absen'] = $data['no_absen'];
-            } elseif ($data['role'] === RoleType::GURU) {
-                $userDetails['mapel_id'] = $data['mapel_id'];
             }
 
             DB::table('user_details')->insert($userDetails);
+
+            if ($data['role'] === RoleType::GURU) {
+                $kelasData = [];
+                foreach ($data['kelas_id'] as $kelasId) {
+                    $kelasData[] = [
+                        'guru_id' => $user->id,
+                        'kelas_id' => $kelasId
+                    ];
+                }
+                if (!empty($kelasData)) {
+                    DB::table('user_kelases')->insert($kelasData);
+                }
+
+                $mapelData = [];
+                foreach ($data['mapel_id'] as $mapelId) {
+                    $mapelData[] = [
+                        'guru_id' => $user->id,
+                        'mapel_id' => $mapelId
+                    ];
+                }
+                if (!empty($mapelData)) {
+                    DB::table('user_mapels')->insert($mapelData);
+                }
+            }
 
             $user->assignRole($data['role']);
         });
@@ -65,11 +102,27 @@ class UserRepository
 
     public function getById(string $id)
     {
-        return DB::table('users')
+        $user = DB::table('users')
             ->where('users.id', $id)
             ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
             ->select('users.*', 'user_details.kelas_id', 'user_details.no_absen', 'user_details.mapel_id')
             ->first();
+
+            if ($user->role === RoleType::GURU) {
+                $user->kelases = DB::table('user_kelases as uk')
+                    ->where('uk.guru_id', $id)
+                    ->leftJoin('kelases', 'uk.kelas_id', '=', 'kelases.id')
+                    ->select('uk.*', 'kelases.nama')
+                    ->get();
+
+                $user->mapels = DB::table('user_mapels as um')
+                    ->where('um.guru_id', $id)
+                    ->leftJoin('mapels', 'um.mapel_id', '=', 'mapels.id')
+                    ->select('um.*', 'mapels.nama')
+                    ->get();
+            }
+
+        return $user;
     }
 
     public function update(array $data, string $id)
@@ -84,17 +137,41 @@ class UserRepository
             DB::table('users')->where('id', $id)->update($userData);
 
             $userDetails = array_filter([
-                'kelas_id' => $data['kelas_id'] ?? null,
                 'combination' => $data['combination'] ?? null
             ]);
 
             if ($data['role'] === RoleType::SISWA) {
+                $userDetails['kelas_id'] = $data['kelas_id'] ?? null;
                 $userDetails['no_absen'] = $data['no_absen'] ?? null;
-            } elseif ($data['role'] === RoleType::GURU) {
-                $userDetails['mapel_id'] = $data['mapel_id'] ?? null;
             }
 
             DB::table('user_details')->updateOrInsert(['user_id' => $id], $userDetails);
+
+            if ($data['role'] === RoleType::GURU) {
+                DB::table('user_kelases')->where('guru_id', $id)->delete();
+                $kelasData = [];
+                foreach ($data['kelas_id'] as $kelasId) {
+                    $kelasData[] = [
+                        'guru_id' => $id,
+                        'kelas_id' => $kelasId
+                    ];
+                }
+                if (!empty($kelasData)) {
+                    DB::table('user_kelases')->insert($kelasData);
+                }
+
+                DB::table('user_mapels')->where('guru_id', $id)->delete();
+                $mapelData = [];
+                foreach ($data['mapel_id'] as $mapelId) {
+                    $mapelData[] = [
+                        'guru_id' => $id,
+                        'mapel_id' => $mapelId
+                    ];
+                }
+                if (!empty($mapelData)) {
+                    DB::table('user_mapels')->insert($mapelData);
+                }
+            }
         });
     }
 

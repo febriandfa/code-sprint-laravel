@@ -7,13 +7,14 @@ type InputSelectProps = {
     label: string;
     placeholder?: string;
     error?: string;
-    value?: string | number;
+    value?: string | number | (string | number)[];
     onChange?: (e: any) => void;
     required?: boolean;
+    multi?: boolean;
     options?: OptionItem[];
 };
 
-export default function InputSelect({ id, label, placeholder, options, error, value, onChange, required }: InputSelectProps) {
+export default function InputSelect({ id, label, placeholder, multi = false, options, error, value, onChange, required }: InputSelectProps) {
     const styles: StylesConfig = {
         control: (styles, { isFocused }) => ({
             ...styles,
@@ -39,6 +40,19 @@ export default function InputSelect({ id, label, placeholder, options, error, va
         }),
     };
 
+    console.log(value);
+
+    const getSelectedValue = () => {
+        if (multi) {
+            if (Array.isArray(value)) {
+                return options?.filter((option) => value.includes(option.value));
+            }
+            return [];
+        } else {
+            return options?.find((option) => option.value == value) || null;
+        }
+    };
+
     return (
         <div>
             <label htmlFor={id} className="text-lg capitalize">
@@ -51,8 +65,9 @@ export default function InputSelect({ id, label, placeholder, options, error, va
                 className="basic-single"
                 classNamePrefix="select"
                 isSearchable
+                isMulti={multi}
                 options={options}
-                value={options?.find((option) => option.value == value) || null}
+                value={getSelectedValue()}
                 onChange={onChange}
                 required={required}
             />

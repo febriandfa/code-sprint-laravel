@@ -27,8 +27,10 @@ class GuruService
         return Validator::make($data, [
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,' . $id,
-            'mapel_id' => 'required|exists:mapels,id',
-            'kelas_id' => 'required|exists:kelases,id',
+            'mapel_id' => 'required|array',
+            'mapel_id.*' => 'required|exists:mapels,id',
+            'kelas_id' => 'required|array',
+            'kelas_id.*' => 'required|exists:kelases,id',
         ]);
     }
 

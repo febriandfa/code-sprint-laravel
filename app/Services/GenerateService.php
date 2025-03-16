@@ -6,25 +6,22 @@ use App\Repositories\UserRepository;
 
 class GenerateService
 {
-    protected $userRepository;
-
-    public function __construct(UserRepository $userRepository)
+    public function __construct()
     {
-        $this->userRepository = $userRepository;
+        //
     }
 
-    public function generatePasswordCombination(string $fullName, string $role, string $kelasId)
+    public function generatePasswordCombination(string $fullName)
     {
         $names = explode(' ', strtolower($fullName));
         $firstName = $names[0] ?? '';
         $secondName = $names[1] ?? '';
 
-        $noUrut = $this->userRepository->getUserCount($role, $kelasId) + 1;
-        $noUrutFormatted = str_pad($noUrut, 3, '0', STR_PAD_LEFT);
+        $randNumber = rand(000, 999);
 
-        $password = (strlen($firstName . $noUrutFormatted) >= 8)
-            ? $firstName . $noUrutFormatted
-            : $firstName . $secondName . $noUrutFormatted;
+        $password = (strlen($firstName . $randNumber) >= 8)
+            ? $firstName . $randNumber
+            : $firstName . $secondName . $randNumber;
 
         return $password;
     }

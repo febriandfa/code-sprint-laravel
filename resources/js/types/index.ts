@@ -112,6 +112,17 @@ export interface UserDetail extends User {
     no_absen?: number;
     kelas_id: string;
     kelas: string;
-    mapel_id?: string;
-    mapel?: string;
+}
+
+export interface GuruDetail extends User {
+    kelases: {
+        id: number;
+        kelas_id: string;
+        nama: string;
+    }[];
+    mapels: {
+        id: number;
+        mapel_id: string;
+        nama: string;
+    }[];
 }

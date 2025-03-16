@@ -2,11 +2,11 @@ import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { UserDetail } from '@/types';
+import { GuruDetail, UserDetail } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function IndexGuru() {
-    const { gurus } = usePage().props as { gurus?: UserDetail[] };
+    const { gurus } = usePage().props as { gurus?: GuruDetail[] };
 
     console.log(gurus);
 
@@ -54,8 +54,8 @@ export default function IndexGuru() {
         name: guru.name,
         password: guru.combination,
         email: guru.email,
-        kelas: guru.kelas,
-        mapel: guru.mapel,
+        kelas: guru.kelases.map((kelas) => kelas.nama).join(', '),
+        mapel: guru.mapels.map((mapel) => mapel.nama).join(', '),
     }));
 
     const searchBy = ['name', 'email', 'mapel'];
