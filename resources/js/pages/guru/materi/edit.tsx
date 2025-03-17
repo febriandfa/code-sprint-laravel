@@ -26,7 +26,7 @@ export default function EditMateri() {
             link: route('guru.materi.index'),
         },
         {
-            title: 'Tambah materi',
+            title: 'Edit Materi',
             link: '#',
         },
     ];

@@ -4,38 +4,25 @@ import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Kelas, Mapel } from '@/types';
+import { Kelas, Mapel, Proyek } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { useEffect, useRef } from 'react';
 
-type MateriForm = {
+type ProyekForm = {
     kelas_id: string;
     mapel_id: string;
-    judul: string;
+    nama: string;
     deskripsi: string;
-    file_materi: File | null;
-    file_modul: File | null;
+    tenggat: string;
 };
 
-export default function CreateMateri() {
+export default function EditProyek() {
     const breadcrumbs = [
-        {
-            title: 'Materi',
-            link: route('guru.materi.index'),
-        },
-        {
-            title: 'Tambah Materi',
-            link: '#',
-        },
+        { title: 'Proyek', link: route('guru.proyek.index') },
+        { title: 'Edit Proyek', link: '#' },
     ];
 
-    const fileMateriRef = useRef<HTMLInputElement | null>(null);
-    const fileModulRef = useRef<HTMLInputElement | null>(null);
-
-    const { kelases, mapels } = usePage().props as { kelases?: Kelas[]; mapels?: Mapel[] };
-
-    console.log(kelases, mapels);
+    const { proyek, kelases, mapels } = usePage().props as { proyek?: Proyek; kelases?: Kelas[]; mapels?: Mapel[] };
 
     const kelasOptions = kelases?.map((kelas) => ({
         value: kelas.id,
@@ -47,33 +34,26 @@ export default function CreateMateri() {
         label: mapel.nama,
     }));
 
-    const { data, setData, post, processing, errors, reset } = useForm<Required<MateriForm>>({
-        kelas_id: '',
-        mapel_id: '',
-        judul: '',
-        deskripsi: '',
-        file_materi: null,
-        file_modul: null,
+    const { data, setData, patch, processing, errors, reset } = useForm<Required<ProyekForm>>({
+        kelas_id: proyek?.kelas_id.toString() ?? '',
+        mapel_id: proyek?.mapel_id.toString() ?? '',
+        nama: proyek?.nama ?? '',
+        deskripsi: proyek?.deskripsi ?? '',
+        tenggat: proyek?.tenggat ?? '',
     });
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(route('guru.materi.store'), {
+        patch(route('guru.proyek.update', proyek?.id), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Materi berhasil ditambahkan' });
-                if (fileMateriRef.current) fileMateriRef.current.value = '';
-                if (fileModulRef.current) fileModulRef.current.value = '';
+                SwalSuccess({ title: 'Berhasil', text: 'Proyek berhasil ditambahkan' });
                 reset();
             },
         });
     };
 
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
-
     return (
-        <AuthLayout title="Tambah Materi" breadcrumbs={breadcrumbs}>
+        <AuthLayout title="Edit Proyek" breadcrumbs={breadcrumbs}>
             <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
                 <InputSelect
                     id={'kelas_id'}
@@ -96,46 +76,38 @@ export default function CreateMateri() {
                     error={errors.mapel_id}
                 />
                 <InputField
-                    id="judul"
-                    label="Nama Materi"
-                    placeholder="Masukkan judul materi"
+                    id="nama"
+                    label="Nama Proyek"
+                    placeholder="Masukkan nama proyek"
                     required
                     autoFocus
-                    autoComplete="judul"
-                    value={data.judul}
-                    onChange={(e) => setData('judul', e.target.value)}
-                    error={errors.judul}
+                    autoComplete="nama"
+                    value={data.nama}
+                    onChange={(e) => setData('nama', e.target.value)}
+                    error={errors.nama}
                 />
                 <InputQuill
                     id="deskripsi"
                     label="Deskripsi"
-                    placeholder="Masukkan deskripsi materi"
+                    placeholder="Masukkan deskripsi proyek"
                     value={data.deskripsi}
                     onChange={(value: string) => setData('deskripsi', value)}
                     error={errors.deskripsi}
                 />
                 <InputField
-                    id="file_materi"
-                    label="File Materi"
-                    type="file"
+                    id="tenggat"
+                    label="Tenggat"
+                    placeholder="Masukkan tenggat proyek"
+                    type="datetime-local"
                     required
-                    ref={fileMateriRef}
-                    onChange={(e) => setData('file_materi', e.target.files?.[0] ?? null)}
-                    error={errors.file_materi}
-                />
-                <InputField
-                    id="file_modul"
-                    label="File Modul"
-                    type="file"
-                    required
-                    ref={fileModulRef}
-                    onChange={(e) => setData('file_modul', e.target.files?.[0] ?? null)}
-                    error={errors.file_modul}
+                    value={data.tenggat}
+                    onChange={(e) => setData('tenggat', e.target.value)}
+                    error={errors.tenggat}
                 />
                 <div className="mt-3 w-fit">
                     <Button type="submit" disabled={processing} className="w-full">
                         {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Tambah Materi
+                        Ubah Proyek
                     </Button>
                 </div>
             </form>

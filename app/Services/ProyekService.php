@@ -28,7 +28,6 @@ class ProyekService
             'nama' => 'required|string',
             'deskripsi' => 'required|string',
             'tenggat' => 'required|date',
-            'status' => 'required|in:' . implode(',', ProyekStatus::values()),
         ]);
     }
 

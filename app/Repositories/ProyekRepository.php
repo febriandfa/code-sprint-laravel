@@ -38,7 +38,7 @@ class ProyekRepository
             ->leftJoin('kelases', 'proyeks.kelas_id', '=', 'kelases.id')
             ->leftJoin('mapels', 'proyeks.mapel_id', '=', 'mapels.id')
             ->select('proyeks.*', 'kelases.nama as kelas', 'mapels.nama as mapel')
-            ->where('id', $id)
+            ->where('proyeks.id', $id)
             ->first();
     }
 

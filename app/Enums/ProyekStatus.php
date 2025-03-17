@@ -5,7 +5,7 @@ namespace App\Enums;
 enum ProyekStatus
 {
     const BELUM = 'belum';
-    const PROSES = 'proses';
+    const BERJALAN = 'berjalan';
     const SELESAI = 'selesai';
 
     public static function values(): array

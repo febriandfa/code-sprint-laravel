@@ -69,7 +69,7 @@ export default function IndexMateri() {
         file_modul: materi.file_modul,
     }));
 
-    const searchBy = ['judul'];
+    const searchBy = ['judul', 'kelas', 'mapel'];
 
     return (
         <AuthLayout title="Materi" index>

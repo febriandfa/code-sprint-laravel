@@ -52,6 +52,18 @@ export type Kuis = {
     updated_at: string;
 };
 
+export type Proyek = {
+    id: number;
+    kelas_id: string;
+    kelas: string;
+    mapel_id: string;
+    mapel: string;
+    nama: string;
+    deskripsi: string;
+    tenggat: string;
+    status: 'belum' | 'proses' | 'selesai';
+};
+
 export interface BreadcrumbItem {
     title: string;
     link: string;
