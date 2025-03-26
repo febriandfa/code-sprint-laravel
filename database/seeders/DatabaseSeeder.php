@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             MateriSeeder::class,
             KuisSeeder::class,
+            ProyekSeeder::class,
         ]);
 
         // User::factory()->create([
