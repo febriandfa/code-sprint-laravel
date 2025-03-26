@@ -14,15 +14,16 @@ interface AuthLayoutProps {
 export default function AuthLayout({ children, title, breadcrumbs, index = false }: PropsWithChildren<AuthLayoutProps>) {
     const { auth } = usePage().props as { auth?: Auth };
 
+    console.log(auth);
+
     const userRole: UserRole = auth?.user.role ?? 'siswa';
-    const userName: string = auth?.user.name ? auth.user.name.split(' ').slice(0, 2).join(' ') : 'Not Authenticated';
 
     return (
         <React.Fragment>
             <Head title={title} />
             <div className="min-h-screen bg-gray-200">
                 <Sidebar userRole={userRole} />
-                <Header userName={userName} />
+                <Header user={auth?.user} />
                 <main className="pl-80">
                     <div className="p-4">
                         {!index && <h1 className="text-2xl font-medium">{title}</h1>}

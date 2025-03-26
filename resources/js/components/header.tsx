@@ -1,8 +1,9 @@
+import { User } from '@/types';
 import { Bell, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
-import User from './icons/user';
+import UserIcon from './icons/user-icon';
 
-export default function Header({ userName }: { userName: string }) {
+export default function Header({ user }: { user?: User }) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const currentDate = new Date().toLocaleDateString('id-ID', {
@@ -16,16 +17,22 @@ export default function Header({ userName }: { userName: string }) {
         <header className="relative flex h-20 w-full items-center bg-white pl-80">
             <div className="flex w-full items-center justify-between px-8 py-2">
                 <div>
-                    <h5 className="text-2xl font-medium text-black capitalize">Halo, {userName}!</h5>
+                    {user?.role == 'siswa' ? (
+                        <h5 className="text-2xl font-medium text-black capitalize">
+                            Selamat Datang di {user?.user_detail?.kelas?.nama}, {user?.name}!
+                        </h5>
+                    ) : (
+                        <h5 className="text-2xl font-medium text-black capitalize">Halo, {user?.name}!</h5>
+                    )}
                     <p className="text-slate-400">{currentDate}</p>
                 </div>
                 <div className="relative flex items-center">
                     <Bell className="mr-6 cursor-pointer" />
                     <div className="relative flex cursor-pointer items-center gap-3" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
                         <div className="rounded bg-slate-100 p-2">
-                            <User />
+                            <UserIcon />
                         </div>
-                        <p className="capitalize">{userName}</p>
+                        <p className="capitalize">{user?.name}</p>
                         {isDropdownOpen ? <ChevronUp /> : <ChevronDown />}
                     </div>
 
