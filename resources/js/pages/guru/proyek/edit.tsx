@@ -46,7 +46,7 @@ export default function EditProyek() {
         e.preventDefault();
         patch(route('guru.proyek.update', proyek?.id), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Proyek berhasil ditambahkan' });
+                SwalSuccess({ type: 'edit', content: 'proyek' });
                 reset();
             },
         });

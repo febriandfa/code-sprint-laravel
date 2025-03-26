@@ -58,7 +58,7 @@ export default function CreateMateri() {
         e.preventDefault();
         post(route('guru.materi.store'), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Materi berhasil ditambahkan' });
+                SwalSuccess({ content: 'materi' });
                 if (fileMateriRef.current) fileMateriRef.current.value = '';
                 if (fileModulRef.current) fileModulRef.current.value = '';
                 reset();

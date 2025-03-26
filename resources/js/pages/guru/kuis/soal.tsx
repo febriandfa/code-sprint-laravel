@@ -128,7 +128,7 @@ export default function SoalKuis() {
                 : route('guru.kuis.soalStore', kuis?.id),
             {
                 onSuccess: () => {
-                    SwalSuccess({ title: 'Berhasil', text: isEdit ? 'Soal berhasil diperbarui' : 'Soal berhasil ditambahkan' });
+                    SwalSuccess({ type: isEdit ? 'edit' : 'create', content: 'soal' });
                     if (lampiranRef.current) lampiranRef.current.value = '';
                 },
             },
@@ -150,7 +150,7 @@ export default function SoalKuis() {
                     route('guru.kuis.soalDestroy', { kuisId: kuis?.id, soalId: soals?.find((soal) => soal.urutan === currentNumber)?.id }),
                     {
                         onSuccess: () => {
-                            SwalSuccess({ title: 'Berhasil', text: 'Soal berhasil dihapus' });
+                            SwalSuccess({ text: 'Soal berhasil dihapus' });
                             setTimeout(() => {
                                 window.location.reload();
                             }, 1500);

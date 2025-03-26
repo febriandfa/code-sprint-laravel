@@ -36,7 +36,7 @@ export default function EditSiswa() {
         e.preventDefault();
         patch(route('admin.siswa.update', siswa?.id), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Siswa berhasil dirubah' });
+                SwalSuccess({ type: 'edit', content: 'siswa' });
             },
         });
     };

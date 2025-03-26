@@ -43,7 +43,7 @@ export default function EditSiswa() {
         e.preventDefault();
         patch(route('admin.guru.update', guru?.id), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Guru berhasil dirubah' });
+                SwalSuccess({ type: 'edit', content: 'guru' });
             },
         });
     };

@@ -43,7 +43,7 @@ export default function CreateSiswa() {
         e.preventDefault();
         post(route('admin.guru.store'), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Guru berhasil ditambahkan' });
+                SwalSuccess({ content: 'guru' });
                 reset();
             },
         });

@@ -45,7 +45,7 @@ export default function EditMapel() {
         e.preventDefault();
         patch(route('admin.mapel.update', mapel?.id), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Mata pelajaran berhasil dirubah' });
+                SwalSuccess({ type: 'edit', content: 'mata pelajaran' });
             },
         });
     };

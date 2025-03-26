@@ -34,7 +34,7 @@ export default function EditKelas() {
         e.preventDefault();
         patch(route('admin.kelas.update', kelas?.id), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Kelas berhasil dirubah' });
+                SwalSuccess({ type: 'edit', content: 'kelas' });
             },
         });
     };

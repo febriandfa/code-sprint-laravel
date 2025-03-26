@@ -40,7 +40,7 @@ export default function EditKuis() {
         e.preventDefault();
         patch(route('guru.kuis.update', kuis?.id), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Kuis berhasil ditambahkan' });
+                SwalSuccess({ type: 'edit', content: 'kuis' });
             },
         });
     };

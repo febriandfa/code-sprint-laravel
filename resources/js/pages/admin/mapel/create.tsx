@@ -42,7 +42,7 @@ export default function CreateMapel() {
         e.preventDefault();
         post(route('admin.mapel.store'), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Mata pelajaran berhasil ditambahkan' });
+                SwalSuccess({ content: 'mata pelajaran' });
                 reset();
             },
         });

@@ -40,7 +40,7 @@ export default function CreateKuis() {
         e.preventDefault();
         post(route('guru.kuis.store'), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Kuis berhasil ditambahkan' });
+                SwalSuccess({ content: 'kuis' });
                 reset();
             },
         });

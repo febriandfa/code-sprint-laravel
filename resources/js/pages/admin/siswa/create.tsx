@@ -36,7 +36,7 @@ export default function CreateSiswa() {
         e.preventDefault();
         post(route('admin.siswa.store'), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Siswa berhasil ditambahkan' });
+                SwalSuccess({ content: 'siswa' });
                 reset();
             },
         });

@@ -60,7 +60,7 @@ export default function EditMateri() {
         e.preventDefault();
         post(route('guru.materi.update', materi?.id), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Materi berhasil dirubah' });
+                SwalSuccess({ type: 'edit', content: 'materi' });
             },
         });
     };

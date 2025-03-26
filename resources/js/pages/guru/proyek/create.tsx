@@ -46,7 +46,7 @@ export default function CreateProyek() {
         e.preventDefault();
         post(route('guru.proyek.store'), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Proyek berhasil ditambahkan' });
+                SwalSuccess({ content: 'proyek' });
                 reset();
             },
         });

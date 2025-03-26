@@ -24,7 +24,7 @@ export default function ActionButton({ routeShow, routeEdit, routeDelete }: Acti
             if (result.isConfirmed && routeDelete) {
                 router.delete(routeDelete, {
                     onSuccess: () => {
-                        SwalSuccess({ title: 'Berhasil', text: 'Data berhasil dihapus' });
+                        SwalSuccess({ text: 'Data berhasil dihapus' });
                         setTimeout(() => {
                             window.location.reload();
                         }, 1500);

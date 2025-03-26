@@ -34,7 +34,7 @@ export default function CreateKelas() {
         e.preventDefault();
         post(route('admin.kelas.store'), {
             onSuccess: () => {
-                SwalSuccess({ title: 'Berhasil', text: 'Kelas berhasil ditambahkan' });
+                SwalSuccess({ content: 'kelas' });
                 reset();
             },
         });
