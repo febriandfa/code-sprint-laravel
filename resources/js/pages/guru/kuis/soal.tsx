@@ -1,16 +1,21 @@
+import Trash from '@/components/icons/trash';
 import InputField from '@/components/input-field';
 import InputQuill from '@/components/input-quill';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
+import { SwalSuccess } from '@/lib/swal';
 import { Kuis, KuisSoal } from '@/types';
-import { useForm, usePage } from '@inertiajs/react';
+import { router, useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import Swal from 'sweetalert2';
 
 type KuisSoalForm = {
+    _method: 'POST' | 'PATCH';
     soal: string;
     lampiran: File | null;
+    hapus_lampiran: boolean;
     opsis: { label: string; opsi: string }[];
     jawaban: 'A' | 'B' | 'C' | 'D' | 'E';
     urutan: number;
@@ -21,10 +26,13 @@ export default function SoalKuis() {
     const { kuis, soals } = usePage().props as { kuis?: Kuis; soals?: KuisSoal[] };
     const [currentNumber, setCurrentNumber] = useState(soals?.length ? 1 : 1);
     const [currentLampiran, setCurrentLampiran] = useState<string | null>(null);
+    const [isEdit, setIsEdit] = useState(false);
 
     const { data, setData, post, processing, errors } = useForm<Required<KuisSoalForm>>({
+        _method: 'POST',
         soal: '',
         lampiran: null,
+        hapus_lampiran: false,
         opsis: [
             { label: 'A', opsi: '' },
             { label: 'B', opsi: '' },
@@ -57,25 +65,31 @@ export default function SoalKuis() {
         { value: 4, label: '4' },
     ];
 
-    const fileModulRef = useRef<HTMLInputElement | null>(null);
+    const lampiranRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
         const soalTerpilih = soals?.find((soal) => soal.urutan === currentNumber);
         setCurrentLampiran(soalTerpilih?.lampiran ?? null);
         if (soalTerpilih) {
+            setIsEdit(true);
             setData({
+                _method: 'PATCH',
                 soal: soalTerpilih.soal,
                 lampiran: null,
+                hapus_lampiran: false,
                 opsis: soalTerpilih.opsis,
                 urutan: soalTerpilih.urutan,
                 jawaban: soalTerpilih.jawaban,
                 poin: soalTerpilih.poin,
             });
         } else {
+            setIsEdit(false);
             setData((prevData) => ({
                 ...prevData,
+                _method: 'POST',
                 soal: '',
                 lampiran: null,
+                hapus_lampiran: false,
                 opsis: [
                     { label: 'A', opsi: '' },
                     { label: 'B', opsi: '' },
@@ -94,6 +108,11 @@ export default function SoalKuis() {
         setCurrentNumber(number);
     };
 
+    const handleDeleteLampiran = () => {
+        setCurrentLampiran(null);
+        setData('hapus_lampiran', true);
+    };
+
     const handleQuillOnChange = (index: number) => (value: string) => {
         setData((prevData) => ({
             ...prevData,
@@ -103,7 +122,43 @@ export default function SoalKuis() {
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(route('guru.kuis.soalStore', kuis?.id));
+        post(
+            isEdit
+                ? route('guru.kuis.soalUpdate', { kuisId: kuis?.id, soalId: soals?.find((soal) => soal.urutan === currentNumber)?.id })
+                : route('guru.kuis.soalStore', kuis?.id),
+            {
+                onSuccess: () => {
+                    SwalSuccess({ title: 'Berhasil', text: isEdit ? 'Soal berhasil diperbarui' : 'Soal berhasil ditambahkan' });
+                    if (lampiranRef.current) lampiranRef.current.value = '';
+                },
+            },
+        );
+    };
+
+    const handleOnDelete = () => {
+        Swal.fire({
+            title: 'Hapus soal?',
+            text: 'Soal yang dihapus tidak dapat dikembalikan',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            confirmButtonColor: 'red',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.delete(
+                    route('guru.kuis.soalDestroy', { kuisId: kuis?.id, soalId: soals?.find((soal) => soal.urutan === currentNumber)?.id }),
+                    {
+                        onSuccess: () => {
+                            SwalSuccess({ title: 'Berhasil', text: 'Soal berhasil dihapus' });
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1500);
+                        },
+                    },
+                );
+            }
+        });
     };
 
     return (
@@ -126,11 +181,23 @@ export default function SoalKuis() {
                                 label="File Lampiran"
                                 type="file"
                                 required
-                                ref={fileModulRef}
+                                ref={lampiranRef}
                                 onChange={(e) => setData('lampiran', e.target.files?.[0] ?? null)}
                                 error={errors.lampiran}
                             />
-                            {currentLampiran && <img src={currentLampiran} alt="Lampiran Soal" className="mt-1 w-60 rounded-lg" />}
+                            {currentLampiran && (
+                                <div className="relative mt-1 w-60">
+                                    <img src={currentLampiran} alt="Lampiran Soal" className="w-full rounded" />
+                                    <Button
+                                        variant="danger"
+                                        size="small"
+                                        onClick={() => handleDeleteLampiran()}
+                                        className="absolute top-0 right-0 rounded"
+                                    >
+                                        <Trash />
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                         <div className="grid grid-cols-2 gap-6">
                             {data.opsis.map((opsi, index) => (
@@ -168,10 +235,17 @@ export default function SoalKuis() {
                                 error={errors.poin}
                             />
                         </div>
-                        <Button type="submit" disabled={processing} className="w-full">
-                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            Simpan
-                        </Button>
+                        <div>
+                            <Button type="submit" disabled={processing} className="w-full">
+                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                Simpan
+                            </Button>
+                            {isEdit && (
+                                <Button type="button" variant="danger" onClick={handleOnDelete} className="mt-2 w-full">
+                                    Hapus
+                                </Button>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="col-span-2">

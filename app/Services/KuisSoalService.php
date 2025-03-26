@@ -39,11 +39,9 @@ class KuisSoalService
     public function create(Request $request, string $kuisId)
     {
         try {
-            // dd($request->all());
             $validator = $this->validateInput($request->all());
 
             if ($validator->fails()) {
-                dd($validator->errors());
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             $validatedData = $validator->validated();
@@ -61,6 +59,75 @@ class KuisSoalService
             $this->kuisSoalRepository->create($validatedData, $kuisId);
 
             return redirect()->back()->with('success', 'Soal berhasil ditambahkan');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function update(Request $request, string $kuisId, string $id)
+    {
+        try {
+            // dd($request->all());
+            $validator = $this->validateInput($request->all());
+
+            if ($validator->fails()) {
+                dd($validator->errors());
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            $validatedData = $validator->validated();
+
+            $kuisSoal = $this->kuisSoalRepository->getById($id);
+
+            if ($request->hapus_lampiran) {
+                $oldPath = storage_path('app/public') . str_replace('/storage', '', $kuisSoal->lampiran);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+                $validatedData['lampiran'] = null;
+            } else {
+                if ($request->hasFile('lampiran')) {
+                    $fileLampiran = $request->file('lampiran');
+                    $extension = $fileLampiran->getClientOriginalName();
+                    $lampiranName = date('YmdHis') . "." . $extension;
+
+                    if ($kuisSoal->lampiran) {
+                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $kuisSoal->lampiran);
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath);
+                        }
+                    }
+
+                    $fileLampiran->move(storage_path('app/public/kuis/lampiran'), $lampiranName);
+                    $lampiranPath = '/storage/kuis/lampiran/' . $lampiranName;
+                    $validatedData['lampiran'] = $lampiranPath;
+                } else {
+                    $validatedData['lampiran'] = $kuisSoal->lampiran;
+                }
+            }
+
+            $this->kuisSoalRepository->update($validatedData, $id);
+
+            return redirect()->back()->with('success', 'Soal berhasil diubah');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function delete(string $kuisId, string $id)
+    {
+        try {
+            $kuisSoal = $this->kuisSoalRepository->getById($id);
+
+            if ($kuisSoal->lampiran) {
+                $oldPath = storage_path('app/public') . str_replace('/storage', '', $kuisSoal->lampiran);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+
+            $this->kuisSoalRepository->delete($id);
+
+            return redirect()->back()->with('success', 'Soal berhasil dihapus');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

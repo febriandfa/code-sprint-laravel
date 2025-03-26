@@ -56,13 +56,54 @@ class KuisSoalRepository
         }
     }
 
-    public function update($id, $data)
+    public function update($data, $id)
     {
-        DB::table('kuis_soals')->where('id', $id)->update($data);
+        DB::beginTransaction();
+        try {
+            DB::table('kuis_soals')->where('id', $id)->update([
+                'soal' => $data['soal'],
+                'lampiran' => $data['lampiran'],
+                'jawaban' => $data['jawaban'],
+                'urutan' => $data['urutan'],
+                'poin' => $data['poin'],
+            ]);
+
+            DB::table('kuis_opsis')->where('kuis_soal_id', $id)->delete();
+
+            $opsis = [];
+            foreach ($data['opsis'] as $opsi) {
+                $opsis[] = [
+                    'kuis_soal_id' => $id,
+                    'opsi' => $opsi['opsi'],
+                    'label' => $opsi['label'],
+                ];
+            }
+            DB::table('kuis_opsis')->insert($opsis);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     public function delete($id)
     {
-        return DB::table('kuis_soals')->where('id', $id)->delete();
+        $soal = $this->getById($id);
+
+        DB::beginTransaction();
+        try {
+            DB::table('kuis_soals')->where('id', $id)->delete();
+
+            DB::table('kuis_soals')
+                ->where('kuis_id', $soal->kuis_id)
+                ->where('urutan', '>', $soal->urutan)
+                ->decrement('urutan');
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 }

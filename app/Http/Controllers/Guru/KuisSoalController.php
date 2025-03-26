@@ -34,4 +34,14 @@ class KuisSoalController extends Controller
     {
         return $this->kuisSoalService->create($request, $kuisId);
     }
+
+    public function update(Request $request, string $kuisId, string $soalId)
+    {
+        return $this->kuisSoalService->update($request, $kuisId, $soalId);
+    }
+
+    public function destroy(string $kuisId, string $soalId)
+    {
+        $this->kuisSoalService->delete($kuisId, $soalId);
+    }
 }
