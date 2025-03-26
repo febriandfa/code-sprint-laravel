@@ -24,8 +24,10 @@ return new class extends Migration
         Schema::create('kuis_soals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kuis_id')->constrained('kuises')->onDelete('cascade');
-            $table->string('soal');
-            $table->string('gambar_soal')->nullable();
+            $table->longText('soal');
+            $table->string('lampiran')->nullable();
+            $table->enum('jawaban', ['A', 'B', 'C', 'D', 'E']);
+            $table->integer('urutan');
             $table->integer('poin');
             $table->timestamps();
         });
@@ -33,8 +35,8 @@ return new class extends Migration
         Schema::create('kuis_opsis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kuis_soal_id')->constrained('kuis_soals')->onDelete('cascade');
-            $table->string('opsi');
-            $table->tinyInteger('is_answer')->default(0);
+            $table->text('opsi');
+            $table->enum('label', ['A', 'B', 'C', 'D', 'E']);
             $table->timestamps();
         });
 

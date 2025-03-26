@@ -8,8 +8,6 @@ import { Link, usePage } from '@inertiajs/react';
 export default function IndexGuru() {
     const { gurus } = usePage().props as { gurus?: GuruDetail[] };
 
-    console.log(gurus);
-
     const columns = [
         {
             name: 'Nama Guru',

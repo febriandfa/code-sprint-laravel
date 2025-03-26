@@ -8,8 +8,6 @@ import { Link, usePage } from '@inertiajs/react';
 export default function IndexSiswa() {
     const { siswas } = usePage().props as { siswas?: UserDetail[] };
 
-    console.log(siswas);
-
     const columns = [
         {
             name: 'Nomor',

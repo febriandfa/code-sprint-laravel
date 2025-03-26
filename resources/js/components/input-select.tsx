@@ -24,7 +24,7 @@ export default function InputSelect({
     error,
     value,
     onChange,
-    required,
+    required = false,
     disabled = false,
 }: InputSelectProps) {
     const styles: StylesConfig = {
@@ -52,8 +52,6 @@ export default function InputSelect({
         }),
     };
 
-    console.log(value);
-
     const getSelectedValue = () => {
         if (multi) {
             if (Array.isArray(value)) {
@@ -69,6 +67,7 @@ export default function InputSelect({
         <div>
             <label htmlFor={id} className="text-lg capitalize">
                 {label}
+                {required && <span className="text-danger font-medium">*</span>}
             </label>
             <Select
                 id={id}

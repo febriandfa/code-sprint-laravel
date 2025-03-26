@@ -9,7 +9,7 @@ class KelasRepository
     public function getAll()
     {
         return DB::table('kelases')
-            ->join('users', 'kelases.guru_id', '=', 'users.id')
+            ->leftJoin('users', 'kelases.wali_kelas_id', '=', 'users.id')
             ->select('kelases.*', 'users.name as wali_kelas')
             ->get();
     }

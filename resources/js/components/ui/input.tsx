@@ -6,13 +6,13 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
     label: string;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ id, placeholder, label, type, value, ...props }, ref) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ id, placeholder, label, type, value, required = false, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
         <React.Fragment>
             <label htmlFor={id} className="text-lg capitalize">
-                {label}
+                {label}{required && <span className='text-danger font-medium'>*</span>}
             </label>
             <div className="relative">
                 <input

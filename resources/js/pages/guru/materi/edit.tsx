@@ -7,7 +7,7 @@ import { SwalSuccess } from '@/lib/swal';
 import { Kelas, Mapel, Materi } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 type MateriForm = {
     _method: 'PATCH';
@@ -65,12 +65,6 @@ export default function EditMateri() {
         });
     };
 
-    console.log(data);
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
-
     return (
         <AuthLayout title="Edit Materi" breadcrumbs={breadcrumbs}>
             <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
@@ -109,6 +103,7 @@ export default function EditMateri() {
                     id="deskripsi"
                     label="Deskripsi"
                     placeholder="Masukkan deskripsi materi"
+                    required
                     value={data.deskripsi}
                     onChange={(value: string) => setData('deskripsi', value)}
                     error={errors.deskripsi}

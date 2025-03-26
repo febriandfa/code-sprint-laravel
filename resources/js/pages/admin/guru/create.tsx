@@ -6,7 +6,6 @@ import { SwalSuccess } from '@/lib/swal';
 import { Kelas, Mapel, OptionItem } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { useEffect } from 'react';
 
 type GuruForm = {
     name: string;
@@ -49,10 +48,6 @@ export default function CreateSiswa() {
             },
         });
     };
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
 
     return (
         <AuthLayout title="Tambah Guru" breadcrumbs={breadcrumbs}>

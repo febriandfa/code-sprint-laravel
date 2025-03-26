@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\SiswaController;
 use App\Http\Controllers\Guru\KelompokController;
 use App\Http\Controllers\Guru\KuisController;
+use App\Http\Controllers\Guru\KuisSoalController;
 use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\ProyekController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'proyek' => ProyekController::class,
             'kelompok' => KelompokController::class,
         ]);
+        Route::get('/kuis/{kuisId}/soal/create', [KuisSoalController::class, 'create'])->name('kuis.soalCreate');
+        Route::post('/kuis/{kuisId}/soal', [KuisSoalController::class, 'store'])->name('kuis.soalStore');
+        Route::patch('/kuis/{kuisId}/soal/{soalId}', [KuisSoalController::class, 'update'])->name('kuis.soalUpdate');
 
         Route::get('dashboard', function () {
             return Inertia::render('guru/dashboard-guru');

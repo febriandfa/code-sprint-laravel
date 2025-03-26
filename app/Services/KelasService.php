@@ -23,7 +23,7 @@ class KelasService
     {
         return Validator::make($data, [
             'nama' => 'required|string',
-            'guru_id' => 'required|exists:users,id'
+            'wali_kelas_id' => 'nullable|exists:users,id'
         ]);
     }
 

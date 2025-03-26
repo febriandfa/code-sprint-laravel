@@ -37,7 +37,6 @@ export default function QuillEditor({ id, value, placeholder, onChange }: QuillE
     }, [onChange, placeholder]);
 
     useEffect(() => {
-        console.log('value', value);
         if (quillInstance.current) {
             const currentContent = quillInstance.current.root.innerHTML;
             if (currentContent !== value) {

@@ -14,12 +14,12 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            [
-                'name' => 'Siswa',
-                'email' => 'siswa@csprint.com',
-                'password' => bcrypt('siswa123'),
-                'role' => RoleType::SISWA,
-            ],
+            // [
+            //     'name' => 'Siswa',
+            //     'email' => 'siswa@csprint.com',
+            //     'password' => bcrypt('siswa123'),
+            //     'role' => RoleType::SISWA,
+            // ],
             [
                 'name' => 'Guru',
                 'email' => 'guru@csprint.com',
@@ -37,6 +37,18 @@ class UserSeeder extends Seeder
         foreach ($users as $user) {
             $createdUser = \App\Models\User::create($user);
             $createdUser->assignRole($user['role']);
+
+            if ($user['role'] === RoleType::GURU) {
+                \App\Models\UserMapel::create([
+                    'guru_id' => $createdUser->id,
+                    'mapel_id' => 1,
+                ]);
+
+                \App\Models\UserKelas::create([
+                    'guru_id' => $createdUser->id,
+                    'kelas_id' => 1,
+                ]);
+            }
         }
     }
 }

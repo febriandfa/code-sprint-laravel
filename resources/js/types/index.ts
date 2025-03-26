@@ -52,6 +52,19 @@ export type Kuis = {
     updated_at: string;
 };
 
+export type KuisSoal = {
+    id: number;
+    kuis_id: string;
+    soal: string;
+    lampiran: string;
+    opsis: { label: string; opsi: string }[];
+    jawaban: 'A' | 'B' | 'C' | 'D' | 'E';
+    urutan: number;
+    poin: number;
+    created_at: string;
+    updated_at: string;
+};
+
 export type Proyek = {
     id: number;
     kelas_id: string;

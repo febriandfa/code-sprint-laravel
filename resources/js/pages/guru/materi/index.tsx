@@ -9,8 +9,6 @@ import { Link, usePage } from '@inertiajs/react';
 export default function IndexMateri() {
     const { materis } = usePage().props as { materis?: Materi[] };
 
-    console.log(materis);
-
     const columns = [
         {
             name: 'Judul',

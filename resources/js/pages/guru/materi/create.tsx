@@ -7,7 +7,7 @@ import { SwalSuccess } from '@/lib/swal';
 import { Kelas, Mapel } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 type MateriForm = {
     kelas_id: string;
@@ -34,8 +34,6 @@ export default function CreateMateri() {
     const fileModulRef = useRef<HTMLInputElement | null>(null);
 
     const { kelases, mapels } = usePage().props as { kelases?: Kelas[]; mapels?: Mapel[] };
-
-    console.log(kelases, mapels);
 
     const kelasOptions = kelases?.map((kelas) => ({
         value: kelas.id,
@@ -67,10 +65,6 @@ export default function CreateMateri() {
             },
         });
     };
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
 
     return (
         <AuthLayout title="Tambah Materi" breadcrumbs={breadcrumbs}>
@@ -110,6 +104,7 @@ export default function CreateMateri() {
                     id="deskripsi"
                     label="Deskripsi"
                     placeholder="Masukkan deskripsi materi"
+                    required
                     value={data.deskripsi}
                     onChange={(value: string) => setData('deskripsi', value)}
                     error={errors.deskripsi}

@@ -9,7 +9,7 @@ import { LoaderCircle } from 'lucide-react';
 
 type KelasForm = {
     nama: string;
-    guru_id: string;
+    wali_kelas_id: string;
 };
 
 export default function CreateKelas() {
@@ -27,7 +27,7 @@ export default function CreateKelas() {
 
     const { data, setData, post, processing, errors, reset } = useForm<Required<KelasForm>>({
         nama: '',
-        guru_id: '',
+        wali_kelas_id: '',
     });
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -55,14 +55,13 @@ export default function CreateKelas() {
                     error={errors.nama}
                 />
                 <InputSelect
-                    id={'guru_id'}
+                    id={'wali_kelas_id'}
                     label={'Wali Kelas'}
                     placeholder={'Pilih wali kelas'}
-                    required
                     options={waliKelasOptions}
-                    value={data.guru_id}
-                    onChange={(e) => setData('guru_id', e.value)}
-                    error={errors.guru_id}
+                    value={data.wali_kelas_id}
+                    onChange={(e) => setData('wali_kelas_id', e.value)}
+                    error={errors.wali_kelas_id}
                 />
                 <div className="mt-3 w-fit">
                     <Button type="submit" disabled={processing} className="w-full">

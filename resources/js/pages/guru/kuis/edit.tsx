@@ -50,7 +50,7 @@ export default function EditKuis() {
             <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
                 <InputField
                     id="judul"
-                    label="Nama Mata Pelajaran"
+                    label="Judul"
                     placeholder="Masukkan judul kuis"
                     required
                     autoFocus

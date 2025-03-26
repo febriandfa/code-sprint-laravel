@@ -68,6 +68,7 @@ export default function EditMapel() {
                     id="deskripsi"
                     label="Deskripsi"
                     placeholder="Masukkan deskripsi mata pelajaran"
+                    required
                     value={data.deskripsi}
                     onChange={(value: string) => setData('deskripsi', value)}
                     error={errors.deskripsi}

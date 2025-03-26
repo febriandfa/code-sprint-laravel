@@ -6,7 +6,6 @@ import { SwalSuccess } from '@/lib/swal';
 import { GuruDetail, Kelas, Mapel, OptionItem } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { useEffect } from 'react';
 
 type GuruForm = {
     name: string;
@@ -22,8 +21,6 @@ export default function EditSiswa() {
     ];
 
     const { guru, kelases, mapels } = usePage().props as { guru?: GuruDetail; kelases?: Kelas[]; mapels?: Mapel[] };
-
-    console.log(guru);
 
     const kelasOptions = kelases?.map((kelas) => ({
         value: kelas.id,
@@ -50,10 +47,6 @@ export default function EditSiswa() {
             },
         });
     };
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
 
     return (
         <AuthLayout title="Edit Guru" breadcrumbs={breadcrumbs}>
