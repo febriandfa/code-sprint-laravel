@@ -46,6 +46,16 @@ export default function IndexKuis() {
             },
         },
         {
+            name: 'Hasil',
+            cell: (row: Kuis) => {
+                return (
+                    <Link href={route('guru.kuis.siswa', row.id)}>
+                        <Button>Lihat</Button>
+                    </Link>
+                );
+            },
+        },
+        {
             name: 'Aksi',
             cell: (row: Kuis) => (
                 <ActionButton

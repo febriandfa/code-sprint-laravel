@@ -1,6 +1,6 @@
 import { formatTwoDigit } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
-import { Kuis, KuisSoal } from '@/types';
+import { Kuis, KuisJawaban, KuisSoal } from '@/types';
 import { router, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -12,11 +12,12 @@ import Title from './ui/title';
 type KuisTemplateProps = {
     kuis: Kuis;
     soals: KuisSoal[];
+    jawabans?: KuisJawaban[];
     view?: boolean;
-    checkedBy?: 'siswa_answer' | 'kuis_answer';
+    checkedBy?: 'siswa_answer' | 'kuis_answer' | 'hasil_answer';
 };
 
-export default function KuisTemplate({ kuis, soals, view = false, checkedBy = 'siswa_answer' }: KuisTemplateProps) {
+export default function KuisTemplate({ kuis, soals, jawabans, view = false, checkedBy = 'siswa_answer' }: KuisTemplateProps) {
     const [currentNumber, setCurrentNumber] = useState(1);
     const [currentSoal, setCurrentSoal] = useState<KuisSoal | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -185,17 +186,34 @@ export default function KuisTemplate({ kuis, soals, view = false, checkedBy = 's
             <div className="my-6 space-y-2">
                 {currentSoal?.opsis.map((opsi, index) => {
                     let answerToCheck = answers[currentSoal.urutan];
+                    let correctAnswer = '';
+                    let studentAnswer = '';
+                    let isCorrect = false;
+
                     if (checkedBy === 'kuis_answer') {
                         answerToCheck = currentSoal.jawaban;
+                    } else if (checkedBy === 'hasil_answer') {
+                        const jawaban = jawabans?.find((jawaban) => jawaban.kuis_soal_id === currentSoal.id);
+                        studentAnswer = jawaban?.jawaban ?? '';
+                        correctAnswer = currentSoal.jawaban;
+                        isCorrect = studentAnswer === correctAnswer;
+                        answerToCheck = studentAnswer;
                     }
+
+                    const borderClass =
+                        checkedBy === 'hasil_answer' && studentAnswer === opsi.label
+                            ? isCorrect
+                                ? 'border-success bg-success/10'
+                                : 'border-danger bg-danger/10'
+                            : answerToCheck === opsi.label
+                              ? 'bg-primary-100 border-primary'
+                              : '';
 
                     return (
                         <label
                             key={index}
                             htmlFor={opsi.label}
-                            className={`group hover:border-primary flex w-full items-center rounded-lg border px-6 py-4 text-left ${
-                                answerToCheck === opsi.label ? 'bg-primary-100 border-primary' : ''
-                            } ${view ? 'cursor-default' : 'hover:border-primary'}`}
+                            className={`group flex w-full items-center rounded-lg border px-6 py-4 text-left ${borderClass} ${view ? 'cursor-default' : 'hover:border-primary'}`}
                         >
                             <input
                                 type="radio"
@@ -205,7 +223,7 @@ export default function KuisTemplate({ kuis, soals, view = false, checkedBy = 's
                                 checked={answerToCheck === opsi.label}
                                 onChange={() => handleAnswerSelect(opsi.label)}
                                 disabled={view}
-                                className={`group-hover:border-primary size-4 rounded-full border ${view ? 'cursor-not-allowed' : ''}`}
+                                className={`size-4 rounded-full border ${view ? 'cursor-not-allowed' : 'group-hover:border-primary'}`}
                             ></input>
                             <p className="mx-4">{opsi.label}.</p>
                             <RichText content={opsi.opsi} />

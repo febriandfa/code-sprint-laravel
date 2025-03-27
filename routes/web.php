@@ -44,6 +44,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/kuis/{kuisId}/soal', [KuisSoalController::class, 'store'])->name('kuis.soalStore');
         Route::patch('/kuis/{kuisId}/soal/{soalId}', [KuisSoalController::class, 'update'])->name('kuis.soalUpdate');
         Route::delete('/kuis/{kuisId}/soal/{soalId}', [KuisSoalController::class, 'destroy'])->name('kuis.soalDestroy');
+        Route::get('/kuis/{kuisId}/siswa', [KuisController::class, 'siswa'])->name('kuis.siswa');
+        Route::get('/kuis/{kuisId}/siswa/{siswaId}', [KuisController::class, 'hasil'])->name('kuis.hasil');
 
         Route::get('dashboard', function () {
             return Inertia::render('guru/dashboard-guru');

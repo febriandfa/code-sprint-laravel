@@ -58,12 +58,10 @@ export default function SoalKuis() {
         { value: 'E', label: 'Opsi E' },
     ];
 
-    const poinOptions = [
-        { value: 1, label: '1' },
-        { value: 2, label: '2' },
-        { value: 3, label: '3' },
-        { value: 4, label: '4' },
-    ];
+    const poinOptions = Array.from({ length: 10 }, (_, i) => ({
+        value: i + 1,
+        label: (i + 1).toString(),
+    }));
 
     const lampiranRef = useRef<HTMLInputElement | null>(null);
 

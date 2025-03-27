@@ -108,6 +108,7 @@ class KuisService
 
                 $siswaAnswers[] = [
                     'kuis_soal_id' => $soal->id,
+                    'user_id' => Auth::user()->id,
                     'jawaban' => $answer,
                     'poin' => $point,
                     'is_benar' => $isCorrect
@@ -121,7 +122,9 @@ class KuisService
             $this->kuisJawabanRepository->createNilai([
                 'kuis_id' => $request->kuis_id,
                 'user_id' => Auth::user()->id,
-                'total_poin' => $totalPoint
+                'total_poin' => $totalPoint,
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
 
             foreach ($siswaAnswers as $jawaban) {

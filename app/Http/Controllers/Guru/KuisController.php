@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\KuisJawabanRepository;
 use App\Repositories\KuisRepository;
 use App\Repositories\KuisSoalRepository;
 use App\Repositories\MateriRepository;
@@ -16,18 +17,21 @@ class KuisController extends Controller
     protected $kuisRepository;
     protected $materiRepository;
     protected $kuisSoalRepository;
+    protected $kuisJawabanRepository;
 
     public function __construct(
         KuisService $kuisService,
         KuisRepository $kuisRepository,
         MateriRepository $materiRepository,
-        KuisSoalRepository $kuisSoalRepository
+        KuisSoalRepository $kuisSoalRepository,
+        KuisJawabanRepository $kuisJawabanRepository
     )
     {
         $this->kuisService = $kuisService;
         $this->kuisRepository = $kuisRepository;
         $this->materiRepository = $materiRepository;
         $this->kuisSoalRepository = $kuisSoalRepository;
+        $this->kuisJawabanRepository = $kuisJawabanRepository;
     }
 
     public function index()
@@ -73,5 +77,23 @@ class KuisController extends Controller
     public function destroy($id)
     {
         $this->kuisRepository->delete($id);
+    }
+
+    public function siswa(string $kuisId)
+    {
+        $kuis = $this->kuisRepository->getById($kuisId);
+        $hasilSiswas = $this->kuisJawabanRepository->getAllHasil($kuisId);
+
+        return Inertia::render('guru/kuis/siswa', compact('kuis', 'hasilSiswas'));
+    }
+
+    public function hasil(string $kuisId, string $siswaId)
+    {
+        $kuis = $this->kuisRepository->getById($kuisId);
+        $soals = $this->kuisSoalRepository->getAllByKuisId($kuisId);
+        $hasilSiswa = $this->kuisJawabanRepository->getHasilByKuisIdSiswaId($kuisId, $siswaId);
+        $jawabans = $this->kuisJawabanRepository->getJawabanByKuisIdSiswaId($kuisId, $siswaId);
+
+        return Inertia::render('guru/kuis/jawaban', compact('kuis', 'soals', 'hasilSiswa', 'jawabans'));
     }
 }

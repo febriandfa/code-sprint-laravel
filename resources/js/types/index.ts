@@ -68,6 +68,29 @@ export type KuisSoal = {
     updated_at: string;
 };
 
+export type KuisJawaban = {
+    id: number;
+    kuis_id: string;
+    user_id: string;
+    kuis_soal_id: number;
+    jawaban: 'A' | 'B' | 'C' | 'D' | 'E';
+    is_benar: boolean;
+    poin: number;
+    created_at: string;
+    updated_at: string;
+};
+
+export type HasilKuis = {
+    id: number;
+    user_id: string;
+    kuis_id: string;
+    kuis: Kuis;
+    nama_siswa: string;
+    total_poin: number;
+    created_at: string;
+    updated_at: string;
+};
+
 export type Proyek = {
     id: number;
     kelas_id: string;
