@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\KuisRepository;
+use App\Repositories\KuisSoalRepository;
 use App\Repositories\MateriRepository;
 use App\Services\KuisService;
 use Illuminate\Http\Request;
@@ -14,12 +15,19 @@ class KuisController extends Controller
     protected $kuisService;
     protected $kuisRepository;
     protected $materiRepository;
+    protected $kuisSoalRepository;
 
-    public function __construct(KuisService $kuisService, KuisRepository $kuisRepository, MateriRepository $materiRepository)
+    public function __construct(
+        KuisService $kuisService,
+        KuisRepository $kuisRepository,
+        MateriRepository $materiRepository,
+        KuisSoalRepository $kuisSoalRepository
+    )
     {
         $this->kuisService = $kuisService;
         $this->kuisRepository = $kuisRepository;
         $this->materiRepository = $materiRepository;
+        $this->kuisSoalRepository = $kuisSoalRepository;
     }
 
     public function index()
@@ -39,6 +47,14 @@ class KuisController extends Controller
     public function store(Request $request)
     {
         $this->kuisService->create($request);
+    }
+
+    public function show(string $id)
+    {
+        $kuis = $this->kuisRepository->getById($id);
+        $soals = $this->kuisSoalRepository->getAllByKuisId($id);
+
+        return Inertia::render('guru/kuis/show', compact('kuis', 'soals'));
     }
 
     public function edit($id)
