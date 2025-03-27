@@ -32,6 +32,35 @@ class ProyekRepository
             ->get();
     }
 
+    public function getBySiswa()
+    {
+        $userId = Auth::user()->id;
+        $kelasId = Auth::user()->userDetail->kelas_id;
+
+        return DB::table('proyeks')
+            ->leftJoin('kelases', 'proyeks.kelas_id', '=', 'kelases.id')
+            ->leftJoin('mapels', 'proyeks.mapel_id', '=', 'mapels.id')
+            ->leftJoin('proyek_jawabans', function($join) use ($userId) {
+                $join->on('proyeks.id', '=', 'proyek_jawabans.proyek_id')
+                        ->where('proyek_jawabans.user_id', $userId);
+            })
+            ->leftJoin('proyek_nilais', function($join) use ($userId) {
+                $join->on('proyeks.id', '=', 'proyek_nilais.proyek_id')
+                        ->where('proyek_nilais.user_id', $userId);
+            })
+            ->select(
+                'proyeks.*',
+                'kelases.nama as kelas',
+                'mapels.nama as mapel',
+                DB::raw('IF(proyek_jawabans.id IS NOT NULL, true, false) as is_processed'),
+                DB::raw('IF(proyek_nilais.id IS NOT NULL, true, false) as is_completed'),
+                'proyek_nilais.nilai'
+            )
+            ->where('proyeks.kelas_id', $kelasId)
+            ->groupBy('proyeks.id', 'kelases.nama', 'mapels.nama', 'proyek_jawabans.id', 'proyek_nilais.id', 'proyek_nilais.nilai')
+            ->get();
+    }
+
     public function getById(string $id)
     {
         return DB::table('proyeks')

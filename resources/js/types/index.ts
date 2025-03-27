@@ -48,6 +48,9 @@ export type Kuis = {
     durasi: number;
     tanggal_mulai: string;
     tanggal_selesai: string;
+    total_soal: number;
+    is_completed?: boolean;
+    total_poin?: number;
     created_at: string;
     updated_at: string;
 };
@@ -74,6 +77,9 @@ export type Proyek = {
     nama: string;
     deskripsi: string;
     tenggat: string;
+    is_completed?: boolean;
+    is_processed?: boolean;
+    nilai?: number;
     status: 'belum' | 'proses' | 'selesai';
 };
 

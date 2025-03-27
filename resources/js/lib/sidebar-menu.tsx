@@ -71,12 +71,12 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Kuis',
                 icon: <Category />,
-                // link: route('siswa.kuis.index'),
+                link: route('siswa.kuis.index'),
             },
             {
                 name: 'Project Based Learning',
                 icon: <Category />,
-                // link: route('siswa.proyek.index'),
+                link: route('siswa.proyek.index'),
             },
             {
                 name: 'Nilai',
