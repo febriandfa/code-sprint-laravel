@@ -63,6 +63,26 @@ export const sidebarMenus = (userRole: UserRole) => {
                 icon: <Category />,
                 link: route('siswa.dashboard'),
             },
+            {
+                name: 'Materi',
+                icon: <Category />,
+                link: route('siswa.materi.index'),
+            },
+            {
+                name: 'Kuis',
+                icon: <Category />,
+                // link: route('siswa.kuis.index'),
+            },
+            {
+                name: 'Project Based Learning',
+                icon: <Category />,
+                // link: route('siswa.proyek.index'),
+            },
+            {
+                name: 'Nilai',
+                icon: <Category />,
+                // link: route('siswa.nilai.index'),
+            },
         ],
     };
 

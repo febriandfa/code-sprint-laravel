@@ -60,7 +60,7 @@ export default function IndexGuru() {
 
     return (
         <AuthLayout title="Guru" index>
-            <div className="my-6 flex justify-end">
+            <div className="mb-6 flex justify-end">
                 <Link href={route('admin.guru.create')}>
                     <Button>Tambah Guru</Button>
                 </Link>

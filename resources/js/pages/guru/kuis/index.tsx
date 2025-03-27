@@ -71,7 +71,7 @@ export default function IndexKuis() {
 
     return (
         <AuthLayout title="Kuis" index>
-            <div className="my-6 flex justify-end">
+            <div className="mb-6 flex justify-end">
                 <Link href={route('guru.kuis.create')}>
                     <Button>Tambah Kuis</Button>
                 </Link>

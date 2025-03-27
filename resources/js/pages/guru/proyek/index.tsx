@@ -73,7 +73,7 @@ export default function IndexProyek() {
 
     return (
         <AuthLayout title="Proyek" index>
-            <div className="my-6 flex justify-end">
+            <div className="mb-6 flex justify-end">
                 <Link href={route('guru.proyek.create')}>
                     <Button>Tambah Proyek</Button>
                 </Link>

@@ -60,7 +60,7 @@ export default function IndexSiswa() {
 
     return (
         <AuthLayout title="Siswa" index>
-            <div className="my-6 flex justify-end">
+            <div className="mb-6 flex justify-end">
                 <Link href={route('admin.siswa.create')}>
                     <Button>Tambah Siswa</Button>
                 </Link>

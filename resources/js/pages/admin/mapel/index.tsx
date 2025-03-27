@@ -54,7 +54,7 @@ export default function IndexMapel() {
 
     return (
         <AuthLayout title="Mata Pelajaran" index>
-            <div className="my-6 flex justify-end">
+            <div className="mb-6 flex justify-end">
                 <Link href={route('admin.mapel.create')}>
                     <Button>Tambah Mata Pelajaran</Button>
                 </Link>

@@ -39,7 +39,7 @@ export default function IndexKelas() {
 
     return (
         <AuthLayout title="Kelas" index>
-            <div className="my-6 flex justify-end">
+            <div className="mb-6 flex justify-end">
                 <Link href={route('admin.kelas.create')}>
                     <Button>Tambah Kelas</Button>
                 </Link>

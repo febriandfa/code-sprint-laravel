@@ -71,7 +71,7 @@ export default function IndexMateri() {
 
     return (
         <AuthLayout title="Materi" index>
-            <div className="my-6 flex justify-end">
+            <div className="mb-6 flex justify-end">
                 <Link href={route('guru.materi.create')}>
                     <Button>Tambah Materi</Button>
                 </Link>

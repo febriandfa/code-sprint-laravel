@@ -9,6 +9,7 @@ use App\Http\Controllers\Guru\KuisController;
 use App\Http\Controllers\Guru\KuisSoalController;
 use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\ProyekController;
+use App\Http\Controllers\Siswa\MateriController as SiswaMateriController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -48,6 +49,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('siswa')->name('siswa.')->middleware('role:siswa')->group(function () {
+        Route::resources([
+            'materi' => SiswaMateriController::class,
+        ]);
+
         Route::get('dashboard', function () {
             return Inertia::render('siswa/dashboard-siswa');
         })->name('dashboard');

@@ -13,10 +13,10 @@ export default function Button({ children, variant, size, type = 'button', class
         {
             variants: {
                 variant: {
-                    primary: 'bg-primary text-white',
-                    danger: 'bg-danger text-white',
-                    warning: 'bg-warning text-white',
-                    success: 'bg-success text-white',
+                    primary: 'bg-primary text-white hover:bg-primary-700',
+                    danger: 'bg-danger text-white hover:bg-danger-700',
+                    warning: 'bg-warning text-white hover:bg-warning-700',
+                    success: 'bg-success text-white hover:bg-success-700',
                 },
                 size: {
                     small: 'text-sm px-3 py-1',

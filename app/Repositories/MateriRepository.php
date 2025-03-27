@@ -32,6 +32,18 @@ class MateriRepository
             ->get();
     }
 
+    public function getBySiswa()
+    {
+        $kelasId = Auth::user()->userDetail->kelas_id;
+
+        return DB::table('materis')
+            ->leftJoin('kelases', 'materis.kelas_id', '=', 'kelases.id')
+            ->leftJoin('mapels', 'materis.mapel_id', '=', 'mapels.id')
+            ->select('materis.*', 'kelases.nama as kelas', 'mapels.nama as mapel')
+            ->where('materis.kelas_id', $kelasId)
+            ->get();
+    }
+
     public function getById(string $id)
     {
         return DB::table('materis')
