@@ -7,7 +7,7 @@ import { SwalSuccess } from '@/lib/swal';
 import { Kuis, KuisSoal } from '@/types';
 import { router, useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
 export default function ShowKuis() {
@@ -26,6 +26,7 @@ export default function ShowKuis() {
     const [currentNumber, setCurrentNumber] = useState(1);
     const [currentSoal, setCurrentSoal] = useState<KuisSoal | null>(null);
     const [answers, setAnswers] = useState<{ [key: number]: string }>(getStoredAnswers());
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { setData, post, processing } = useForm({
         kuis_id: kuis?.id,
@@ -52,6 +53,25 @@ export default function ShowKuis() {
 
     const [timeRemaining, setTimeRemaining] = useState(getInitialTimeRemaining);
 
+    const autoSubmit = useCallback(() => {
+        if (isSubmitting) return;
+
+        setIsSubmitting(true);
+        post(route('siswa.kuis.answer'), {
+            onSuccess: () => {
+                SwalSuccess({
+                    text: 'Waktu habis! Jawaban otomatis dikirim.',
+                });
+                localStorage.removeItem(`kuis_${kuis?.id}_answers`);
+                localStorage.removeItem(`kuis_${kuis?.id}_end_time`);
+
+                setTimeout(() => {
+                    router.visit(route('siswa.kuis.index'));
+                }, 1500);
+            },
+        });
+    }, [kuis?.id, isSubmitting, post]);
+
     useEffect(() => {
         if (kuis) {
             localStorage.setItem(`kuis_${kuis.id}_answers`, JSON.stringify(answers));
@@ -73,9 +93,10 @@ export default function ShowKuis() {
                 const remaining = Math.max(0, Math.floor((parseInt(storedEndTime, 10) - Date.now()) / 1000));
                 setTimeRemaining(remaining);
 
-                if (remaining <= 0) {
+                if (remaining <= 0 && !isSubmitting) {
                     clearInterval(timer);
                     localStorage.removeItem(`kuis_${kuis?.id}_end_time`);
+                    autoSubmit();
                 }
             }
         }, 1000);

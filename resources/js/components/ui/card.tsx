@@ -9,8 +9,9 @@ type CardProps = {
     content: string;
     routeShow: string;
     children: React.ReactNode;
+    disabled?: boolean;
 };
-export default function Card({ title, content, children, routeShow }: CardProps) {
+export default function Card({ title, content, children, routeShow, disabled = false }: CardProps) {
     return (
         <div className="space-y-4 rounded-lg bg-white p-3">
             <span className="*:text-primary flex items-center gap-3">
@@ -21,8 +22,8 @@ export default function Card({ title, content, children, routeShow }: CardProps)
             <div className='*:text-slate-400 space-y-2'>
                 {children}
             </div>
-            <Link href={routeShow}>
-                <Button className="w-full">
+            <Link href={disabled ? '' : routeShow} disabled={disabled}>
+                <Button className="w-full" disabled={disabled}>
                     Detail {content} <ArrowRight />
                 </Button>
             </Link>

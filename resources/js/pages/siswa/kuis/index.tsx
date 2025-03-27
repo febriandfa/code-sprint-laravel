@@ -14,7 +14,7 @@ export default function IndexKuis() {
             <div className="grid grid-cols-3 gap-5">
                 {kuises?.map((kuis, index) => {
                     return (
-                        <Card key={index} title={kuis.judul} content="kuis" routeShow={route('siswa.kuis.show', kuis.id)}>
+                        <Card key={index} title={kuis.judul} content="kuis" routeShow={route('siswa.kuis.show', kuis.id)} disabled={kuis.is_completed}>
                             <div className="grid grid-cols-2">
                                 <div>
                                     <p className="flex justify-between pr-4">

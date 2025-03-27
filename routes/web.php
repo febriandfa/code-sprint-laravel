@@ -51,12 +51,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('siswa')->name('siswa.')->middleware('role:siswa')->group(function () {
+        Route::get('kuis', [SiswaKuisController::class, 'index'])->name('kuis.index');
         Route::resources([
             'materi' => SiswaMateriController::class,
-            'kuis' => SiswaKuisController::class,
             'proyek' => SiswaProyekController::class,
         ]);
-        Route::post('kuis/answer', [SiswaKuisController::class, 'answer'])->name('kuis.answer');
+
+        Route::middleware(['kuis_answered'])->group(function () {
+            Route::get('kuis/{kuis}/show', [SiswaKuisController::class, 'show'])->name('kuis.show');
+            Route::post('kuis/answer', [SiswaKuisController::class, 'answer'])->name('kuis.answer');
+        });
 
         Route::get('dashboard', function () {
             return Inertia::render('siswa/dashboard-siswa');
