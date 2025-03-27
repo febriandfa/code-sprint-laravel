@@ -51,7 +51,7 @@ export default function CreateSiswa() {
 
     return (
         <AuthLayout title="Tambah Guru" breadcrumbs={breadcrumbs}>
-            <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
+            <form className="space-y-6" onSubmit={handleOnSubmit}>
                 <InputField
                     id="name"
                     label="Nama Guru"

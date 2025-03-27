@@ -54,7 +54,7 @@ export default function EditProyek() {
 
     return (
         <AuthLayout title="Edit Proyek" breadcrumbs={breadcrumbs}>
-            <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
+            <form className="space-y-6" onSubmit={handleOnSubmit}>
                 <InputSelect
                     id={'kelas_id'}
                     label={'Kelas'}

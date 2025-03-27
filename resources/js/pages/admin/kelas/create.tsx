@@ -42,7 +42,7 @@ export default function CreateKelas() {
 
     return (
         <AuthLayout title="Tambah Kelas" breadcrumbs={breadcrumbs}>
-            <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
+            <form className="space-y-6" onSubmit={handleOnSubmit}>
                 <InputField
                     id="nama"
                     label="Nama Kelas"

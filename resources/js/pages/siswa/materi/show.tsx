@@ -1,4 +1,5 @@
 import Embed from '@/components/ui/embed';
+import RichText from '@/components/ui/rich-text';
 import Subtitle from '@/components/ui/subtitle';
 import AuthLayout from '@/layouts/auth-layout';
 import { Materi } from '@/types';
@@ -16,7 +17,7 @@ export default function ShowMateri() {
         <AuthLayout title={materi?.judul ?? 'Materi'} breadcrumbs={breadcrumbs}>
             <div className="flex flex-col gap-4">
                 <Subtitle subtitle="Deskripsi Materi" />
-                <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: materi?.deskripsi || 'Tidak ada deskripsi' }} />
+                <RichText content={materi?.deskripsi} />
                 <Embed src={materi?.file_materi} />
             </div>
         </AuthLayout>

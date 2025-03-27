@@ -28,7 +28,7 @@ export default function Login() {
             <div className="grid min-h-svh grid-cols-2 bg-gray-200">
                 <div className="flex h-full flex-col items-center justify-center gap-32">
                     <img src="/assets/images/illust-login.svg" alt="illust login" className="size-80" />
-                    <div className="flex flex-col gap-6">
+                    <div className="space-y-6">
                         <AppLogo />
                         <p className="text-2xl">
                             Code Sprint menghadirkan pengalaman
@@ -44,7 +44,7 @@ export default function Login() {
                             Silahkan masuk ke akun Anda
                             <br /> dan mulai pembelajaran
                         </p>
-                        <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
+                        <form className="space-y-6" onSubmit={handleOnSubmit}>
                             <InputField
                                 id="email"
                                 type="email"

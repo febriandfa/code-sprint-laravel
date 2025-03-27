@@ -52,7 +52,7 @@ export default function EditMapel() {
 
     return (
         <AuthLayout title="Tambah Mata Pelajaran" breadcrumbs={breadcrumbs}>
-            <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
+            <form className="space-y-6" onSubmit={handleOnSubmit}>
                 <InputField
                     id="nama"
                     label="Nama Mata Pelajaran"

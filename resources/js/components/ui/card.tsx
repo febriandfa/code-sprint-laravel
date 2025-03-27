@@ -12,13 +12,13 @@ type CardProps = {
 };
 export default function Card({ title, content, children, routeShow }: CardProps) {
     return (
-        <div className="flex flex-col gap-4 rounded-lg bg-white p-3">
+        <div className="space-y-4 rounded-lg bg-white p-3">
             <span className="*:text-primary flex items-center gap-3">
                 <Book />
                 <p className="text-lg capitalize">{content}</p>
             </span>
             <Subtitle subtitle={title} />
-            <div className='*:text-slate-400 flex flex-col gap-2'>
+            <div className='*:text-slate-400 space-y-2'>
                 {children}
             </div>
             <Link href={routeShow}>

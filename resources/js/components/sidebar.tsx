@@ -14,7 +14,7 @@ export default function Sidebar({ userRole = 'siswa' }: { userRole: UserRole }) 
             <div className="flex h-full w-full flex-col justify-between">
                 <nav className="w-full">
                     <p className="text-lg text-slate-400">Menu Siswa</p>
-                    <ul className="flex flex-col gap-2">
+                    <ul className="space-y-2">
                         {menus.map((menu, index) => (
                             <li>
                                 <Link
@@ -30,7 +30,7 @@ export default function Sidebar({ userRole = 'siswa' }: { userRole: UserRole }) 
                     </ul>
                 </nav>
                 <nav className="w-full">
-                    <ul className="flex flex-col gap-2">
+                    <ul className="space-y-2">
                         <li>
                             <Link
                                 href=""

@@ -164,8 +164,8 @@ export default function SoalKuis() {
     return (
         <AuthLayout title="Kuis" breadcrumbs={breadcrumbs}>
             <form className="grid grid-cols-7 gap-4" onSubmit={handleOnSubmit}>
-                <div className="col-span-5 flex flex-col gap-6">
-                    <div className="border-primary flex flex-col gap-6 rounded-lg border p-4">
+                <div className="col-span-5 space-y-6">
+                    <div className="border-primary space-y-6 rounded-lg border p-4">
                         <InputQuill
                             id="soal"
                             label={`Soal ${currentNumber}`}

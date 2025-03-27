@@ -42,6 +42,15 @@ return new class extends Migration
 
         Schema::create('kuis_jawabans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kuis_soal_id')->constrained('kuis_soals')->onDelete('cascade');
+            $table->enum('jawaban', ['A', 'B', 'C', 'D', 'E'])->nullable();
+            $table->tinyInteger('is_benar');
+            $table->integer('poin');
+            $table->timestamps();
+        });
+
+        Schema::create('kuis_nilais', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('kuis_id')->constrained('kuises')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->integer('total_poin');

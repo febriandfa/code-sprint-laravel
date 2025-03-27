@@ -47,7 +47,7 @@ export default function EditKuis() {
 
     return (
         <AuthLayout title="Edit Kuis" breadcrumbs={breadcrumbs}>
-            <form className="flex flex-col gap-6" onSubmit={handleOnSubmit}>
+            <form className="space-y-6" onSubmit={handleOnSubmit}>
                 <InputField
                     id="judul"
                     label="Judul"

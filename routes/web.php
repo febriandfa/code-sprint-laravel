@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'kuis' => SiswaKuisController::class,
             'proyek' => SiswaProyekController::class,
         ]);
+        Route::post('kuis/answer', [SiswaKuisController::class, 'answer'])->name('kuis.answer');
 
         Route::get('dashboard', function () {
             return Inertia::render('siswa/dashboard-siswa');

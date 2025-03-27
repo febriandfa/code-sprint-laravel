@@ -38,19 +38,19 @@ class KuisRepository
         return DB::table('kuises')
             ->leftJoin('materis', 'kuises.materi_id', '=', 'materis.id')
             ->leftJoin('kuis_soals', 'kuises.id', '=', 'kuis_soals.kuis_id')
-            ->leftJoin('kuis_jawabans', function($join) use ($userId) {
-                $join->on('kuises.id', '=', 'kuis_jawabans.kuis_id')
-                        ->where('kuis_jawabans.user_id', $userId);
+            ->leftJoin('kuis_nilais', function($join) use ($userId) {
+                $join->on('kuises.id', '=', 'kuis_nilais.kuis_id')
+                        ->where('kuis_nilais.user_id', $userId);
             })
             ->select(
                 'kuises.*',
                 'materis.judul as materi',
                 DB::raw('COUNT(DISTINCT kuis_soals.id) as total_soal'),
-                DB::raw('IF(kuis_jawabans.id IS NOT NULL, true, false) as is_completed'),
-                'kuis_jawabans.total_poin'
+                DB::raw('IF(kuis_nilais.id IS NOT NULL, true, false) as is_completed'),
+                'kuis_nilais.total_poin'
             )
             ->where('materis.kelas_id', $kelasId)
-            ->groupBy('kuises.id', 'materis.judul', 'kuis_jawabans.id', 'kuis_jawabans.total_poin')
+            ->groupBy('kuises.id', 'materis.judul', 'kuis_nilais.id', 'kuis_nilais.total_poin')
             ->havingRaw('COUNT(DISTINCT kuis_soals.id) > 1')
             ->get();
     }
