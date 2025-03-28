@@ -24,8 +24,6 @@ export default function EditKelompok() {
         { title: 'Edit Kelompok', link: '#' },
     ];
 
-    console.log('ketuaCandidates', ketuaCandidates);
-
     const ketuaOptions = [
         ...(kelompok?.ketua
             ? [

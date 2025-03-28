@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Enums\RoleType;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class KelompokRepository
@@ -26,8 +27,9 @@ class KelompokRepository
 
             $kelompok->anggotas = DB::table('kelompok_anggotas')
                 ->leftJoin('users', 'kelompok_anggotas.anggota_id', '=', 'users.id')
+                ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
                 ->where('kelompok_anggotas.kelompok_id', $kelompok->id)
-                ->select('users.name as nama_anggota', 'kelompok_anggotas.*')
+                ->select('users.name as nama_anggota', 'user_details.no_absen', 'kelompok_anggotas.*')
                 ->get();
         }
 
@@ -66,15 +68,37 @@ class KelompokRepository
         return $kelompok;
     }
 
-    public function getByIdWithAnggota($id)
+    public function getByIdWithAnggota(string $id)
     {
         $kelompok = $this->getById($id);
 
         $kelompok->anggotas = DB::table('kelompok_anggotas')
             ->leftJoin('users', 'kelompok_anggotas.anggota_id', '=', 'users.id')
+            ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
             ->where('kelompok_anggotas.kelompok_id', $kelompok->id)
-            ->select('users.name as nama_anggota', 'kelompok_anggotas.*')
+            ->select('users.name as nama_anggota', 'user_details.no_absen', 'kelompok_anggotas.*')
             ->get();
+
+        return $kelompok;
+    }
+
+    public function getKelompokByCurrentProyek(string $proyekId)
+    {
+        $kelompok = DB::table('kelompoks')
+            ->leftJoin('kelompok_anggotas', 'kelompok_anggotas.kelompok_id', '=', 'kelompoks.id')
+            ->where('kelompok_anggotas.anggota_id', Auth::id())
+            ->where('kelompoks.proyek_id', $proyekId)
+            ->select('kelompoks.*')
+            ->first();
+
+        if ($kelompok) {
+            $kelompok->anggotas = DB::table('kelompok_anggotas')
+                ->leftJoin('users', 'kelompok_anggotas.anggota_id', '=', 'users.id')
+                ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
+                ->where('kelompok_anggotas.kelompok_id', $kelompok->id)
+                ->select('users.name as nama_anggota', 'user_details.no_absen', 'kelompok_anggotas.*')
+                ->get();
+        }
 
         return $kelompok;
     }

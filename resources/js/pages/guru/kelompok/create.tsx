@@ -24,8 +24,6 @@ export default function CreateKelompok() {
         { title: 'Tambah Kelompok', link: '#' },
     ];
 
-    console.log('ketuaCandidates', ketuaCandidates);
-
     const ketuaOptions = ketuaCandidates?.map((ketua) => ({
         value: ketua.id,
         label: ketua.name,

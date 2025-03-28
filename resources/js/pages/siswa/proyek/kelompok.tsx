@@ -1,15 +1,17 @@
 import DataTables from '@/components/data-tables';
 import Button from '@/components/ui/button';
 import LabelStatus from '@/components/ui/label-status';
+import Title from '@/components/ui/title';
 import AuthLayout from '@/layouts/auth-layout';
-import { Kelompok } from '@/types';
+import { Kelompok, Proyek } from '@/types';
 import { usePage } from '@inertiajs/react';
 
 export default function KelompokProyek() {
-    const { kelompoks } = usePage().props as { kelompoks?: Kelompok[] };
+    const { kelompoks, proyek } = usePage().props as { kelompoks?: Kelompok[]; proyek?: Proyek };
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
+        { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },
         { title: 'Data Kelompok', link: '#' },
     ];
 
@@ -32,7 +34,7 @@ export default function KelompokProyek() {
         },
         {
             name: 'Jumlah Anggota',
-            cell: (row: Kelompok) => <LabelStatus status={`${row.anggotas.length}/${row.jumlah_anggota.toString()}`} />,
+            cell: (row: Kelompok) => <LabelStatus variant={row.is_full ? 'danger' : 'success'} size="small" status={row.jumlah_anggota.toString()} />,
             wrap: true,
         },
         {
@@ -45,14 +47,16 @@ export default function KelompokProyek() {
     const data = kelompoks?.map((kelompok) => ({
         id: kelompok.id,
         nama: kelompok.nama,
-        nama_ketua: kelompok.ketua,
-        jumlah_anggota: kelompok.jumlah_anggota,
+        ketua: kelompok.ketua,
+        is_full: kelompok.anggotas?.length === kelompok.jumlah_anggota,
+        jumlah_anggota: `${kelompok.anggotas?.length ?? 0}/${kelompok.jumlah_anggota}`,
     }));
 
-    const searchBy = ['nama'];
+    const searchBy = ['nama', 'ketua'];
 
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
+            <Title title="Data Kelompok" />
             <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
         </AuthLayout>
     );

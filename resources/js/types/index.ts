@@ -124,6 +124,7 @@ export type KelompokAnggota = {
     kelompok_id: string;
     anggota_id: string;
     nama_anggota: string;
+    no_absen: number;
     status: 'ketua' | 'anggota';
     created_at: string;
     updated_at: string;

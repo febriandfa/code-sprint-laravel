@@ -7,14 +7,18 @@ import { usePage } from '@inertiajs/react';
 export default function IndexKuis() {
     const { kuises } = usePage().props as { kuises?: Kuis[] };
 
-    console.log(kuises);
-
     return (
         <AuthLayout title="Kuis" index siswa>
             <div className="grid grid-cols-3 gap-5">
                 {kuises?.map((kuis, index) => {
                     return (
-                        <Card key={index} title={kuis.judul} content="kuis" routeShow={route('siswa.kuis.show', kuis.id)} disabled={kuis.is_completed}>
+                        <Card
+                            key={index}
+                            title={kuis.judul}
+                            content="kuis"
+                            routeShow={route('siswa.kuis.show', kuis.id)}
+                            disabled={kuis.is_completed}
+                        >
                             <div className="grid grid-cols-2">
                                 <div>
                                     <p className="flex justify-between pr-4">

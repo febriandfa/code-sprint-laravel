@@ -71,6 +71,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('kuis/answer', [SiswaKuisController::class, 'answer'])->name('kuis.answer');
         });
 
+        Route::get('/proyek/{proyekId}/kelompok', [SiswaProyekController::class, 'kelompok'])->name('proyek.kelompok');
+
         Route::get('dashboard', function () {
             return Inertia::render('siswa/dashboard-siswa');
         })->name('dashboard');

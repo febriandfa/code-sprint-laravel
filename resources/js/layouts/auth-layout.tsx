@@ -16,8 +16,6 @@ interface AuthLayoutProps {
 export default function AuthLayout({ children, title, breadcrumbs, index = false, siswa = false }: PropsWithChildren<AuthLayoutProps>) {
     const { auth } = usePage().props as { auth?: Auth };
 
-    console.log(auth);
-
     const userRole: UserRole = auth?.user.role ?? 'siswa';
 
     return (

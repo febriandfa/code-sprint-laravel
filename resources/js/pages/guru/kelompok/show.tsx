@@ -7,11 +7,7 @@ import { usePage } from '@inertiajs/react';
 export default function ShowKelompok() {
     const { proyek, kelompok } = usePage().props as { proyek?: Proyek; kelompok?: Kelompok };
 
-    console.log('kelompok', kelompok);
-
     const anggotas = kelompok?.anggotas?.filter((anggota) => anggota.status === 'anggota');
-
-    console.log('anggotas', anggotas);
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('guru.proyek.index') },
