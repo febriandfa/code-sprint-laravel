@@ -31,9 +31,20 @@ class KelompokRepository
                 ->where('kelompok_anggotas.kelompok_id', $kelompok->id)
                 ->select('users.name as nama_anggota', 'user_details.no_absen', 'kelompok_anggotas.*')
                 ->get();
+
+            $kelompok->is_full = count($kelompok->anggotas) === $kelompok->jumlah_anggota;
         }
 
         return $kelompoks;
+    }
+
+    public function checkIsJoined(string $proyekId)
+    {
+        return DB::table('kelompok_anggotas')
+            ->leftJoin('kelompoks', 'kelompok_anggotas.kelompok_id', '=', 'kelompoks.id')
+            ->where('kelompoks.proyek_id', $proyekId)
+            ->where('anggota_id', Auth::id())
+            ->value('kelompoks.id');
     }
 
     public function getKetuaCandidate(string $proyekId)
@@ -45,7 +56,7 @@ class KelompokRepository
                     ->from('kelompok_anggotas')
                     ->join('kelompoks', 'kelompok_anggotas.kelompok_id', '=', 'kelompoks.id')
                     ->whereRaw('kelompok_anggotas.anggota_id = users.id')
-                    ->where('kelompok_anggotas.status', 'ketua')
+                    // ->where('kelompok_anggotas.status', 'ketua')
                     ->where('kelompoks.proyek_id', $proyekId);
             })
             ->get();
@@ -164,5 +175,14 @@ class KelompokRepository
     public function delete($id)
     {
         return DB::table('kelompoks')->where('id', $id)->delete();
+    }
+
+    public function join(string $kelompokId)
+    {
+        return DB::table('kelompok_anggotas')->insertGetId([
+            'kelompok_id' => $kelompokId,
+            'anggota_id' => Auth::user()->id,
+            'status' => 'anggota',
+        ]);
     }
 }

@@ -76,4 +76,15 @@ class KelompokService
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function join(string $id)
+    {
+        try {
+            $this->kelompokRepository->join($id);
+
+            return redirect()->back()->with('success', 'Berhasil bergabung ke kelompok');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
 }

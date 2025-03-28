@@ -38,7 +38,8 @@ class ProyekController extends Controller
     {
         $kelompoks = $this->kelompokRepository->getAll($id);
         $proyek = $this->proyekRepository->getById($id);
+        $isJoined = $this->kelompokRepository->checkIsJoined($id);
 
-        return Inertia::render('siswa/proyek/kelompok', compact('kelompoks', 'proyek'));
+        return Inertia::render('siswa/proyek/kelompok', compact('kelompoks', 'proyek', 'isJoined'));
     }
 }

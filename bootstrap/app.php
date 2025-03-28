@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'kuis_answered' => \App\Http\Middleware\KuisAnsweredMiddleware::class,
+            'already_joined' => \App\Http\Middleware\AlreadyJoinedMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

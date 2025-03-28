@@ -3,11 +3,15 @@ import Button from '@/components/ui/button';
 import LabelStatus from '@/components/ui/label-status';
 import Title from '@/components/ui/title';
 import AuthLayout from '@/layouts/auth-layout';
+import { SwalSuccess } from '@/lib/swal';
 import { Kelompok, Proyek } from '@/types';
-import { usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
+import { LoaderCircle } from 'lucide-react';
 
 export default function KelompokProyek() {
-    const { kelompoks, proyek } = usePage().props as { kelompoks?: Kelompok[]; proyek?: Proyek };
+    const { kelompoks, proyek, isJoined } = usePage().props as { kelompoks?: Kelompok[]; proyek?: Proyek; isJoined?: number };
+
+    console.log('kelompoks', isJoined);
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
@@ -15,8 +19,19 @@ export default function KelompokProyek() {
         { title: 'Data Kelompok', link: '#' },
     ];
 
+    const { post, processing } = useForm();
+
     const handleJoinKelompok = (kelompokId: number) => () => {
-        console.log('Bergabung ke kelompok dengan ID:', kelompokId);
+        if (isJoined) return;
+
+        post(route('siswa.kelompok.join', kelompokId), {
+            onSuccess: () => {
+                SwalSuccess({ text: 'Berhasil bergabung ke kelompok!' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            },
+        });
     };
 
     const columns = [
@@ -39,7 +54,12 @@ export default function KelompokProyek() {
         },
         {
             name: 'Aksi',
-            cell: (row: Kelompok) => <Button onClick={handleJoinKelompok(row.id)}>Bergabung</Button>,
+            cell: (row: Kelompok) => (
+                <Button onClick={handleJoinKelompok(row.id)} disabled={processing || row.is_full || isJoined !== null}>
+                    {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                    {isJoined === row.id ? 'Tergabung' : 'Bergabung'}
+                </Button>
+            ),
             width: '11rem',
         },
     ];
@@ -48,7 +68,7 @@ export default function KelompokProyek() {
         id: kelompok.id,
         nama: kelompok.nama,
         ketua: kelompok.ketua,
-        is_full: kelompok.anggotas?.length === kelompok.jumlah_anggota,
+        is_full: kelompok.is_full,
         jumlah_anggota: `${kelompok.anggotas?.length ?? 0}/${kelompok.jumlah_anggota}`,
     }));
 

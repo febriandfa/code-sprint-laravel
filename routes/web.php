@@ -9,6 +9,7 @@ use App\Http\Controllers\Guru\KuisController;
 use App\Http\Controllers\Guru\KuisSoalController;
 use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\ProyekController;
+use App\Http\Controllers\Siswa\KelompokController as SiswaKelompokController;
 use App\Http\Controllers\Siswa\KuisController as SiswaKuisController;
 use App\Http\Controllers\Siswa\MateriController as SiswaMateriController;
 use App\Http\Controllers\Siswa\ProyekController as SiswaProyekController;
@@ -63,14 +64,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('kuis', [SiswaKuisController::class, 'index'])->name('kuis.index');
         Route::resources([
             'materi' => SiswaMateriController::class,
-            'proyek' => SiswaProyekController::class,
         ]);
+
+        Route::middleware(['already_joined'])->group(function () {
+            Route::resources([
+                'proyek' => SiswaProyekController::class,
+            ]);
+        });
 
         Route::middleware(['kuis_answered'])->group(function () {
             Route::get('kuis/{kuis}/show', [SiswaKuisController::class, 'show'])->name('kuis.show');
             Route::post('kuis/answer', [SiswaKuisController::class, 'answer'])->name('kuis.answer');
         });
 
+        Route::post('/kelompok/{kelompokId}/join', [SiswaKelompokController::class, 'join'])->name('kelompok.join');
         Route::get('/proyek/{proyekId}/kelompok', [SiswaProyekController::class, 'kelompok'])->name('proyek.kelompok');
 
         Route::get('dashboard', function () {
