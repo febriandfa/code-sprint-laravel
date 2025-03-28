@@ -49,7 +49,10 @@ class KuisSoalRepository
                 ];
             }
             DB::table('kuis_opsis')->insert($opsis);
+
             DB::commit();
+
+            return true;
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -81,6 +84,8 @@ class KuisSoalRepository
             DB::table('kuis_opsis')->insert($opsis);
 
             DB::commit();
+
+            return true;
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
@@ -101,6 +106,8 @@ class KuisSoalRepository
                 ->decrement('urutan');
 
             DB::commit();
+
+            return true;
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;

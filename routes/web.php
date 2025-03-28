@@ -38,7 +38,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'materi' => MateriController::class,
             'kuis' => KuisController::class,
             'proyek' => ProyekController::class,
-            'kelompok' => KelompokController::class,
         ]);
         Route::get('/kuis/{kuisId}/soal/create', [KuisSoalController::class, 'create'])->name('kuis.soalCreate');
         Route::post('/kuis/{kuisId}/soal', [KuisSoalController::class, 'store'])->name('kuis.soalStore');
@@ -46,6 +45,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/kuis/{kuisId}/soal/{soalId}', [KuisSoalController::class, 'destroy'])->name('kuis.soalDestroy');
         Route::get('/kuis/{kuisId}/siswa', [KuisController::class, 'siswa'])->name('kuis.siswa');
         Route::get('/kuis/{kuisId}/siswa/{siswaId}', [KuisController::class, 'hasil'])->name('kuis.hasil');
+
+        Route::get('proyek/{proyekId}/kelompok', [KelompokController::class, 'index'])->name('proyek.kelompok');
+        Route::get('proyek/{proyekId}/kelompok/create', [KelompokController::class, 'create'])->name('proyek.kelompokCreate');
+        Route::post('proyek/{proyekId}/kelompok', [KelompokController::class, 'store'])->name('proyek.kelompokStore');
+        Route::get('proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'show'])->name('proyek.kelompokShow');
+        Route::get('proyek/{proyekId}/kelompok/{kelompokId}/edit', [KelompokController::class, 'edit'])->name('proyek.kelompokEdit');
+        Route::patch('proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'update'])->name('proyek.kelompokUpdate');
+        Route::delete('proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'destroy'])->name('proyek.kelompokDestroy');
 
         Route::get('dashboard', function () {
             return Inertia::render('guru/dashboard-guru');

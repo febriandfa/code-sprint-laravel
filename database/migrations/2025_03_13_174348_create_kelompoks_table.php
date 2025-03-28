@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->integer('jumlah_anggota');
-            $table->foreignId('ketua_id')->constrained('users')->onDelete('cascade');
+            $table->longText('masalah');
             $table->foreignId('proyek_id')->constrained('proyeks')->onDelete('cascade');
             $table->timestamps();
         });

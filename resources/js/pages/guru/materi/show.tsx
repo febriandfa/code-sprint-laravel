@@ -15,20 +15,20 @@ export default function ShowMateri() {
             link: route('guru.materi.index'),
         },
         {
-            title: materi?.judul ?? 'Detail Materi',
+            title: materi?.judul ?? 'Lihat Materi',
             link: '#',
         },
     ];
 
     return (
-        <AuthLayout title="Edit Materi" breadcrumbs={breadcrumbs}>
+        <AuthLayout title="Lihat Materi" breadcrumbs={breadcrumbs}>
             <div className="space-y-6">
                 <InputField id="kelas" label="Kelas" value={materi?.kelas} disabled />
                 <InputField id="mapel" label="Mata Pelajaran" value={materi?.mapel} disabled />
                 <InputField id="judul" label="Nama Materi" value={materi?.judul} disabled />
                 <RichTextView label="Deskripsi" value={materi?.deskripsi} />
-                <Embed label="File Materi" src={materi?.file_materi} />
-                <Embed label="File Modul" src={materi?.file_modul} />
+                <Embed label="File Materi" src={materi?.file_materi ?? ''} />
+                <Embed label="File Modul" src={materi?.file_modul ?? ''} />
                 <div className="mt-3 w-fit">
                     <Button className="w-full" onClick={() => router.visit(route('guru.materi.index'))}>
                         Kembali

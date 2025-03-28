@@ -25,11 +25,11 @@ class KelompokService
             'nama' => 'required|string',
             'jumlah_anggota' => 'required|integer',
             'ketua_id' => 'required|exists:users,id',
-            'proyek_id' => 'required|exists:proyeks,id',
+            'masalah' => 'required|string',
         ]);
     }
 
-    public function create(Request $request)
+    public function create(Request $request, string $proyekId)
     {
         try {
             $validator = $this->validateInput($request->all());
@@ -38,6 +38,7 @@ class KelompokService
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             $validatedData = $validator->validated();
+            $validatedData['proyek_id'] = $proyekId;
 
             $this->kelompokRepository->create($validatedData);
 
@@ -57,7 +58,7 @@ class KelompokService
             }
             $validatedData = $validator->validated();
 
-            $this->kelompokRepository->update($id, $validatedData);
+            $this->kelompokRepository->update($validatedData, $id);
 
             return redirect()->back()->with('success', 'Kelompok berhasil diubah');
         } catch (\Exception $e) {

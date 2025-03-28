@@ -1,6 +1,7 @@
 import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
 import Button from '@/components/ui/button';
+import LabelStatus from '@/components/ui/label-status';
 import AuthLayout from '@/layouts/auth-layout';
 import { stripHtml } from '@/lib/helper';
 import { Proyek } from '@/types';
@@ -42,9 +43,20 @@ export default function IndexProyek() {
         },
         {
             name: 'Status',
-            selector: (row: Proyek) => row.status,
+            cell: (row: Proyek) =>
+                row.status ? (
+                    row.status === 'selesai' ? (
+                        <LabelStatus variant="success" size="small" status="Selesai" />
+                    ) : row.status === 'berjalan' ? (
+                        <LabelStatus variant="warning" size="small" status="Berjalan" />
+                    ) : (
+                        <LabelStatus variant="info" size="small" status="Belum Dimulai" />
+                    )
+                ) : (
+                    <LabelStatus variant="default" size="small" status="-" />
+                ),
             sortable: true,
-            wrap: true,
+            width: '10rem',
         },
         {
             name: 'Aksi',
@@ -52,7 +64,7 @@ export default function IndexProyek() {
                 <ActionButton
                     routeEdit={route('guru.proyek.edit', row.id)}
                     routeDelete={route('guru.proyek.destroy', row.id)}
-                    routeShow={route('guru.proyek.show', row.id)}
+                    routeShow={route('guru.proyek.kelompok', row.id)}
                 />
             ),
             width: '11rem',

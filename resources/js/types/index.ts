@@ -1,4 +1,3 @@
-import { LucideIcon } from 'lucide-react';
 import React from 'react';
 
 export type UserRole = 'siswa' | 'guru' | 'admin';
@@ -103,7 +102,31 @@ export type Proyek = {
     is_completed?: boolean;
     is_processed?: boolean;
     nilai?: number;
-    status: 'belum' | 'proses' | 'selesai';
+    status: 'belum' | 'berjalan' | 'selesai';
+};
+
+export type Kelompok = {
+    id: number;
+    proyek_id: string;
+    nama: string;
+    jumlah_anggota: number;
+    ketua_id: string;
+    ketua: string;
+    masalah: string;
+    anggotas: KelompokAnggota[];
+    is_full?: boolean;
+    created_at: string;
+    updated_at: string;
+};
+
+export type KelompokAnggota = {
+    id: number;
+    kelompok_id: string;
+    anggota_id: string;
+    nama_anggota: string;
+    status: 'ketua' | 'anggota';
+    created_at: string;
+    updated_at: string;
 };
 
 export interface BreadcrumbItem {
@@ -134,25 +157,6 @@ export interface SelectProps {
     label: string;
     error?: string;
     options?: { value: string; label: string }[];
-}
-
-export interface NavGroup {
-    title: string;
-    items: NavItem[];
-}
-
-export interface NavItem {
-    title: string;
-    url: string;
-    icon?: LucideIcon | null;
-    isActive?: boolean;
-}
-
-export interface SharedData {
-    name: string;
-    quote: { message: string; author: string };
-    auth: Auth;
-    [key: string]: unknown;
 }
 
 export interface User {

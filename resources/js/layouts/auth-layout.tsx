@@ -30,7 +30,7 @@ export default function AuthLayout({ children, title, breadcrumbs, index = false
                     <div className="p-4">
                         {!index && <Title title={title} />}
                         <Breadcrumb items={breadcrumbs} />
-                        <div className={`rounded-lg p-8 ${siswa ? '' : 'bg-white'}`}>
+                        <div className={`rounded-lg ${siswa ? '' : 'bg-white p-8'}`}>
                             {index && <Title title={title} />}
                             <div className={`${index ? 'my-6' : ''}`}>{children}</div>
                         </div>
