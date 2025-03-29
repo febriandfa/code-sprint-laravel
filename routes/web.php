@@ -70,7 +70,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::resources([
                 'proyek' => SiswaProyekController::class,
             ]);
-            Route::get('/proyek/{proyekId}/syntax-one', [SiswaProyekController::class, 'syntaxOne'])->name('proyek.syntaxOne');
+            Route::get('/proyek/{proyekId}/syntax/1', [SiswaProyekController::class, 'syntaxOne'])->name('proyek.syntaxOne');
+            Route::get('/proyek/{proyekId}/syntax/2', [SiswaProyekController::class, 'syntaxtwo'])->name('proyek.syntaxTwo');
             Route::post('/proyek/{proyekId}/jawab', [SiswaProyekController::class, 'store'])->name('proyek.storeAnswer');
             Route::patch('/proyek{proyekId}/jawab/{answerId}', [SiswaProyekController::class, 'update'])->name('proyek.updateAnswer');
         });

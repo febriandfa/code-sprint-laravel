@@ -62,6 +62,17 @@ class ProyekController extends Controller
         return Inertia::render('siswa/proyek/syntax-one', compact('currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban'));
     }
 
+    public function syntaxTwo(string $id)
+    {
+        $currentSyntax = SyntaxEnum::SYNTAX_TWO;
+        $proyek = $this->proyekRepository->getById($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
+        $jawaban = $this->proyekRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
+
+        return Inertia::render('siswa/proyek/syntax-two', compact('currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban'));
+    }
+
     public function store(Request $request, string $id)
     {
         return $this->proyekService->storeAnswer($request, $id);

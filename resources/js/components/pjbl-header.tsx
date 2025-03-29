@@ -1,16 +1,44 @@
-import { Kelompok, Proyek } from '@/types';
+import { Kelompok, Proyek, ProyekJawaban } from '@/types';
+import { Link } from '@inertiajs/react';
 import { CircleCheck, Lock } from 'lucide-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LabelStatus from './ui/label-status';
 import Title from './ui/title';
 
-export default function PjblHeader({ kelompok, proyek, currentSyntax }: { kelompok?: Kelompok; proyek?: Proyek; currentSyntax: number }) {
+export default function PjblHeader({
+    kelompok,
+    proyek,
+    jawaban,
+    currentSyntax,
+}: {
+    kelompok?: Kelompok;
+    proyek?: Proyek;
+    jawaban?: ProyekJawaban;
+    currentSyntax: number;
+}) {
     const syntaxDatas = [
-        { description: 'Identifikasi Masalah' },
-        { description: 'Merencanakan Proyek' },
-        { description: 'Membuat Jadwal Proyek' },
-        { description: 'Pembuatan Proyek' },
+        { description: 'Identifikasi Masalah', link: route('siswa.proyek.syntaxOne', proyek?.id) },
+        { description: 'Merencanakan Proyek', link: route('siswa.proyek.syntaxTwo', proyek?.id) },
+        { description: 'Membuat Jadwal Proyek', link: '#' },
+        { description: 'Pembuatan Proyek', link: '#' },
     ];
+
+    const [canProceedToSyntax2, setCanProceedToSyntax2] = useState<boolean>(false);
+    const [canProceedToSyntax3, setCanProceedToSyntax3] = useState<boolean>(false);
+    const [canProceedToSyntax4, setCanProceedToSyntax4] = useState<boolean>(false);
+    const [canProceedToSyntax5, setCanProceedToSyntax5] = useState<boolean>(false);
+
+    const isCompleted = [canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5];
+    const canProceedNextSyntax = [true, ...isCompleted];
+
+    useEffect(() => {
+        if (jawaban) {
+            setCanProceedToSyntax2(jawaban.status_tahap_4 === 'diterima');
+            setCanProceedToSyntax3(jawaban.status_tahap_5 === 'diterima');
+            setCanProceedToSyntax4(jawaban.status_tahap_6 === 'diterima');
+            setCanProceedToSyntax5(jawaban.status_tahap_7 === 'diterima');
+        }
+    }, [jawaban]);
 
     return (
         <React.Fragment>
@@ -20,16 +48,18 @@ export default function PjblHeader({ kelompok, proyek, currentSyntax }: { kelomp
                 {syntaxDatas.map((data, index) => {
                     const isActive = index + 1 <= (currentSyntax ?? 1);
                     return (
-                        <div
+                        <Link
+                            key={index}
+                            href={isActive || canProceedNextSyntax[index] ? data.link : '#'}
                             className={`w-60 rounded border p-2 text-lg font-medium ${isActive ? 'bg-primary-100 border-primary text-primary' : 'border-slate-100 bg-slate-100 text-gray-400'}`}
                         >
                             <p className="flex items-center gap-2">
                                 Sintaks {index + 1}
-                                {isActive && <CircleCheck size={18} />}
-                                {!isActive && <Lock size={18} />}
+                                {isCompleted[index] && <CircleCheck size={18} />}
+                                {!isActive && !canProceedNextSyntax[index] && <Lock size={18} />}
                             </p>
                             <p>{data.description}</p>
-                        </div>
+                        </Link>
                     );
                 })}
             </div>

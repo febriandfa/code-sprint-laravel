@@ -139,6 +139,53 @@ export type JoinedKelompok = {
     updated_at: string;
 };
 
+export type ProyekAnswerStatus = 'diterima' | 'ditolak' | 'direvisi' | 'diproses';
+
+export type ProyekJawaban = {
+    id: number;
+    proyek_id: number;
+    kelompok_id: number;
+    user_id?: number;
+
+    jawaban_tahap_1?: string;
+    feedback_tahap_1?: string;
+    status_tahap_1?: ProyekAnswerStatus;
+
+    jawaban_tahap_2?: string;
+    feedback_tahap_2?: string;
+    status_tahap_2?: ProyekAnswerStatus;
+
+    jawaban_tahap_3?: string;
+    feedback_tahap_3?: string;
+    status_tahap_3?: ProyekAnswerStatus;
+
+    jawaban_tahap_4?: string;
+    feedback_tahap_4?: string;
+    status_tahap_4?: ProyekAnswerStatus;
+
+    jawaban_tahap_5?: string;
+    feedback_tahap_5?: string;
+    status_tahap_5?: ProyekAnswerStatus;
+
+    jawaban_tahap_6?: string;
+    feedback_tahap_6?: string;
+    status_tahap_6?: ProyekAnswerStatus;
+
+    jawaban_tahap_7?: string;
+    feedback_tahap_7?: string;
+    status_tahap_7?: ProyekAnswerStatus;
+
+    jawaban_tahap_8?: string;
+    feedback_tahap_8?: string;
+    status_tahap_8?: ProyekAnswerStatus;
+
+    file_proyek?: string;
+    file_laporan?: string;
+
+    created_at?: string;
+    updated_at?: string;
+};
+
 export interface BreadcrumbItem {
     title: string;
     link: string;

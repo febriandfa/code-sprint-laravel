@@ -7,7 +7,7 @@ import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { JoinedKelompok, Kelompok, Proyek } from '@/types';
+import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { CircleCheck, LoaderCircle, Lock } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -32,12 +32,13 @@ export default function SyntaxOneProyek() {
         proyek?: Proyek;
         kelompok?: Kelompok;
         joinedKelompok?: JoinedKelompok;
-        jawaban?: any;
+        jawaban?: ProyekJawaban;
     };
 
     const [currentStep, setCurrentStep] = useState<number>(1);
     const [canProceedToStep3, setCanProceedToStep3] = useState<boolean>(false);
     const [canProceedToStep4, setCanProceedToStep4] = useState<boolean>(false);
+    const [canProceedToStep5, setCanProceedToStep5] = useState<boolean>(false);
     const siswaStatus = joinedKelompok?.status ?? 'anggota';
     const analisisMasalahRef = useRef<HTMLInputElement | null>(null);
 
@@ -147,6 +148,15 @@ export default function SyntaxOneProyek() {
         }
     };
 
+    const handleJumpStep = (step: number) => {
+        if (step > 0 && step <= stepDatas.length) {
+            setCurrentStep(step);
+        }
+    };
+
+    const isCompleted = [true, canProceedToStep3, canProceedToStep4, canProceedToStep5];
+    const canProceedNextStep = [true, true, canProceedToStep3, canProceedToStep4];
+
     useEffect(() => {
         if (jawaban) {
             setDataOne((prev) => ({
@@ -161,15 +171,16 @@ export default function SyntaxOneProyek() {
 
             setCanProceedToStep3(jawaban.status_tahap_2 === 'diterima');
             setCanProceedToStep4(jawaban.status_tahap_3 === 'diterima');
+            setCanProceedToStep5(jawaban.status_tahap_4 === 'diterima');
         }
     }, [jawaban]);
 
     const getStatusInfo = (step: number) => {
-        if (!jawaban || !jawaban[`status_tahap_${step}`]) {
+        if (!jawaban || !jawaban[`status_tahap_${step}` as keyof ProyekJawaban]) {
             return { variant: 'default' as const, text: 'Sedang Mengerjakan' };
         }
 
-        const status = jawaban[`status_tahap_${step}`] as keyof typeof statusMap;
+        const status = jawaban[`status_tahap_${step}` as keyof ProyekJawaban] as keyof typeof statusMap;
 
         const statusMap = {
             diterima: { variant: 'success' as const, text: 'Jawaban Diterima' },
@@ -182,19 +193,22 @@ export default function SyntaxOneProyek() {
 
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
-            <PjblHeader kelompok={kelompok} proyek={proyek} currentSyntax={currentSyntax ?? 1} />
+            <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} />
             <div className="my-5 space-y-6">
                 <div className="item-center flex gap-6">
                     {stepDatas.map((data, index) => {
                         const isActive = index + 1 <= (currentStep ?? 1);
+                        const canJump = index === 0 || canProceedNextStep[index];
+
                         return (
                             <div
-                                className={`w-48 rounded border p-2 ${isActive ? 'bg-primary-100 border-primary text-primary' : 'border-slate-100 bg-slate-100 text-gray-400'}`}
+                                onClick={canJump ? () => handleJumpStep(index + 1) : undefined}
+                                className={`w-48 cursor-pointer rounded border p-2 ${isActive ? 'bg-primary-100 border-primary text-primary' : 'border-slate-100 bg-slate-100 text-gray-400'}`}
                             >
                                 <p className="flex items-center gap-2 font-medium">
                                     Tahap {index + 1}
-                                    {isActive && <CircleCheck size={18} />}
-                                    {!isActive && <Lock size={18} />}
+                                    {isCompleted[index] && <CircleCheck size={18} />}
+                                    {!isActive && !canProceedNextStep[index] && <Lock size={18} />}
                                 </p>
                                 <p>{data.description}</p>
                             </div>
@@ -243,9 +257,12 @@ export default function SyntaxOneProyek() {
                             <Label id={`status_tahap_${currentStep}`} label="Status Pengerjaan" />
                             <LabelStatus variant={getStatusInfo(currentStep).variant} status={getStatusInfo(currentStep).text} />
                         </div>
-                        {jawaban && jawaban[`feedback_tahap_${currentStep}`] && (
+                        {jawaban && jawaban[`feedback_tahap_${currentStep}` as keyof ProyekJawaban] && (
                             <div>
-                                <RichTextView label="Feedback Guru" value={jawaban[`feedback_tahap_${currentStep}`]} />
+                                <RichTextView
+                                    label="Feedback Guru"
+                                    value={jawaban[`feedback_tahap_${currentStep}` as keyof ProyekJawaban] as string}
+                                />
                             </div>
                         )}
                     </React.Fragment>
