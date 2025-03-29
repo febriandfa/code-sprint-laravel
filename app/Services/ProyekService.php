@@ -50,6 +50,8 @@ class ProyekService
             $rules = ['indikator' => 'required|string',];
         } elseif ($step == 4) {
             $rules = ['analisis_masalah' => 'file|mimes:pdf|max:2048',];
+        } elseif ($step == 5) {
+            $rules = ['rencana_proyek' => 'required|string',];
         }
 
         return Validator::make($data, $rules);
@@ -160,6 +162,11 @@ class ProyekService
                 $answerToUpdate = [
                     'jawaban_tahap_4' => $filePath,
                     'status_tahap_4' => ProyekAnswerStatus::PROSES,
+                ];
+            } elseif ($step == 5) {
+                $answerToUpdate = [
+                    'jawaban_tahap_5' => $validatedData['rencana_proyek'],
+                    'status_tahap_5' => ProyekAnswerStatus::PROSES,
                 ];
             }
 
