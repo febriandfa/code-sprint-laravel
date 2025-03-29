@@ -70,7 +70,7 @@ export default function ProyekTemplate({ proyek, kelompok, columns, data, search
                         </div>
                     </div>
                     {view ? (
-                        <Link href={''}>
+                        <Link href={route('siswa.proyek.syntaxOne', proyek?.id)}>
                             <Button variant="primary" className="w-full">
                                 Kerjakan Proyek
                             </Button>

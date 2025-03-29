@@ -38,13 +38,14 @@ class KelompokRepository
         return $kelompoks;
     }
 
-    public function checkIsJoined(string $proyekId)
+    public function getJoinedKelompok(string $proyekId)
     {
         return DB::table('kelompok_anggotas')
             ->leftJoin('kelompoks', 'kelompok_anggotas.kelompok_id', '=', 'kelompoks.id')
             ->where('kelompoks.proyek_id', $proyekId)
-            ->where('anggota_id', Auth::id())
-            ->value('kelompoks.id');
+            ->where('anggota_id', Auth::user()->id)
+            ->select('kelompok_anggotas.*')
+            ->first();
     }
 
     public function getKetuaCandidate(string $proyekId)

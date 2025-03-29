@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'guru' => GuruController::class,
         ]);
 
-        Route::get('dashboard', function () {
+        Route::get('/dashboard', function () {
             return Inertia::render('admin/dashboard-admin');
         })->name('dashboard');
     });
@@ -47,21 +47,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/kuis/{kuisId}/siswa', [KuisController::class, 'siswa'])->name('kuis.siswa');
         Route::get('/kuis/{kuisId}/siswa/{siswaId}', [KuisController::class, 'hasil'])->name('kuis.hasil');
 
-        Route::get('proyek/{proyekId}/kelompok', [KelompokController::class, 'index'])->name('proyek.kelompok');
-        Route::get('proyek/{proyekId}/kelompok/create', [KelompokController::class, 'create'])->name('proyek.kelompokCreate');
-        Route::post('proyek/{proyekId}/kelompok', [KelompokController::class, 'store'])->name('proyek.kelompokStore');
-        Route::get('proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'show'])->name('proyek.kelompokShow');
-        Route::get('proyek/{proyekId}/kelompok/{kelompokId}/edit', [KelompokController::class, 'edit'])->name('proyek.kelompokEdit');
-        Route::patch('proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'update'])->name('proyek.kelompokUpdate');
-        Route::delete('proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'destroy'])->name('proyek.kelompokDestroy');
+        Route::get('/proyek/{proyekId}/kelompok', [KelompokController::class, 'index'])->name('proyek.kelompok');
+        Route::get('/proyek/{proyekId}/kelompok/create', [KelompokController::class, 'create'])->name('proyek.kelompokCreate');
+        Route::post('/proyek/{proyekId}/kelompok', [KelompokController::class, 'store'])->name('proyek.kelompokStore');
+        Route::get('/proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'show'])->name('proyek.kelompokShow');
+        Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/edit', [KelompokController::class, 'edit'])->name('proyek.kelompokEdit');
+        Route::patch('/proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'update'])->name('proyek.kelompokUpdate');
+        Route::delete('/proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'destroy'])->name('proyek.kelompokDestroy');
 
-        Route::get('dashboard', function () {
+        Route::get('/dashboard', function () {
             return Inertia::render('guru/dashboard-guru');
         })->name('dashboard');
     });
 
     Route::prefix('siswa')->name('siswa.')->middleware('role:siswa')->group(function () {
-        Route::get('kuis', [SiswaKuisController::class, 'index'])->name('kuis.index');
+        Route::get('/kuis', [SiswaKuisController::class, 'index'])->name('kuis.index');
         Route::resources([
             'materi' => SiswaMateriController::class,
         ]);
@@ -70,17 +70,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::resources([
                 'proyek' => SiswaProyekController::class,
             ]);
+            Route::get('/proyek/{proyekId}/syntax-one', [SiswaProyekController::class, 'syntaxOne'])->name('proyek.syntaxOne');
+            Route::post('/proyek/{proyekId}/jawab', [SiswaProyekController::class, 'store'])->name('proyek.storeAnswer');
+            Route::patch('/proyek{proyekId}/jawab/{answerId}', [SiswaProyekController::class, 'update'])->name('proyek.updateAnswer');
         });
 
         Route::middleware(['kuis_answered'])->group(function () {
-            Route::get('kuis/{kuis}/show', [SiswaKuisController::class, 'show'])->name('kuis.show');
-            Route::post('kuis/answer', [SiswaKuisController::class, 'answer'])->name('kuis.answer');
+            Route::get('/kuis/{kuis}/show', [SiswaKuisController::class, 'show'])->name('kuis.show');
+            Route::post('/kuis/answer', [SiswaKuisController::class, 'answer'])->name('kuis.answer');
         });
 
         Route::post('/kelompok/{kelompokId}/join', [SiswaKelompokController::class, 'join'])->name('kelompok.join');
         Route::get('/proyek/{proyekId}/kelompok', [SiswaProyekController::class, 'kelompok'])->name('proyek.kelompok');
 
-        Route::get('dashboard', function () {
+        Route::get('/dashboard', function () {
             return Inertia::render('siswa/dashboard-siswa');
         })->name('dashboard');
     });

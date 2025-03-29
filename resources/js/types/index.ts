@@ -130,6 +130,15 @@ export type KelompokAnggota = {
     updated_at: string;
 };
 
+export type JoinedKelompok = {
+    id: number;
+    anggota_id: string;
+    kelompok_id: string;
+    status: 'ketua' | 'anggota';
+    created_at: string;
+    updated_at: string;
+};
+
 export interface BreadcrumbItem {
     title: string;
     link: string;

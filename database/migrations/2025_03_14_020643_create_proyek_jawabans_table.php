@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProyekAnswerStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,30 +19,30 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->longText('jawaban_tahap_1')->nullable();
             $table->text('feedback_tahap_1')->nullable();
-            $table->enum('status_tahap_1', ['diterima', 'ditolak', 'direvisi'])->nullable();
+            $table->enum('status_tahap_1', ProyekAnswerStatus::values())->nullable();
             $table->longText('jawaban_tahap_2')->nullable();
             $table->text('feedback_tahap_2')->nullable();
-            $table->enum('status_tahap_2', ['diterima', 'ditolak', 'direvisi'])->nullable();
+            $table->enum('status_tahap_2', ProyekAnswerStatus::values())->nullable();
             $table->longText('jawaban_tahap_3')->nullable();
             $table->text('feedback_tahap_3')->nullable();
-            $table->enum('status_tahap_3', ['diterima', 'ditolak', 'direvisi'])->nullable();
+            $table->enum('status_tahap_3', ProyekAnswerStatus::values())->nullable();
             $table->longText('jawaban_tahap_4')->nullable();
             $table->text('feedback_tahap_4')->nullable();
-            $table->enum('status_tahap_4', ['diterima', 'ditolak', 'direvisi'])->nullable();
+            $table->enum('status_tahap_4', ProyekAnswerStatus::values())->nullable();
             $table->longText('jawaban_tahap_5')->nullable(); //sintaks 2
             $table->text('feedback_tahap_5')->nullable();
-            $table->enum('status_tahap_5', ['diterima', 'ditolak', 'direvisi'])->nullable();
+            $table->enum('status_tahap_5', ProyekAnswerStatus::values())->nullable();
             $table->longText('jawaban_tahap_6')->nullable(); //sintaks 3
             $table->text('feedback_tahap_6')->nullable();
-            $table->enum('status_tahap_6', ['diterima', 'ditolak', 'direvisi'])->nullable();
+            $table->enum('status_tahap_6', ProyekAnswerStatus::values())->nullable();
             $table->longText('jawaban_tahap_7')->nullable(); //sintaks 4
             $table->text('feedback_tahap_7')->nullable();
-            $table->enum('status_tahap_7', ['diterima', 'ditolak', 'direvisi'])->nullable();
+            $table->enum('status_tahap_7', ProyekAnswerStatus::values())->nullable();
             $table->longText('jawaban_tahap_8')->nullable(); //sintaks 5
             $table->string('file_proyek')->nullable();
             $table->string('file_laporan')->nullable();
             $table->text('feedback_tahap_8')->nullable();
-            $table->enum('status_tahap_8', ['diterima', 'ditolak', 'direvisi'])->nullable();
+            $table->enum('status_tahap_8', ProyekAnswerStatus::values())->nullable();
             $table->timestamps();
         });
 

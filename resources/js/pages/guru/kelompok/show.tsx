@@ -1,4 +1,5 @@
 import InputField from '@/components/input-field';
+import Label from '@/components/ui/label';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { Kelompok, Proyek } from '@/types';
@@ -22,7 +23,7 @@ export default function ShowKelompok() {
                 <InputField id="jumlah_anggota" label="Jumlah Anggota" value={kelompok?.jumlah_anggota} disabled />
                 <InputField id="ketua" label="Ketua Kelompok" value={kelompok?.ketua} disabled />
                 <div className="">
-                    <label className="text-lg capitalize">Anggota Kelompok</label>
+                    <Label id="anggota" label="Anggota Kelompok" />
                     <div className="rounded-md border border-gray-200 px-4 py-2">
                         {(anggotas ?? []).length > 0 ? (
                             <ul className="list-disc pl-5">

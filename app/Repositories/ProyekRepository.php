@@ -85,4 +85,22 @@ class ProyekRepository
     {
         return DB::table('proyeks')->where('id', $id)->delete();
     }
+
+    public function storeAnswer(array $data)
+    {
+        return DB::table('proyek_jawabans')->insertGetId($data);
+    }
+
+    public function updateAnswer(array $data, string $id)
+    {
+        return DB::table('proyek_jawabans')->where('id', $id)->update($data);
+    }
+
+    public function getJawabanByProyekIdKelompokId(string $proyekId, string $kelompokId)
+    {
+        return DB::table('proyek_jawabans')
+            ->where('proyek_id', $proyekId)
+            ->where('kelompok_id', $kelompokId)
+            ->first();
+    }
 }

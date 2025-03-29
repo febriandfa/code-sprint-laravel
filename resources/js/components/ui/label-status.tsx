@@ -11,11 +11,11 @@ export default function LabelStatus({ status, variant, size }: LabelStatusProps)
     const labelVariant = cva('border rounded flex items-center justify-center gap-1 py-1.5 px-3 w-fit', {
         variants: {
             variant: {
-                success: 'border-success text-success',
-                info: 'border-primary text-primary',
-                warning: 'border-warning text-warning',
-                danger: 'border-danger text-danger',
-                default: 'border-gray-300 text-gray-300',
+                success: 'border-success text-success bg-success-100',
+                info: 'border-primary text-primary bg-primary-100',
+                warning: 'border-warning text-warning bg-warning-100',
+                danger: 'border-danger text-danger bg-danger-100',
+                default: 'border-gray-300 text-gray-300 bg-gray-100',
             },
             size: {
                 small: 'text-xs',

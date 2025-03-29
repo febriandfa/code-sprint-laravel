@@ -4,14 +4,14 @@ import LabelStatus from '@/components/ui/label-status';
 import Title from '@/components/ui/title';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Kelompok, Proyek } from '@/types';
+import { JoinedKelompok, Kelompok, Proyek } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 export default function KelompokProyek() {
-    const { kelompoks, proyek, isJoined } = usePage().props as { kelompoks?: Kelompok[]; proyek?: Proyek; isJoined?: number };
+    const { kelompoks, proyek, joinedKelompok } = usePage().props as { kelompoks?: Kelompok[]; proyek?: Proyek; joinedKelompok?: JoinedKelompok };
 
-    console.log('kelompoks', isJoined);
+    console.log('kelompoks', joinedKelompok);
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
@@ -22,7 +22,7 @@ export default function KelompokProyek() {
     const { post, processing } = useForm();
 
     const handleJoinKelompok = (kelompokId: number) => () => {
-        if (isJoined) return;
+        if (joinedKelompok) return;
 
         post(route('siswa.kelompok.join', kelompokId), {
             onSuccess: () => {
@@ -55,9 +55,9 @@ export default function KelompokProyek() {
         {
             name: 'Aksi',
             cell: (row: Kelompok) => (
-                <Button onClick={handleJoinKelompok(row.id)} disabled={processing || row.is_full || isJoined !== null}>
+                <Button onClick={handleJoinKelompok(row.id)} disabled={processing || row.is_full || joinedKelompok !== null}>
                     {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                    {isJoined === row.id ? 'Tergabung' : 'Bergabung'}
+                    {Number(joinedKelompok?.kelompok_id) === row.id ? 'Tergabung' : 'Bergabung'}
                 </Button>
             ),
             width: '11rem',

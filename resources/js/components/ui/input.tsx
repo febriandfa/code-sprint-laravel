@@ -1,5 +1,6 @@
 import { Eye, EyeOff } from 'lucide-react';
 import React, { forwardRef, useState } from 'react';
+import Label from './label';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     id: string;
@@ -11,9 +12,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ id, placeholder, label
 
     return (
         <React.Fragment>
-            <label htmlFor={id} className="text-lg capitalize">
-                {label}{required && <span className='text-danger font-medium'>*</span>}
-            </label>
+            <Label id={id} label={label} required={required} />
             <div className="relative">
                 <input
                     id={id}
@@ -36,7 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({ id, placeholder, label
                     </button>
                 )}
             </div>
-            {type === "file" && value && <p className="text-sm text-slate-400">File: {value}</p>}
+            {type === 'file' && value && <p className="text-sm text-slate-400">File: {value}</p>}
         </React.Fragment>
     );
 });
