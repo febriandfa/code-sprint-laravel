@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\GuruRepository;
+use App\Repositories\MateriRepository;
 use App\Repositories\ProyekRepository;
 use App\Services\ProyekService;
 use Illuminate\Http\Request;
@@ -14,12 +15,19 @@ class ProyekController extends Controller
     protected $proyekRepository;
     protected $proyekService;
     protected $guruRepository;
+    protected $materiRepository;
 
-    public function __construct(ProyekRepository $proyekRepository, ProyekService $proyekService, GuruRepository $guruRepository)
+    public function __construct(
+        ProyekRepository $proyekRepository,
+        ProyekService $proyekService,
+        GuruRepository $guruRepository,
+        MateriRepository $materiRepository
+    )
     {
         $this->proyekRepository = $proyekRepository;
         $this->proyekService = $proyekService;
         $this->guruRepository = $guruRepository;
+        $this->materiRepository = $materiRepository;
     }
 
     public function index()
@@ -31,10 +39,9 @@ class ProyekController extends Controller
 
     public function create()
     {
-        $mapels = $this->guruRepository->getMapelGuru();
-        $kelases = $this->guruRepository->getKelasGuru();
+        $materis = $this->materiRepository->getByGuru();
 
-        return Inertia::render('guru/proyek/create', compact('mapels', 'kelases'));
+        return Inertia::render('guru/proyek/create', compact('materis'));
     }
 
     public function store(Request $request)
@@ -45,10 +52,9 @@ class ProyekController extends Controller
     public function edit($id)
     {
         $proyek = $this->proyekRepository->getById($id);
-        $mapels = $this->guruRepository->getMapelGuru();
-        $kelases = $this->guruRepository->getKelasGuru();
+        $materis = $this->materiRepository->getByGuru();
 
-        return Inertia::render('guru/proyek/edit', compact('proyek', 'mapels', 'kelases'));
+        return Inertia::render('guru/proyek/edit', compact('proyek', 'materis'));
     }
 
     public function update(Request $request, $id)

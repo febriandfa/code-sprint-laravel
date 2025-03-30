@@ -36,6 +36,12 @@ export default function IndexProyek() {
             wrap: true,
         },
         {
+            name: 'Materi',
+            selector: (row: Proyek) => row.materi,
+            sortable: true,
+            wrap: true,
+        },
+        {
             name: 'Tenggat',
             selector: (row: Proyek) => row.tenggat,
             sortable: true,
@@ -77,11 +83,12 @@ export default function IndexProyek() {
         deskripsi: proyek.deskripsi,
         kelas: proyek.kelas,
         mapel: proyek.mapel,
+        materi: proyek.materi,
         tenggat: proyek.tenggat,
         status: proyek.status,
     }));
 
-    const searchBy = ['judul', 'kelas', 'mapel', 'tenggat'];
+    const searchBy = ['nama', 'mapel', 'kelas', 'materi', 'tenggat'];
 
     return (
         <AuthLayout title="Proyek" index>

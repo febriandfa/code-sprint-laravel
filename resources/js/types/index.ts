@@ -96,6 +96,8 @@ export type Proyek = {
     kelas: string;
     mapel_id: string;
     mapel: string;
+    materi_id: string;
+    materi: string;
     nama: string;
     deskripsi: string;
     tenggat: string;

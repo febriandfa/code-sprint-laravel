@@ -24,11 +24,12 @@ class ProyekRepository
         $kelasIds = DB::table('user_kelases')->where('guru_id', $userId)->pluck('kelas_id');
 
         return DB::table('proyeks')
-            ->leftJoin('kelases', 'proyeks.kelas_id', '=', 'kelases.id')
-            ->leftJoin('mapels', 'proyeks.mapel_id', '=', 'mapels.id')
-            ->select('proyeks.*', 'kelases.nama as kelas', 'mapels.nama as mapel')
-            ->whereIn('proyeks.kelas_id', $kelasIds)
-            ->whereIn('proyeks.mapel_id', $mapelIds)
+            ->leftJoin('materis', 'proyeks.materi_id', '=', 'materis.id')
+            ->leftJoin('kelases', 'materis.kelas_id', '=', 'kelases.id')
+            ->leftJoin('mapels', 'materis.mapel_id', '=', 'mapels.id')
+            ->select('proyeks.*', 'kelases.nama as kelas', 'mapels.nama as mapel', 'materis.judul as materi')
+            ->whereIn('materis.kelas_id', $kelasIds)
+            ->whereIn('materis.mapel_id', $mapelIds)
             ->get();
     }
 
@@ -38,8 +39,7 @@ class ProyekRepository
         $kelasId = Auth::user()->userDetail->kelas_id;
 
         return DB::table('proyeks')
-            ->leftJoin('kelases', 'proyeks.kelas_id', '=', 'kelases.id')
-            ->leftJoin('mapels', 'proyeks.mapel_id', '=', 'mapels.id')
+            ->leftJoin('materis', 'proyeks.materi_id', '=', 'materis.id')
             ->leftJoin('kelompok_anggotas', function($join) use ($userId) {
                 $join->where('kelompok_anggotas.anggota_id', $userId);
             })
@@ -64,23 +64,29 @@ class ProyekRepository
             })
             ->select(
                 'proyeks.*',
-                'kelases.nama as kelas',
-                'mapels.nama as mapel',
+                'materis.judul as materi',
                 DB::raw('IF(proyek_jawabans.id IS NOT NULL, true, false) as is_processed'),
                 DB::raw('IF(proyek_nilais.id IS NOT NULL, true, false) as is_completed'),
                 'proyek_nilais.nilai'
             )
-            ->where('proyeks.kelas_id', $kelasId)
-            ->groupBy('proyeks.id', 'kelases.nama', 'mapels.nama', 'proyek_jawabans.id', 'proyek_nilais.id', 'proyek_nilais.nilai')
+            ->where('materis.kelas_id', $kelasId)
+            ->groupBy(
+                'proyeks.id',
+                'materis.judul',
+                'proyek_jawabans.id',
+                'proyek_nilais.id',
+                'proyek_nilais.nilai'
+            )
             ->get();
     }
 
     public function getById(string $id)
     {
         return DB::table('proyeks')
-            ->leftJoin('kelases', 'proyeks.kelas_id', '=', 'kelases.id')
-            ->leftJoin('mapels', 'proyeks.mapel_id', '=', 'mapels.id')
-            ->select('proyeks.*', 'kelases.nama as kelas', 'mapels.nama as mapel')
+            ->leftJoin('materis', 'proyeks.materi_id', '=', 'materis.id')
+            ->leftJoin('kelases', 'materis.kelas_id', '=', 'kelases.id')
+            ->leftJoin('mapels', 'materis.mapel_id', '=', 'mapels.id')
+            ->select('proyeks.*', 'kelases.nama as kelas', 'mapels.nama as mapel', 'materis.judul as materi')
             ->where('proyeks.id', $id)
             ->first();
     }

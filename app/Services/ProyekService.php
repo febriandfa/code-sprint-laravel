@@ -25,8 +25,7 @@ class ProyekService
     public function validateInput(array $data)
     {
         return Validator::make($data, [
-            'kelas_id' => 'required|exists:kelases,id',
-            'mapel_id' => 'required|exists:mapels,id',
+            'materi_id' => 'required|exists:materis,id',
             'nama' => 'required|string',
             'deskripsi' => 'required|string',
             'tenggat' => 'required|date',

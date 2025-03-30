@@ -17,8 +17,9 @@ class ProyekSeeder extends Seeder
                 'nama' => 'Proyek 1',
                 'deskripsi' => 'Deskripsi Proyek 1',
                 'tenggat' => '2025-03-03 08:00:00',
-                'kelas_id' => 1,
-                'mapel_id' => 1,
+                // 'kelas_id' => 1,
+                // 'mapel_id' => 1,
+                'materi_id' => 1,
             ]
         ];
 

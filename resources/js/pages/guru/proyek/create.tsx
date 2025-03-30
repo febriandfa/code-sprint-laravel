@@ -4,13 +4,12 @@ import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Kelas, Mapel } from '@/types';
+import { Materi } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 type ProyekForm = {
-    kelas_id: string;
-    mapel_id: string;
+    materi_id: string;
     nama: string;
     deskripsi: string;
     tenggat: string;
@@ -22,21 +21,15 @@ export default function CreateProyek() {
         { title: 'Tambah Proyek', link: '#' },
     ];
 
-    const { kelases, mapels } = usePage().props as { kelases?: Kelas[]; mapels?: Mapel[] };
+    const { materis } = usePage().props as { materis?: Materi[] };
 
-    const kelasOptions = kelases?.map((kelas) => ({
-        value: kelas.id,
-        label: kelas.nama,
-    }));
-
-    const mapelOptions = mapels?.map((mapel) => ({
-        value: mapel.id,
-        label: mapel.nama,
+    const materiOptions = materis?.map((materi) => ({
+        value: materi.id,
+        label: materi.judul,
     }));
 
     const { data, setData, post, processing, errors, reset } = useForm<Required<ProyekForm>>({
-        kelas_id: '',
-        mapel_id: '',
+        materi_id: '',
         nama: '',
         deskripsi: '',
         tenggat: '',
@@ -56,24 +49,14 @@ export default function CreateProyek() {
         <AuthLayout title="Tambah Proyek" breadcrumbs={breadcrumbs}>
             <form className="space-y-6" onSubmit={handleOnSubmit}>
                 <InputSelect
-                    id={'kelas_id'}
-                    label={'Kelas'}
-                    placeholder={'Pilih kelas'}
+                    id={'materi_id'}
+                    label={'Materi'}
+                    placeholder={'Pilih materi'}
                     required
-                    options={kelasOptions}
-                    value={data.kelas_id}
-                    onChange={(e) => setData('kelas_id', e.value)}
-                    error={errors.kelas_id}
-                />
-                <InputSelect
-                    id={'mapel_id'}
-                    label={'Mata Pelajaran'}
-                    placeholder={'Pilih mata pelajaran'}
-                    required
-                    options={mapelOptions}
-                    value={data.mapel_id}
-                    onChange={(e) => setData('mapel_id', e.value)}
-                    error={errors.mapel_id}
+                    options={materiOptions}
+                    value={data.materi_id}
+                    onChange={(e) => setData('materi_id', e.value)}
+                    error={errors.materi_id}
                 />
                 <InputField
                     id="nama"
@@ -90,6 +73,7 @@ export default function CreateProyek() {
                     id="deskripsi"
                     label="Deskripsi"
                     placeholder="Masukkan deskripsi proyek"
+                    required
                     value={data.deskripsi}
                     onChange={(value: string) => setData('deskripsi', value)}
                     error={errors.deskripsi}
