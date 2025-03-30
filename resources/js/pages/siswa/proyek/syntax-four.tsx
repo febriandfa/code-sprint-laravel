@@ -7,13 +7,13 @@ import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
-import { Auth, JoinedKelompok, Kelompok, Proyek, ProyekJadwal, ProyekJawaban } from '@/types';
+import { Auth, JoinedKelompok, Kelompok, Proyek, ProyekJadwal, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { FileText, LoaderCircle, Plus } from 'lucide-react';
 import { useState } from 'react';
 
 export default function SyntaxTwoProyek() {
-    const { currentSyntax, proyek, kelompok, joinedKelompok, jawaban, jadwals, auth } = usePage().props as {
+    const { currentSyntax, proyek, kelompok, joinedKelompok, jawaban, jadwals, auth, nilai } = usePage().props as {
         currentSyntax?: number;
         proyek?: Proyek;
         kelompok?: Kelompok;
@@ -21,6 +21,7 @@ export default function SyntaxTwoProyek() {
         jawaban?: ProyekJawaban;
         jadwals?: ProyekJadwal[];
         auth?: Auth;
+        nilai?: ProyekNilai;
     };
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -57,7 +58,7 @@ export default function SyntaxTwoProyek() {
 
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
-            <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} />
+            <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} nilai={nilai} currentSyntax={currentSyntax ?? 1} />
             <div className="my-5 space-y-6">
                 <div className="w-full overflow-x-auto">
                     <div className="flex gap-4 whitespace-nowrap">

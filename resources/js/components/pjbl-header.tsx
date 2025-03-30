@@ -1,4 +1,4 @@
-import { Kelompok, Proyek, ProyekJawaban } from '@/types';
+import { Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { Link } from '@inertiajs/react';
 import { CircleCheck, Lock } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
@@ -9,11 +9,13 @@ export default function PjblHeader({
     kelompok,
     proyek,
     jawaban,
+    nilai,
     currentSyntax,
 }: {
     kelompok?: Kelompok;
     proyek?: Proyek;
     jawaban?: ProyekJawaban;
+    nilai?: ProyekNilai;
     currentSyntax: number;
 }) {
     const syntaxDatas = [
@@ -42,9 +44,9 @@ export default function PjblHeader({
             setCanProceedToSyntax4(jawaban.status_tahap_6 === 'diterima');
             setCanProceedToSyntax5(jawaban.status_tahap_7 === 'diterima');
             setCanProceedToSyntax6(jawaban.status_tahap_8 === 'diterima');
-            setCanProceedResult(jawaban.status_tahap_8 === 'diterima');
+            setCanProceedResult(nilai !== null);
         }
-    }, [jawaban]);
+    }, [jawaban, nilai]);
 
     return (
         <React.Fragment>

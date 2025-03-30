@@ -40,10 +40,24 @@ class ProyekRepository
         return DB::table('proyeks')
             ->leftJoin('kelases', 'proyeks.kelas_id', '=', 'kelases.id')
             ->leftJoin('mapels', 'proyeks.mapel_id', '=', 'mapels.id')
-            ->leftJoin('proyek_jawabans', function($join) use ($userId) {
-                $join->on('proyeks.id', '=', 'proyek_jawabans.proyek_id')
-                        ->where('proyek_jawabans.user_id', $userId);
+            ->leftJoin('kelompok_anggotas', function($join) use ($userId) {
+                $join->where('kelompok_anggotas.anggota_id', $userId);
             })
+            ->leftJoin('kelompoks', function($join) {
+                $join->on('kelompoks.id', '=', 'kelompok_anggotas.kelompok_id')
+                    ->on('kelompoks.proyek_id', '=', 'proyeks.id');
+            })
+            ->leftJoin('proyek_jawabans', function($join) {
+                $join->on('proyeks.id', '=', 'proyek_jawabans.proyek_id')
+                    ->whereRaw('proyek_jawabans.user_id IN (
+                        SELECT anggota_id FROM kelompok_anggotas
+                        WHERE kelompok_id = kelompoks.id
+                    )');
+            })
+            // ->leftJoin('proyek_jawabans', function($join) use ($userId) {
+            //     $join->on('proyeks.id', '=', 'proyek_jawabans.proyek_id')
+            //             ->where('proyek_jawabans.user_id', $userId);
+            // })
             ->leftJoin('proyek_nilais', function($join) use ($userId) {
                 $join->on('proyeks.id', '=', 'proyek_nilais.proyek_id')
                         ->where('proyek_nilais.user_id', $userId);
@@ -84,5 +98,13 @@ class ProyekRepository
     public function delete(string $id)
     {
         return DB::table('proyeks')->where('id', $id)->delete();
+    }
+
+    public function getNilaiByProyekIdKelompokId(string $proyekId, string $kelompokId)
+    {
+        return DB::table('proyek_nilais')
+            ->where('proyek_id', $proyekId)
+            ->where('kelompok_id', $kelompokId)
+            ->first();
     }
 }

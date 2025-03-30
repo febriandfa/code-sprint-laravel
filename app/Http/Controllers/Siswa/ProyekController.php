@@ -62,8 +62,11 @@ class ProyekController extends Controller
         $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
+        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
 
-        return Inertia::render('siswa/proyek/syntax-one', compact('currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban'));
+        return Inertia::render('siswa/proyek/syntax-one', compact(
+            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban', 'nilai'
+        ));
     }
 
     public function syntaxTwo(string $id)
@@ -73,8 +76,11 @@ class ProyekController extends Controller
         $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
+        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
 
-        return Inertia::render('siswa/proyek/syntax-two', compact('currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban'));
+        return Inertia::render('siswa/proyek/syntax-two', compact(
+            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban', 'nilai'
+        ));
     }
 
     public function syntaxThree(string $id)
@@ -84,9 +90,10 @@ class ProyekController extends Controller
         $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
+        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
 
         return Inertia::render('siswa/proyek/syntax-three', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban'
+            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban', 'nilai'
         ));
     }
 
@@ -98,9 +105,10 @@ class ProyekController extends Controller
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
         $jadwals = $this->proyekJawabanRepository->getJadwalByProyekIdKelompokId($proyek->id, $kelompok->id);
+        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
 
         return Inertia::render('siswa/proyek/syntax-four', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban', 'jadwals'
+            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban', 'jadwals', 'nilai'
         ));
     }
 
@@ -111,14 +119,24 @@ class ProyekController extends Controller
         $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
+        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
 
         return Inertia::render('siswa/proyek/syntax-five', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban'
+            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban', 'nilai'
         ));
     }
 
     public function syntaxSix(string $id)
     {
-        //
+        $currentSyntax = SyntaxEnum::SYNTAX_SIX;
+        $proyek = $this->proyekRepository->getById($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
+        $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
+        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
+
+        return Inertia::render('siswa/proyek/syntax-six', compact(
+            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban', 'nilai'
+        ));
     }
 }

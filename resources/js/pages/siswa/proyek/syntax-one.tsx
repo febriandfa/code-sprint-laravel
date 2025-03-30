@@ -8,7 +8,7 @@ import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
-import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban } from '@/types';
+import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { CircleCheck, LoaderCircle, Lock } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -28,12 +28,13 @@ type StepThreeForm = {
 };
 
 export default function SyntaxOneProyek() {
-    const { currentSyntax, proyek, kelompok, joinedKelompok, jawaban } = usePage().props as {
+    const { currentSyntax, proyek, kelompok, joinedKelompok, jawaban, nilai } = usePage().props as {
         currentSyntax?: number;
         proyek?: Proyek;
         kelompok?: Kelompok;
         joinedKelompok?: JoinedKelompok;
         jawaban?: ProyekJawaban;
+        nilai?: ProyekNilai;
     };
 
     const [currentStep, setCurrentStep] = useState<number>(1);
@@ -178,7 +179,7 @@ export default function SyntaxOneProyek() {
 
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
-            <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} />
+            <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} nilai={nilai} currentSyntax={currentSyntax ?? 1} />
             <div className="my-5 space-y-6">
                 <div className="item-center flex gap-6">
                     {stepDatas.map((data, index) => {

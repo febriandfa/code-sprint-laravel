@@ -7,7 +7,7 @@ import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
-import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban } from '@/types';
+import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { useEffect } from 'react';
@@ -17,12 +17,13 @@ type SyntaxTwoForm = {
 };
 
 export default function SyntaxTwoProyek() {
-    const { currentSyntax, proyek, kelompok, joinedKelompok, jawaban } = usePage().props as {
+    const { currentSyntax, proyek, kelompok, joinedKelompok, jawaban, nilai } = usePage().props as {
         currentSyntax?: number;
         proyek?: Proyek;
         kelompok?: Kelompok;
         joinedKelompok?: JoinedKelompok;
         jawaban?: ProyekJawaban;
+        nilai?: ProyekNilai;
     };
 
     const siswaStatus = joinedKelompok?.status ?? 'anggota';
@@ -56,7 +57,7 @@ export default function SyntaxTwoProyek() {
 
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
-            <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} />
+            <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} nilai={nilai} currentSyntax={currentSyntax ?? 1} />
             <div className="my-5 space-y-6">
                 <InputQuill
                     id="rencana_proyek"

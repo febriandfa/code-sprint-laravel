@@ -182,6 +182,8 @@ export type ProyekJawaban = {
     file_proyek?: string;
     file_laporan?: string;
 
+    refleksi?: string;
+
     created_at?: string;
     updated_at?: string;
 };
@@ -195,6 +197,22 @@ export type ProyekJadwal = {
     tenggat: string;
     status: 'belum' | 'berjalan' | 'selesai';
     file_kegiatan?: string;
+    created_at: string;
+    updated_at: string;
+};
+
+export type ProyekNilai = {
+    id: number;
+    kelompok_id: string;
+    proyek_id: string;
+    user_id: string;
+    nilai_orientasi_masalah: number;
+    nilai_kerja_sama: number;
+    nilai_proses: number;
+    nilai_waktu: number;
+    nilai_hasil_proyek: number;
+    nilai: number;
+    feedback: string;
     created_at: string;
     updated_at: string;
 };

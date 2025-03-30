@@ -15,8 +15,20 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Siswa',
-                'email' => 'siswa@csprint.com',
+                'name' => 'Siswa Ketua',
+                'email' => 'siswa1@csprint.com',
+                'password' => bcrypt('siswa123'),
+                'role' => RoleType::SISWA,
+            ],
+            [
+                'name' => 'Siswa Anggota',
+                'email' => 'siswa2@csprint.com',
+                'password' => bcrypt('siswa123'),
+                'role' => RoleType::SISWA,
+            ],
+            [
+                'name' => 'Siswa Testing',
+                'email' => 'siswa3@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
             ],

@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('file_laporan')->nullable();
             $table->text('feedback_tahap_8')->nullable();
             $table->enum('status_tahap_8', ProyekAnswerStatus::values())->nullable();
+            $table->text('refleksi')->nullable();
             $table->timestamps();
         });
 
