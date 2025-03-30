@@ -95,6 +95,8 @@ class ProyekJawabanService
             }
             $validatedData = $validator->validated();
 
+            $jawaban = $this->proyekJawabanRepository->getJawabanById($id);
+
             $answerToUpdate = [];
             if ($step == 2) {
                 $answerToUpdate = [
@@ -112,8 +114,16 @@ class ProyekJawabanService
                     $fileMasalah = $request->file('analisis_masalah');
                     $extension = $fileMasalah->getClientOriginalName();
                     $fileMasalahName = date('YmdHis') . "." . $extension;
+
+                    $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_4);
+                    if (file_exists($oldPath)) {
+                        unlink($oldPath);
+                    }
+
                     $fileMasalah->move(storage_path('app/public/proyek/analisis_masalah'), $fileMasalahName);
                     $fileMasalahPath = '/storage/proyek/analisis_masalah/' . $fileMasalahName;
+                } else {
+                    $fileMasalahPath = $jawaban->jawaban_tahap_4;
                 };
 
                 $answerToUpdate = [
@@ -131,8 +141,16 @@ class ProyekJawabanService
                     $fileJadwal = $request->file('jadwal_proyek');
                     $extension = $fileJadwal->getClientOriginalName();
                     $fileJadwalName = date('YmdHis') . "." . $extension;
+
+                    $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                    if (file_exists($oldPath)) {
+                        unlink($oldPath);
+                    }
+
                     $fileJadwal->move(storage_path('app/public/proyek/jadwal_proyek'), $fileJadwalName);
                     $fileJadwalPath = '/storage/proyek/jadwal_proyek/' . $fileJadwalName;
+                } else {
+                    $fileJadwalPath = $jawaban->jawaban_tahap_6;
                 };
 
                 $answerToUpdate = [
@@ -187,23 +205,49 @@ class ProyekJawabanService
             }
             $validatedData = $validator->validated();
 
-            $jawaban = $this->proyekJawabanRepository->getJawabanById($id);
+            $jadwal = $this->proyekJawabanRepository->getJadwalById($id);
 
             $fileKegiatanPath = null;
             if ($request->hasFile('file_kegiatan')) {
                 $fileKegiatan = $request->file('file_kegiatan');
                 $extension = $fileKegiatan->getClientOriginalName();
                 $fileKegiatanName = date('YmdHis') . "." . $extension;
+
+                $oldPath = storage_path('app/public') . str_replace('/storage', '', $jadwal->file_kegiatan);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+
                 $fileKegiatan->move(storage_path('app/public/proyek/file_kegiatan'), $fileKegiatanName);
                 $fileKegiatanPath = '/storage/proyek/file_kegiatan/' . $fileKegiatanName;
                 $validatedData['file_kegiatan'] = $fileKegiatanPath;
             } else {
-                $validatedData['file_kegiatan'] = $jawaban->file_kegiatan;
+                $validatedData['file_kegiatan'] = $jadwal->file_kegiatan;
             };
 
             $this->proyekJawabanRepository->updateJadwal($validatedData, $id);
 
             return redirect()->back()->with('success', 'Jadwal berhasil diperbarui');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function deleteJadwal(string $id)
+    {
+        try {
+            $jadwal = $this->proyekJawabanRepository->getJadwalById($id);
+
+            if ($jadwal->file_kegiatan) {
+                $oldPath = storage_path('app/public') . str_replace('/storage', '', $jadwal->file_kegiatan);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+
+            $this->proyekJawabanRepository->deleteJadwal($id);
+
+            return redirect()->back()->with('success', 'Jadwal berhasil dihapus');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

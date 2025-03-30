@@ -21,14 +21,18 @@ export default function PjblHeader({
         { description: 'Merencanakan Proyek', link: route('siswa.proyek.syntaxTwo', proyek?.id) },
         { description: 'Membuat Jadwal Proyek', link: route('siswa.proyek.syntaxThree', proyek?.id) },
         { description: 'Pembuatan Proyek', link: route('siswa.proyek.syntaxFour', proyek?.id) },
+        { description: 'Hasil Proyek', link: '#' },
+        { description: 'Evaluasi', link: '#' },
     ];
 
     const [canProceedToSyntax2, setCanProceedToSyntax2] = useState<boolean>(false);
     const [canProceedToSyntax3, setCanProceedToSyntax3] = useState<boolean>(false);
     const [canProceedToSyntax4, setCanProceedToSyntax4] = useState<boolean>(false);
     const [canProceedToSyntax5, setCanProceedToSyntax5] = useState<boolean>(false);
+    const [canProceedToSyntax6, setCanProceedToSyntax6] = useState<boolean>(false);
+    const [canProceedResult, setCanProceedResult] = useState<boolean>(false);
 
-    const isCompleted = [canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5];
+    const isCompleted = [canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, canProceedToSyntax6, canProceedResult];
     const canProceedNextSyntax = [true, ...isCompleted];
 
     useEffect(() => {
@@ -37,6 +41,8 @@ export default function PjblHeader({
             setCanProceedToSyntax3(jawaban.status_tahap_5 === 'diterima');
             setCanProceedToSyntax4(jawaban.status_tahap_6 === 'diterima');
             setCanProceedToSyntax5(jawaban.status_tahap_7 === 'diterima');
+            setCanProceedToSyntax6(jawaban.status_tahap_8 === 'diterima');
+            setCanProceedResult(jawaban.status_tahap_8 === 'diterima');
         }
     }, [jawaban]);
 
@@ -44,24 +50,26 @@ export default function PjblHeader({
         <React.Fragment>
             <Title title={kelompok?.nama ?? 'Kelompok'} className="mb-2" />
             <LabelStatus variant="danger" status={proyek?.tenggat ?? '-'} />
-            <div className="flex items-center justify-between border-b-2 border-b-gray-300 py-5">
-                {syntaxDatas.map((data, index) => {
-                    const isActive = index + 1 <= (currentSyntax ?? 1);
-                    return (
-                        <Link
-                            key={index}
-                            href={isActive || canProceedNextSyntax[index] ? data.link : '#'}
-                            className={`w-60 rounded border p-2 text-lg font-medium ${isActive ? 'bg-primary-100 border-primary text-primary' : 'border-slate-100 bg-slate-100 text-gray-400'}`}
-                        >
-                            <p className="flex items-center gap-2">
-                                Sintaks {index + 1}
-                                {isCompleted[index] && <CircleCheck size={18} />}
-                                {!isActive && !canProceedNextSyntax[index] && <Lock size={18} />}
-                            </p>
-                            <p>{data.description}</p>
-                        </Link>
-                    );
-                })}
+            <div className="w-full overflow-x-auto">
+                <div className="flex items-center gap-4 border-b-2 border-b-gray-300 py-5">
+                    {syntaxDatas.map((data, index) => {
+                        const isActive = index + 1 <= (currentSyntax ?? 1);
+                        return (
+                            <Link
+                                key={index}
+                                href={isActive || canProceedNextSyntax[index] ? data.link : '#'}
+                                className={`min-w-60 rounded border p-2 text-lg font-medium ${isActive ? 'bg-primary-100 border-primary text-primary' : 'border-slate-100 bg-slate-100 text-gray-400'}`}
+                            >
+                                <p className="flex items-center gap-2">
+                                    Sintaks {index + 1}
+                                    {isCompleted[index] && <CircleCheck size={18} />}
+                                    {!isActive && !canProceedNextSyntax[index] && <Lock size={18} />}
+                                </p>
+                                <p>{data.description}</p>
+                            </Link>
+                        );
+                    })}
+                </div>
             </div>
         </React.Fragment>
     );

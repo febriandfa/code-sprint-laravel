@@ -37,6 +37,11 @@ class ProyekJawabanRepository
             ->get();
     }
 
+    public function getJadwalById(string $id)
+    {
+        return DB::table('proyek_jadwals')->where('id', $id)->first();
+    }
+
     public function createJadwal(array $data)
     {
         try {
@@ -50,5 +55,10 @@ class ProyekJawabanRepository
     public function updateJadwal(array $data, string $id)
     {
         return DB::table('proyek_jadwals')->where('id', $id)->update($data);
+    }
+
+    public function deleteJadwal(string $id)
+    {
+        return DB::table('proyek_jadwals')->where('id', $id)->delete();
     }
 }

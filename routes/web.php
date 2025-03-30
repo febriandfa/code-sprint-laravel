@@ -79,6 +79,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::patch('/proyek/{proyekId}/jawab/{id}/update', [ProyekJawabanController::class, 'update'])->name('proyek.updateAnswer');
             Route::post('/proyek/{proyekId}/jadwal', [ProyekJawabanController::class, 'storeJadwal'])->name('proyek.storeJadwal');
             Route::patch('/proyek/{proyekId}/jadwal/{id}/update', [ProyekJawabanController::class, 'updateJadwal'])->name('proyek.updateJadwal');
+            Route::delete('/proyek/{proyekId}/jadwal/{id}/delete', [ProyekJawabanController::class, 'deleteJadwal'])->name('proyek.deleteJadwal');
         });
 
         Route::middleware(['kuis_answered'])->group(function () {

@@ -35,4 +35,9 @@ class ProyekJawabanController extends Controller
     {
         return $this->proyekJawabanService->updateJadwal($request, $id);
     }
+
+    public function deleteJadwal(string $id)
+    {
+        return $this->proyekJawabanService->deleteJadwal($id);
+    }
 }

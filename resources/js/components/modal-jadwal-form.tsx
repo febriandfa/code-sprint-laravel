@@ -1,7 +1,7 @@
 import { getFileName } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
 import { ProyekJadwal } from '@/types';
-import { useForm } from '@inertiajs/react';
+import { router, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import InputField from './input-field';
@@ -64,6 +64,13 @@ export default function ModalJadwalForm({ isOpen, onClose, anggotaId, kelompokId
                 onClose();
             },
         });
+    };
+
+    const handleDeleteOnClick = () => {
+        if (jadwal) {
+            router.delete(route('siswa.proyek.deleteJadwal', { proyekId: proyekId, id: jadwal.id }));
+            onClose();
+        }
     };
 
     useEffect(() => {
@@ -132,14 +139,19 @@ export default function ModalJadwalForm({ isOpen, onClose, anggotaId, kelompokId
                             <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jadwal.file_kegiatan, 'file_kegiatan')}</p>
                         )}
                     </div>
-                    <div className="mt-3 flex w-full justify-end gap-2">
-                        <Button variant="outline-primary" onClick={onClose}>
-                            Batal
+                    <div className="mt-3 flex w-full justify-between">
+                        <Button variant="danger" onClick={handleDeleteOnClick}>
+                            Hapus
                         </Button>
-                        <Button type="submit" disabled={processing}>
-                            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                            {jadwal ? 'Ubah' : 'Tambah'} Kegiatan
-                        </Button>
+                        <div className="flex justify-end gap-2">
+                            <Button variant="outline-primary" onClick={onClose}>
+                                Batal
+                            </Button>
+                            <Button type="submit" disabled={processing}>
+                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                {jadwal ? 'Ubah' : 'Tambah'} Kegiatan
+                            </Button>
+                        </div>
                     </div>
                 </form>
             </div>
