@@ -5,6 +5,7 @@ import Label from '@/components/ui/label';
 import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
+import { getFileName } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
@@ -40,7 +41,7 @@ export default function SyntaxThreeProyek() {
     });
 
     const handleOnSubmit = () => {
-        post(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, answerId: jawaban?.id, step: 6 }), {
+        post(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 6 }), {
             onSuccess: () => {
                 SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
             },
@@ -99,7 +100,12 @@ export default function SyntaxThreeProyek() {
                         onChange={(e) => setData('jadwal_proyek', e.target.files?.[0] ?? null)}
                         error={errors.jadwal_proyek}
                     />
-                    {data.jadwal_proyek && typeof data.jadwal_proyek === 'object' && <p>File terpilih: {data.jadwal_proyek.name}</p>}
+                    {data.jadwal_proyek && typeof data.jadwal_proyek === 'object' && (
+                        <p className="text-sm text-slate-500">File terpilih: {data.jadwal_proyek.name}</p>
+                    )}
+                    {jawaban && jawaban.jawaban_tahap_6 && (
+                        <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jawaban.jawaban_tahap_6, 'jadwal_proyek')}</p>
+                    )}
                 </div>
                 <div>
                     <Label id={`status_tahap_6`} label="Status Pengerjaan" />

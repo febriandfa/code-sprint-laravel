@@ -186,6 +186,19 @@ export type ProyekJawaban = {
     updated_at?: string;
 };
 
+export type ProyekJadwal = {
+    id: number;
+    proyek_id: string;
+    kelompok_id: string;
+    anggota_id: string;
+    kegiatan: string;
+    tenggat: string;
+    status: 'belum' | 'berjalan' | 'selesai';
+    file_kegiatan?: string;
+    created_at: string;
+    updated_at: string;
+};
+
 export interface BreadcrumbItem {
     title: string;
     link: string;

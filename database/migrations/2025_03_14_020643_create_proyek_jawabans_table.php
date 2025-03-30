@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\ProyekAnswerStatus;
+use App\Enums\ProyekStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -51,9 +52,10 @@ return new class extends Migration
             $table->foreignId('proyek_id')->constrained('proyeks')->onDelete('cascade');
             $table->foreignId('kelompok_id')->constrained('kelompoks')->onDelete('cascade');
             $table->foreignId('anggota_id')->constrained('users')->onDelete('cascade');
-            $table->string('nama');
-            $table->dateTime('tenggat_waktu');
-            $table->enum('status', ['belum', 'proses', 'sudah'])->default('belum');
+            $table->string('kegiatan');
+            $table->dateTime('tenggat');
+            $table->enum('status', ProyekStatus::values())->default(ProyekStatus::BELUM);
+            $table->string('file_kegiatan')->nullable();
             $table->timestamps();
         });
     }

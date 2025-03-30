@@ -15,7 +15,7 @@ export default function LabelStatus({ status, variant, size }: LabelStatusProps)
                 info: 'border-primary text-primary bg-primary-100',
                 warning: 'border-warning text-warning bg-warning-100',
                 danger: 'border-danger text-danger bg-danger-100',
-                default: 'border-gray-300 text-gray-300 bg-gray-100',
+                default: 'border-slate-400 text-slate-400 bg-slate-100',
             },
             size: {
                 small: 'text-xs',

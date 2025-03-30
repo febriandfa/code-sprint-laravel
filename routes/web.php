@@ -13,6 +13,7 @@ use App\Http\Controllers\Siswa\KelompokController as SiswaKelompokController;
 use App\Http\Controllers\Siswa\KuisController as SiswaKuisController;
 use App\Http\Controllers\Siswa\MateriController as SiswaMateriController;
 use App\Http\Controllers\Siswa\ProyekController as SiswaProyekController;
+use App\Http\Controllers\Siswa\ProyekJawabanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -73,8 +74,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/proyek/{proyekId}/syntax/1', [SiswaProyekController::class, 'syntaxOne'])->name('proyek.syntaxOne');
             Route::get('/proyek/{proyekId}/syntax/2', [SiswaProyekController::class, 'syntaxtwo'])->name('proyek.syntaxTwo');
             Route::get('/proyek/{proyekId}/syntax/3', [SiswaProyekController::class, 'syntaxThree'])->name('proyek.syntaxThree');
-            Route::post('/proyek/{proyekId}/jawab', [SiswaProyekController::class, 'store'])->name('proyek.storeAnswer');
-            Route::patch('/proyek{proyekId}/jawab/{answerId}', [SiswaProyekController::class, 'update'])->name('proyek.updateAnswer');
+            Route::get('/proyek/{proyekId}/syntax/4', [SiswaProyekController::class, 'syntaxFour'])->name('proyek.syntaxFour');
+            Route::post('/proyek/{proyekId}/jawab', [ProyekJawabanController::class, 'store'])->name('proyek.storeAnswer');
+            Route::patch('/proyek/{proyekId}/jawab/{id}/update', [ProyekJawabanController::class, 'update'])->name('proyek.updateAnswer');
+            Route::post('/proyek/{proyekId}/jadwal', [ProyekJawabanController::class, 'storeJadwal'])->name('proyek.storeJadwal');
+            Route::patch('/proyek/{proyekId}/jadwal/{id}/update', [ProyekJawabanController::class, 'updateJadwal'])->name('proyek.updateJadwal');
         });
 
         Route::middleware(['kuis_answered'])->group(function () {

@@ -37,7 +37,7 @@ export default function SyntaxTwoProyek() {
     });
 
     const handleOnSubmit = () => {
-        patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, answerId: jawaban?.id, step: 5 }), {
+        patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 5 }), {
             onSuccess: () => {
                 SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
             },
