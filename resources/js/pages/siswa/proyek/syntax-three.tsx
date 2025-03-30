@@ -1,0 +1,128 @@
+import InputField from '@/components/input-field';
+import PjblHeader from '@/components/pjbl-header';
+import Button from '@/components/ui/button';
+import Label from '@/components/ui/label';
+import LabelStatus from '@/components/ui/label-status';
+import RichTextView from '@/components/ui/rich-text-view';
+import AuthLayout from '@/layouts/auth-layout';
+import { SwalSuccess } from '@/lib/swal';
+import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban } from '@/types';
+import { useForm, usePage } from '@inertiajs/react';
+import { LoaderCircle } from 'lucide-react';
+import { useRef } from 'react';
+
+type SyntaxThreeForm = {
+    _method: 'PATCH' | 'POST';
+    jadwal_proyek: File | null;
+};
+
+export default function SyntaxThreeProyek() {
+    const { currentSyntax, proyek, kelompok, joinedKelompok, jawaban } = usePage().props as {
+        currentSyntax?: number;
+        proyek?: Proyek;
+        kelompok?: Kelompok;
+        joinedKelompok?: JoinedKelompok;
+        jawaban?: ProyekJawaban;
+    };
+
+    const siswaStatus = joinedKelompok?.status ?? 'anggota';
+    const rencanaProyekRef = useRef<HTMLInputElement | null>(null);
+
+    const breadcrumbs = [
+        { title: 'Project Based Learning', link: route('siswa.proyek.index') },
+        { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },
+        { title: 'Pengerjaan Project Based Learning', link: '#' },
+    ];
+
+    const { data, setData, post, processing, errors } = useForm<Required<SyntaxThreeForm>>({
+        _method: 'PATCH',
+        jadwal_proyek: null,
+    });
+
+    const handleOnSubmit = () => {
+        post(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, answerId: jawaban?.id, step: 6 }), {
+            onSuccess: () => {
+                SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
+            },
+        });
+    };
+
+    const getStatusInfo = (step: number) => {
+        if (!jawaban || !jawaban[`status_tahap_${step}` as keyof ProyekJawaban]) {
+            return { variant: 'default' as const, text: 'Sedang Mengerjakan' };
+        }
+
+        const status = jawaban[`status_tahap_${step}` as keyof ProyekJawaban] as keyof typeof statusMap;
+
+        const statusMap = {
+            diterima: { variant: 'success' as const, text: 'Jawaban Diterima' },
+            ditolak: { variant: 'danger' as const, text: 'Jawaban Ditolak' },
+            direvisi: { variant: 'warning' as const, text: 'Perlu Direvisi' },
+        };
+
+        return statusMap[status] || { variant: 'info' as const, text: 'Sedang Diproses' };
+    };
+
+    const handleDownload = () => {
+        const fileUrl = `/assets/downloads/gantt-chart-example.xlsx`;
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = 'gantt-chart-example.xlsx';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    return (
+        <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
+            <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} />
+            <div className="my-5 space-y-6">
+                <div className="space-y-3">
+                    <LabelStatus status="PERHATIAN!" />
+                    <p className="text-justify text-lg">
+                        Pada Sinatks 3 : Menyusun Jadwal, peserta didik berdiskusi tentang penyusunan jadwan yang akan dikerjakan dalam mengerjakan
+                        studi kasus, untuk jawaban hanya diinputkan oleh ketua kelompok.
+                        <br />
+                        <br />
+                        Jadwal dibuat dengan mengunakan metode GanttChart, dapat dilihat pada contoh.
+                    </p>
+                    <Button variant="outline-primary" onClick={handleDownload}>
+                        Unduh Contoh GanttChart
+                    </Button>
+                </div>
+                <div>
+                    <InputField
+                        id="jadwal_proyek"
+                        label="Upload Jadwal Proyek"
+                        type="file"
+                        ref={rencanaProyekRef}
+                        onChange={(e) => setData('jadwal_proyek', e.target.files?.[0] ?? null)}
+                        error={errors.jadwal_proyek}
+                    />
+                    {data.jadwal_proyek && typeof data.jadwal_proyek === 'object' && <p>File terpilih: {data.jadwal_proyek.name}</p>}
+                </div>
+                <div>
+                    <Label id={`status_tahap_6`} label="Status Pengerjaan" />
+                    <LabelStatus variant={getStatusInfo(6).variant} status={getStatusInfo(6).text} />
+                </div>
+                {jawaban && jawaban.feedback_tahap_6 && (
+                    <div>
+                        <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_6} />
+                    </div>
+                )}
+
+                <div className="flex justify-end">
+                    {siswaStatus === 'ketua' && (
+                        <div className="flex gap-2">
+                            <Button variant="outline-primary">Edit</Button>
+                            <Button onClick={handleOnSubmit} disabled={processing}>
+                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                Kirim
+                            </Button>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </AuthLayout>
+    );
+}

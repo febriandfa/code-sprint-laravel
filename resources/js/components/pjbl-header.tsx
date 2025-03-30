@@ -19,7 +19,7 @@ export default function PjblHeader({
     const syntaxDatas = [
         { description: 'Identifikasi Masalah', link: route('siswa.proyek.syntaxOne', proyek?.id) },
         { description: 'Merencanakan Proyek', link: route('siswa.proyek.syntaxTwo', proyek?.id) },
-        { description: 'Membuat Jadwal Proyek', link: '#' },
+        { description: 'Membuat Jadwal Proyek', link: route('siswa.proyek.syntaxThree', proyek?.id) },
         { description: 'Pembuatan Proyek', link: '#' },
     ];
 

@@ -52,6 +52,8 @@ class ProyekService
             $rules = ['analisis_masalah' => 'file|mimes:pdf|max:2048',];
         } elseif ($step == 5) {
             $rules = ['rencana_proyek' => 'required|string',];
+        } elseif ($step == 6) {
+            $rules = ['jadwal_proyek' => 'file|mimes:xlsx,xls,csv|max:2048',];
         }
 
         return Validator::make($data, $rules);
@@ -150,23 +152,37 @@ class ProyekService
                     'status_tahap_3' => ProyekAnswerStatus::PROSES,
                 ];
             } elseif ($step == 4) {
-                $filePath = null;
+                $fileMasalahPath = null;
                 if ($request->hasFile('analisis_masalah')) {
-                    $file = $request->file('analisis_masalah');
-                    $extension = $file->getClientOriginalName();
-                    $fileName = date('YmdHis') . "." . $extension;
-                    $file->move(storage_path('app/public/proyek/analisis_masalah'), $fileName);
-                    $filePath = '/storage/proyek/analisis_masalah/' . $fileName;
+                    $fileMasalah = $request->file('analisis_masalah');
+                    $extension = $fileMasalah->getClientOriginalName();
+                    $fileMasalahName = date('YmdHis') . "." . $extension;
+                    $fileMasalah->move(storage_path('app/public/proyek/analisis_masalah'), $fileMasalahName);
+                    $fileMasalahPath = '/storage/proyek/analisis_masalah/' . $fileMasalahName;
                 };
 
                 $answerToUpdate = [
-                    'jawaban_tahap_4' => $filePath,
+                    'jawaban_tahap_4' => $fileMasalahPath,
                     'status_tahap_4' => ProyekAnswerStatus::PROSES,
                 ];
             } elseif ($step == 5) {
                 $answerToUpdate = [
                     'jawaban_tahap_5' => $validatedData['rencana_proyek'],
                     'status_tahap_5' => ProyekAnswerStatus::PROSES,
+                ];
+            } elseif ($step == 6) {
+                $fileJadwalPath = null;
+                if ($request->hasFile('jadwal_proyek')) {
+                    $fileJadwal = $request->file('jadwal_proyek');
+                    $extension = $fileJadwal->getClientOriginalName();
+                    $fileJadwalName = date('YmdHis') . "." . $extension;
+                    $fileJadwal->move(storage_path('app/public/proyek/jadwal_proyek'), $fileJadwalName);
+                    $fileJadwalPath = '/storage/proyek/jadwal_proyek/' . $fileJadwalName;
+                };
+
+                $answerToUpdate = [
+                    'jawaban_tahap_6' => $fileJadwalPath,
+                    'status_tahap_6' => ProyekAnswerStatus::PROSES,
                 ];
             }
 
