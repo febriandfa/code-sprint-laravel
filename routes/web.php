@@ -75,6 +75,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/proyek/{proyekId}/syntax/2', [SiswaProyekController::class, 'syntaxtwo'])->name('proyek.syntaxTwo');
             Route::get('/proyek/{proyekId}/syntax/3', [SiswaProyekController::class, 'syntaxThree'])->name('proyek.syntaxThree');
             Route::get('/proyek/{proyekId}/syntax/4', [SiswaProyekController::class, 'syntaxFour'])->name('proyek.syntaxFour');
+            Route::get('/proyek/{proyekId}/syntax/5', [SiswaProyekController::class, 'syntaxFive'])->name('proyek.syntaxFive');
+            Route::get('/proyek/{proyekId}/syntax/6', [SiswaProyekController::class, 'syntaxSix'])->name('proyek.syntaxSix');
             Route::post('/proyek/{proyekId}/jawab', [ProyekJawabanController::class, 'store'])->name('proyek.storeAnswer');
             Route::patch('/proyek/{proyekId}/jawab/{id}/update', [ProyekJawabanController::class, 'update'])->name('proyek.updateAnswer');
             Route::post('/proyek/{proyekId}/jadwal', [ProyekJawabanController::class, 'storeJadwal'])->name('proyek.storeJadwal');

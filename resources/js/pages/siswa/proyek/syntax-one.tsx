@@ -6,7 +6,7 @@ import Label from '@/components/ui/label';
 import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
-import { getFileName } from '@/lib/helper';
+import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
@@ -176,22 +176,6 @@ export default function SyntaxOneProyek() {
         }
     }, [jawaban]);
 
-    const getStatusInfo = (step: number) => {
-        if (!jawaban || !jawaban[`status_tahap_${step}` as keyof ProyekJawaban]) {
-            return { variant: 'default' as const, text: 'Sedang Mengerjakan' };
-        }
-
-        const status = jawaban[`status_tahap_${step}` as keyof ProyekJawaban] as keyof typeof statusMap;
-
-        const statusMap = {
-            diterima: { variant: 'success' as const, text: 'Jawaban Diterima' },
-            ditolak: { variant: 'danger' as const, text: 'Jawaban Ditolak' },
-            direvisi: { variant: 'warning' as const, text: 'Perlu Direvisi' },
-        };
-
-        return statusMap[status] || { variant: 'info' as const, text: 'Sedang Diproses' };
-    };
-
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
             <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} />
@@ -222,6 +206,7 @@ export default function SyntaxOneProyek() {
                         id="rumusan_masalah"
                         label="Rumusan Masalah"
                         placeholder="Masukkan jawaban anda"
+                        required
                         value={dataOne.rumusan_masalah}
                         onChange={(value: string) => setDataOne('rumusan_masalah', value)}
                         error={errorsOne.rumusan_masalah}
@@ -232,6 +217,7 @@ export default function SyntaxOneProyek() {
                         id="indikator"
                         label="Menentukan Indikator"
                         placeholder="Masukkan jawaban anda"
+                        required
                         value={dataTwo.indikator}
                         onChange={(value: string) => setDataTwo('indikator', value)}
                         error={errorsTwo.indikator}
@@ -244,6 +230,7 @@ export default function SyntaxOneProyek() {
                             label="Analisis Masalah"
                             type="file"
                             ref={analisisMasalahRef}
+                            required
                             onChange={(e) => setDataThree('analisis_masalah', e.target.files?.[0] ?? null)}
                             error={errorsThree.analisis_masalah}
                         />
@@ -259,7 +246,10 @@ export default function SyntaxOneProyek() {
                     <React.Fragment>
                         <div>
                             <Label id={`status_tahap_${currentStep}`} label="Status Pengerjaan" />
-                            <LabelStatus variant={getStatusInfo(currentStep).variant} status={getStatusInfo(currentStep).text} />
+                            <LabelStatus
+                                variant={getProyekAnswerStatusInfo(currentStep, jawaban).variant}
+                                status={getProyekAnswerStatusInfo(currentStep, jawaban).text}
+                            />
                         </div>
                         {jawaban && jawaban[`feedback_tahap_${currentStep}` as keyof ProyekJawaban] && (
                             <div>

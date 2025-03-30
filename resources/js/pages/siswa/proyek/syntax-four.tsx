@@ -5,10 +5,11 @@ import Label from '@/components/ui/label';
 import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
-import { getFileName } from '@/lib/helper';
+import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
+import { SwalSuccess } from '@/lib/swal';
 import { Auth, JoinedKelompok, Kelompok, Proyek, ProyekJadwal, ProyekJawaban } from '@/types';
-import { usePage } from '@inertiajs/react';
-import { FileText, Plus } from 'lucide-react';
+import { useForm, usePage } from '@inertiajs/react';
+import { FileText, LoaderCircle, Plus } from 'lucide-react';
 import { useState } from 'react';
 
 export default function SyntaxTwoProyek() {
@@ -24,6 +25,7 @@ export default function SyntaxTwoProyek() {
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [currentJadwal, setCurrentJadwal] = useState<ProyekJadwal | null>(null);
+    const siswaStatus = joinedKelompok?.status ?? 'anggota';
 
     console.log('kelompok', kelompok);
 
@@ -33,20 +35,14 @@ export default function SyntaxTwoProyek() {
         { title: 'Pengerjaan Project Based Learning', link: '#' },
     ];
 
-    const getStatusInfo = (step: number) => {
-        if (!jawaban || !jawaban[`status_tahap_${step}` as keyof ProyekJawaban]) {
-            return { variant: 'default' as const, text: 'Sedang Mengerjakan' };
-        }
+    const { patch, processing } = useForm();
 
-        const status = jawaban[`status_tahap_${step}` as keyof ProyekJawaban] as keyof typeof statusMap;
-
-        const statusMap = {
-            diterima: { variant: 'success' as const, text: 'Jawaban Diterima' },
-            ditolak: { variant: 'danger' as const, text: 'Jawaban Ditolak' },
-            direvisi: { variant: 'warning' as const, text: 'Perlu Direvisi' },
-        };
-
-        return statusMap[status] || { variant: 'info' as const, text: 'Sedang Diproses' };
+    const handleOnSubmit = () => {
+        patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 7 }), {
+            onSuccess: () => {
+                SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
+            },
+        });
     };
 
     const handleOpenModal = (jadwal?: ProyekJadwal) => {
@@ -119,13 +115,25 @@ export default function SyntaxTwoProyek() {
                 </div>
                 <div>
                     <Label id={`status_tahap_7`} label="Status Pengerjaan" />
-                    <LabelStatus variant={getStatusInfo(7).variant} status={getStatusInfo(7).text} />
+                    <LabelStatus variant={getProyekAnswerStatusInfo(7, jawaban).variant} status={getProyekAnswerStatusInfo(7, jawaban).text} />
                 </div>
                 {jawaban && jawaban.feedback_tahap_7 && (
                     <div>
                         <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_7} />
                     </div>
                 )}
+
+                <div className="flex justify-end">
+                    {siswaStatus === 'ketua' && (
+                        <div className="flex gap-2">
+                            <Button variant="outline-primary">Edit</Button>
+                            <Button onClick={handleOnSubmit} disabled={processing}>
+                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                Kirim
+                            </Button>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {modalOpen && (

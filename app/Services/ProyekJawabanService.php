@@ -43,6 +43,11 @@ class ProyekJawabanService
             $rules = ['rencana_proyek' => 'required|string',];
         } elseif ($step == 6) {
             $rules = ['jadwal_proyek' => 'file|mimes:xlsx,xls,csv|max:2048',];
+        } elseif ($step == 8) {
+            $rules = [
+                'file_proyek' => 'file|mimes:zip,rar',
+                'file_laporan' => 'file|mimes:pdf,ppt,pptx,doc,docx',
+            ];
         }
 
         return Validator::make($data, $rules);
@@ -115,9 +120,11 @@ class ProyekJawabanService
                     $extension = $fileMasalah->getClientOriginalName();
                     $fileMasalahName = date('YmdHis') . "." . $extension;
 
-                    $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_4);
-                    if (file_exists($oldPath)) {
-                        unlink($oldPath);
+                    if ($jawaban->jawaban_tahap_4) {
+                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_4);
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath);
+                        }
                     }
 
                     $fileMasalah->move(storage_path('app/public/proyek/analisis_masalah'), $fileMasalahName);
@@ -142,9 +149,11 @@ class ProyekJawabanService
                     $extension = $fileJadwal->getClientOriginalName();
                     $fileJadwalName = date('YmdHis') . "." . $extension;
 
-                    $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
-                    if (file_exists($oldPath)) {
-                        unlink($oldPath);
+                    if ($jawaban->jawaban_tahap_6) {
+                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath);
+                        }
                     }
 
                     $fileJadwal->move(storage_path('app/public/proyek/jadwal_proyek'), $fileJadwalName);
@@ -156,6 +165,54 @@ class ProyekJawabanService
                 $answerToUpdate = [
                     'jawaban_tahap_6' => $fileJadwalPath,
                     'status_tahap_6' => ProyekAnswerStatus::PROSES,
+                ];
+            } elseif ($step == 7) {
+                $answerToUpdate = [
+                    'status_tahap_7' => ProyekAnswerStatus::PROSES,
+                ];
+            } elseif ($step == 8) {
+                $fileProyekPath = null;
+                if ($request->hasFile('file_proyek')) {
+                    $fileProyek = $request->file('file_proyek');
+                    $extension = $fileProyek->getClientOriginalName();
+                    $fileProyekName = date('YmdHis') . "." . $extension;
+
+                    if ($jawaban->jawaban_tahap_6) {
+                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath);
+                        }
+                    }
+
+                    $fileProyek->move(storage_path('app/public/proyek/file_proyek'), $fileProyekName);
+                    $fileProyekPath = '/storage/proyek/file_proyek/' . $fileProyekName;
+                } else {
+                    $fileProyekPath = $jawaban->jawaban_tahap_6;
+                };
+
+                $fileLaporanPath = null;
+                if ($request->hasFile('file_laporan')) {
+                    $fileLaporan = $request->file('file_laporan');
+                    $extension = $fileLaporan->getClientOriginalName();
+                    $fileLaporanName = date('YmdHis') . "." . $extension;
+
+                    if ($jawaban->jawaban_tahap_6) {
+                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath);
+                        }
+                    }
+
+                    $fileLaporan->move(storage_path('app/public/proyek/file_laporan'), $fileLaporanName);
+                    $fileLaporanPath = '/storage/proyek/file_laporan/' . $fileLaporanName;
+                } else {
+                    $fileLaporanPath = $jawaban->jawaban_tahap_6;
+                };
+
+                $answerToUpdate = [
+                    'file_proyek' => $fileProyekPath,
+                    'file_laporan' => $fileLaporanPath,
+                    'status_tahap_8' => ProyekAnswerStatus::PROSES,
                 ];
             }
 

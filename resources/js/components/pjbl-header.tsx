@@ -21,8 +21,8 @@ export default function PjblHeader({
         { description: 'Merencanakan Proyek', link: route('siswa.proyek.syntaxTwo', proyek?.id) },
         { description: 'Membuat Jadwal Proyek', link: route('siswa.proyek.syntaxThree', proyek?.id) },
         { description: 'Pembuatan Proyek', link: route('siswa.proyek.syntaxFour', proyek?.id) },
-        { description: 'Hasil Proyek', link: '#' },
-        { description: 'Evaluasi', link: '#' },
+        { description: 'Hasil Proyek', link: route('siswa.proyek.syntaxFive', proyek?.id) },
+        { description: 'Evaluasi', link: route('siswa.proyek.syntaxSix', proyek?.id) },
     ];
 
     const [canProceedToSyntax2, setCanProceedToSyntax2] = useState<boolean>(false);

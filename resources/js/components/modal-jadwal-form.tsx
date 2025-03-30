@@ -140,10 +140,12 @@ export default function ModalJadwalForm({ isOpen, onClose, anggotaId, kelompokId
                         )}
                     </div>
                     <div className="mt-3 flex w-full justify-between">
-                        <Button variant="danger" onClick={handleDeleteOnClick}>
-                            Hapus
-                        </Button>
-                        <div className="flex justify-end gap-2">
+                        {jadwal && (
+                            <Button variant="danger" onClick={handleDeleteOnClick}>
+                                Hapus
+                            </Button>
+                        )}
+                        <div className="flex w-full justify-end gap-2">
                             <Button variant="outline-primary" onClick={onClose}>
                                 Batal
                             </Button>

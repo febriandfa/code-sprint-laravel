@@ -5,6 +5,7 @@ import Label from '@/components/ui/label';
 import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
+import { getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
@@ -53,22 +54,6 @@ export default function SyntaxTwoProyek() {
         }
     }, [jawaban]);
 
-    const getStatusInfo = (step: number) => {
-        if (!jawaban || !jawaban[`status_tahap_${step}` as keyof ProyekJawaban]) {
-            return { variant: 'default' as const, text: 'Sedang Mengerjakan' };
-        }
-
-        const status = jawaban[`status_tahap_${step}` as keyof ProyekJawaban] as keyof typeof statusMap;
-
-        const statusMap = {
-            diterima: { variant: 'success' as const, text: 'Jawaban Diterima' },
-            ditolak: { variant: 'danger' as const, text: 'Jawaban Ditolak' },
-            direvisi: { variant: 'warning' as const, text: 'Perlu Direvisi' },
-        };
-
-        return statusMap[status] || { variant: 'info' as const, text: 'Sedang Diproses' };
-    };
-
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
             <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} />
@@ -77,13 +62,14 @@ export default function SyntaxTwoProyek() {
                     id="rencana_proyek"
                     label="Merencanakan Proyek"
                     placeholder="Masukkan jawaban anda"
+                    required
                     value={data.rencana_proyek}
                     onChange={(value: string) => setData('rencana_proyek', value)}
                     error={errors.rencana_proyek}
                 />
                 <div>
                     <Label id={`status_tahap_5`} label="Status Pengerjaan" />
-                    <LabelStatus variant={getStatusInfo(5).variant} status={getStatusInfo(5).text} />
+                    <LabelStatus variant={getProyekAnswerStatusInfo(5, jawaban).variant} status={getProyekAnswerStatusInfo(5, jawaban).text} />
                 </div>
                 {jawaban && jawaban.feedback_tahap_5 && (
                     <div>

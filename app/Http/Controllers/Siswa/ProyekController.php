@@ -103,4 +103,22 @@ class ProyekController extends Controller
             'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban', 'jadwals'
         ));
     }
+
+    public function syntaxFive(string $id)
+    {
+        $currentSyntax = SyntaxEnum::SYNTAX_FIVE;
+        $proyek = $this->proyekRepository->getById($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
+        $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
+
+        return Inertia::render('siswa/proyek/syntax-five', compact(
+            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban'
+        ));
+    }
+
+    public function syntaxSix(string $id)
+    {
+        //
+    }
 }

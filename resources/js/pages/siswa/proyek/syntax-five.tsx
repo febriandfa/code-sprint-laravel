@@ -12,12 +12,13 @@ import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { useRef } from 'react';
 
-type SyntaxThreeForm = {
+type SyntaxFiveForm = {
     _method: 'PATCH' | 'POST';
-    jadwal_proyek: File | null;
+    file_proyek: File | null;
+    file_laporan: File | null;
 };
 
-export default function SyntaxThreeProyek() {
+export default function SyntaxFiveProyek() {
     const { currentSyntax, proyek, kelompok, joinedKelompok, jawaban } = usePage().props as {
         currentSyntax?: number;
         proyek?: Proyek;
@@ -27,7 +28,8 @@ export default function SyntaxThreeProyek() {
     };
 
     const siswaStatus = joinedKelompok?.status ?? 'anggota';
-    const rencanaProyekRef = useRef<HTMLInputElement | null>(null);
+    const fileProyekRef = useRef<HTMLInputElement | null>(null);
+    const fileLaporanRef = useRef<HTMLInputElement | null>(null);
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
@@ -35,70 +37,65 @@ export default function SyntaxThreeProyek() {
         { title: 'Pengerjaan Project Based Learning', link: '#' },
     ];
 
-    const { data, setData, post, processing, errors } = useForm<Required<SyntaxThreeForm>>({
+    const { data, setData, post, processing, errors } = useForm<Required<SyntaxFiveForm>>({
         _method: 'PATCH',
-        jadwal_proyek: null,
+        file_proyek: null,
+        file_laporan: null,
     });
 
     const handleOnSubmit = () => {
-        post(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 6 }), {
+        post(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 8 }), {
             onSuccess: () => {
                 SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
             },
         });
     };
 
-    const handleDownload = () => {
-        const fileUrl = `/assets/downloads/gantt-chart-example.xlsx`;
-        const link = document.createElement('a');
-        link.href = fileUrl;
-        link.download = 'gantt-chart-example.xlsx';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
             <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} />
             <div className="my-5 space-y-6">
-                <div className="space-y-3">
-                    <LabelStatus status="PERHATIAN!" />
-                    <p className="text-justify text-lg">
-                        Pada Sinatks 3 : Menyusun Jadwal, peserta didik berdiskusi tentang penyusunan jadwan yang akan dikerjakan dalam mengerjakan
-                        studi kasus, untuk jawaban hanya diinputkan oleh ketua kelompok.
-                        <br />
-                        <br />
-                        Jadwal dibuat dengan mengunakan metode GanttChart, dapat dilihat pada contoh.
-                    </p>
-                    <Button variant="outline-primary" onClick={handleDownload}>
-                        Unduh Contoh GanttChart
-                    </Button>
+                <div>
+                    <InputField
+                        id="file_proyek"
+                        label="Upload File Proyek Akhir (ZIP)"
+                        type="file"
+                        ref={fileProyekRef}
+                        required
+                        onChange={(e) => setData('file_proyek', e.target.files?.[0] ?? null)}
+                        error={errors.file_proyek}
+                    />
+                    {data.file_proyek && typeof data.file_proyek === 'object' && (
+                        <p className="text-sm text-slate-500">File terpilih: {data.file_proyek.name}</p>
+                    )}
+                    {jawaban && jawaban.file_proyek && (
+                        <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jawaban.file_proyek, 'file_proyek')}</p>
+                    )}
                 </div>
                 <div>
                     <InputField
-                        id="jadwal_proyek"
-                        label="Upload Jadwal Proyek"
+                        id="file_laporan"
+                        label="Upload File Laporan/Media Presentasi"
                         type="file"
-                        ref={rencanaProyekRef}
+                        ref={fileLaporanRef}
                         required
-                        onChange={(e) => setData('jadwal_proyek', e.target.files?.[0] ?? null)}
-                        error={errors.jadwal_proyek}
+                        onChange={(e) => setData('file_laporan', e.target.files?.[0] ?? null)}
+                        error={errors.file_laporan}
                     />
-                    {data.jadwal_proyek && typeof data.jadwal_proyek === 'object' && (
-                        <p className="text-sm text-slate-500">File terpilih: {data.jadwal_proyek.name}</p>
+                    {data.file_laporan && typeof data.file_laporan === 'object' && (
+                        <p className="text-sm text-slate-500">File terpilih: {data.file_laporan.name}</p>
                     )}
-                    {jawaban && jawaban.jawaban_tahap_6 && (
-                        <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jawaban.jawaban_tahap_6, 'jadwal_proyek')}</p>
+                    {jawaban && jawaban.file_laporan && (
+                        <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jawaban.file_laporan, 'file_laporan')}</p>
                     )}
                 </div>
                 <div>
-                    <Label id={`status_tahap_6`} label="Status Pengerjaan" />
-                    <LabelStatus variant={getProyekAnswerStatusInfo(6, jawaban).variant} status={getProyekAnswerStatusInfo(6, jawaban).text} />
+                    <Label id={`status_tahap_8`} label="Status Pengerjaan" />
+                    <LabelStatus variant={getProyekAnswerStatusInfo(8, jawaban).variant} status={getProyekAnswerStatusInfo(8, jawaban).text} />
                 </div>
-                {jawaban && jawaban.feedback_tahap_6 && (
+                {jawaban && jawaban.feedback_tahap_8 && (
                     <div>
-                        <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_6} />
+                        <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_8} />
                     </div>
                 )}
 
