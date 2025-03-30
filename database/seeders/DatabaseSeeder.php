@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             MateriSeeder::class,
             KuisSeeder::class,
+            KuisSoalSeeder::class,
             ProyekSeeder::class,
             KelompokSeeder::class,
             ProyekJawabanSeeder::class,

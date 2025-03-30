@@ -46,13 +46,11 @@ class KelompokSeeder extends Seeder
         ];
 
         foreach ($dataKelompoks as $kelompok) {
-            $createdKelompok = \App\Models\Kelompok::create($kelompok);
+            \App\Models\Kelompok::create($kelompok);
+        }
 
-            foreach ($dataAnggotas as $anggota) {
-                if ($anggota['kelompok_id'] === $createdKelompok->id) {
-                    \App\Models\KelompokAnggota::create($anggota);
-                }
-            }
+        foreach ($dataAnggotas as $anggota) {
+            \App\Models\KelompokAnggota::create($anggota);
         }
     }
 }

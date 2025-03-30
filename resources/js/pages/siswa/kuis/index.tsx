@@ -18,6 +18,7 @@ export default function IndexKuis() {
                             content="kuis"
                             routeShow={route('siswa.kuis.show', kuis.id)}
                             disabled={kuis.is_completed}
+                            isKuis
                         >
                             <div className="grid grid-cols-2">
                                 <div>
