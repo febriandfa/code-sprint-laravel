@@ -131,12 +131,11 @@ class ProyekController extends Controller
         $currentSyntax = SyntaxEnum::SYNTAX_SIX;
         $proyek = $this->proyekRepository->getById($id);
         $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
-        $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
         $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
 
         return Inertia::render('siswa/proyek/syntax-six', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'joinedKelompok', 'jawaban', 'nilai'
+            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'nilai'
         ));
     }
 }

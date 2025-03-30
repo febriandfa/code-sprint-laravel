@@ -1,4 +1,5 @@
 import ModalJadwalForm from '@/components/modal-jadwal-form';
+import PjblFooter from '@/components/pjbl-footer';
 import PjblHeader from '@/components/pjbl-header';
 import Button from '@/components/ui/button';
 import Label from '@/components/ui/label';
@@ -9,7 +10,7 @@ import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
 import { Auth, JoinedKelompok, Kelompok, Proyek, ProyekJadwal, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
-import { FileText, LoaderCircle, Plus } from 'lucide-react';
+import { FileText, Plus } from 'lucide-react';
 import { useState } from 'react';
 
 export default function SyntaxTwoProyek() {
@@ -118,23 +119,9 @@ export default function SyntaxTwoProyek() {
                     <Label id={`status_tahap_7`} label="Status Pengerjaan" />
                     <LabelStatus variant={getProyekAnswerStatusInfo(7, jawaban).variant} status={getProyekAnswerStatusInfo(7, jawaban).text} />
                 </div>
-                {jawaban && jawaban.feedback_tahap_7 && (
-                    <div>
-                        <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_7} />
-                    </div>
-                )}
+                {jawaban && jawaban.feedback_tahap_7 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_7} />}
 
-                <div className="flex justify-end">
-                    {siswaStatus === 'ketua' && (
-                        <div className="flex gap-2">
-                            <Button variant="outline-primary">Edit</Button>
-                            <Button onClick={handleOnSubmit} disabled={processing}>
-                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                                Kirim
-                            </Button>
-                        </div>
-                    )}
-                </div>
+                <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />
             </div>
 
             {modalOpen && (

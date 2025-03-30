@@ -1,5 +1,6 @@
 import InputField from '@/components/input-field';
 import InputQuill from '@/components/input-quill';
+import PjblFooter from '@/components/pjbl-footer';
 import PjblHeader from '@/components/pjbl-header';
 import Button from '@/components/ui/button';
 import Label from '@/components/ui/label';
@@ -10,7 +11,7 @@ import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
-import { CircleCheck, LoaderCircle, Lock } from 'lucide-react';
+import { CircleCheck, Lock } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
 type StepOneForm = {
@@ -253,12 +254,7 @@ export default function SyntaxOneProyek() {
                             />
                         </div>
                         {jawaban && jawaban[`feedback_tahap_${currentStep}` as keyof ProyekJawaban] && (
-                            <div>
-                                <RichTextView
-                                    label="Feedback Guru"
-                                    value={jawaban[`feedback_tahap_${currentStep}` as keyof ProyekJawaban] as string}
-                                />
-                            </div>
+                            <RichTextView label="Feedback Guru" value={jawaban[`feedback_tahap_${currentStep}` as keyof ProyekJawaban] as string} />
                         )}
                     </React.Fragment>
                 )}
@@ -278,15 +274,7 @@ export default function SyntaxOneProyek() {
                             </Button>
                         )}
                     </div>
-                    {siswaStatus === 'ketua' && currentStep > 1 && (
-                        <div className="flex gap-2">
-                            <Button variant="outline-primary">Edit</Button>
-                            <Button onClick={handleOnSubmit} disabled={isProcessing}>
-                                {isProcessing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                                Kirim
-                            </Button>
-                        </div>
-                    )}
+                    {currentStep > 1 && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={isProcessing} />}
                 </div>
             </div>
         </AuthLayout>

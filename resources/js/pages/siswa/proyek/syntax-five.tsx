@@ -1,6 +1,6 @@
 import InputField from '@/components/input-field';
+import PjblFooter from '@/components/pjbl-footer';
 import PjblHeader from '@/components/pjbl-header';
-import Button from '@/components/ui/button';
 import Label from '@/components/ui/label';
 import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
@@ -9,7 +9,6 @@ import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
 import { useRef } from 'react';
 
 type SyntaxFiveForm = {
@@ -94,23 +93,9 @@ export default function SyntaxFiveProyek() {
                     <Label id={`status_tahap_8`} label="Status Pengerjaan" />
                     <LabelStatus variant={getProyekAnswerStatusInfo(8, jawaban).variant} status={getProyekAnswerStatusInfo(8, jawaban).text} />
                 </div>
-                {jawaban && jawaban.feedback_tahap_8 && (
-                    <div>
-                        <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_8} />
-                    </div>
-                )}
+                {jawaban && jawaban.feedback_tahap_8 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_8} />}
 
-                <div className="flex justify-end">
-                    {siswaStatus === 'ketua' && (
-                        <div className="flex gap-2">
-                            <Button variant="outline-primary">Edit</Button>
-                            <Button onClick={handleOnSubmit} disabled={processing}>
-                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                                Kirim
-                            </Button>
-                        </div>
-                    )}
-                </div>
+                <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />
             </div>
         </AuthLayout>
     );

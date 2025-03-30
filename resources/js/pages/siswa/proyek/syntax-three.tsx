@@ -1,4 +1,5 @@
 import InputField from '@/components/input-field';
+import PjblFooter from '@/components/pjbl-footer';
 import PjblHeader from '@/components/pjbl-header';
 import Button from '@/components/ui/button';
 import Label from '@/components/ui/label';
@@ -9,7 +10,6 @@ import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
 import { useRef } from 'react';
 
 type SyntaxThreeForm = {
@@ -97,23 +97,9 @@ export default function SyntaxThreeProyek() {
                     <Label id={`status_tahap_6`} label="Status Pengerjaan" />
                     <LabelStatus variant={getProyekAnswerStatusInfo(6, jawaban).variant} status={getProyekAnswerStatusInfo(6, jawaban).text} />
                 </div>
-                {jawaban && jawaban.feedback_tahap_6 && (
-                    <div>
-                        <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_6} />
-                    </div>
-                )}
+                {jawaban && jawaban.feedback_tahap_6 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_6} />}
 
-                <div className="flex justify-end">
-                    {siswaStatus === 'ketua' && (
-                        <div className="flex gap-2">
-                            <Button variant="outline-primary">Edit</Button>
-                            <Button onClick={handleOnSubmit} disabled={processing}>
-                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                                Kirim
-                            </Button>
-                        </div>
-                    )}
-                </div>
+                <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />
             </div>
         </AuthLayout>
     );

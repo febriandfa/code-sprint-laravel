@@ -1,6 +1,6 @@
 import InputQuill from '@/components/input-quill';
+import PjblFooter from '@/components/pjbl-footer';
 import PjblHeader from '@/components/pjbl-header';
-import Button from '@/components/ui/button';
 import Label from '@/components/ui/label';
 import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
@@ -9,7 +9,6 @@ import { getProyekAnswerStatusInfo } from '@/lib/helper';
 import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
 import { useEffect } from 'react';
 
 type SyntaxTwoForm = {
@@ -72,23 +71,9 @@ export default function SyntaxTwoProyek() {
                     <Label id={`status_tahap_5`} label="Status Pengerjaan" />
                     <LabelStatus variant={getProyekAnswerStatusInfo(5, jawaban).variant} status={getProyekAnswerStatusInfo(5, jawaban).text} />
                 </div>
-                {jawaban && jawaban.feedback_tahap_5 && (
-                    <div>
-                        <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_5} />
-                    </div>
-                )}
+                {jawaban && jawaban.feedback_tahap_5 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_5} />}
 
-                <div className="flex justify-end">
-                    {siswaStatus === 'ketua' && (
-                        <div className="flex gap-2">
-                            <Button variant="outline-primary">Edit</Button>
-                            <Button onClick={handleOnSubmit} disabled={processing}>
-                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                                Kirim
-                            </Button>
-                        </div>
-                    )}
-                </div>
+                <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />
             </div>
         </AuthLayout>
     );

@@ -214,9 +214,10 @@ export type ProyekNilai = {
     nilai_waktu: number;
     nilai_hasil_proyek: number;
     nilai: number;
-    feedback: string;
+    evaluasi: string;
     created_at: string;
     updated_at: string;
+    [key: string]: number | string;
 };
 
 export interface BreadcrumbItem {

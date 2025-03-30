@@ -35,7 +35,7 @@ export default function PjblHeader({
     const [canProceedResult, setCanProceedResult] = useState<boolean>(false);
 
     const isCompleted = [canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, canProceedToSyntax6, canProceedResult];
-    const canProceedNextSyntax = [true, ...isCompleted];
+    const canProceedNextSyntax = [true, canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, nilai !== null];
 
     useEffect(() => {
         if (jawaban) {
