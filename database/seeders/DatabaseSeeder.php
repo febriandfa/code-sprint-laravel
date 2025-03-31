@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             KelompokSeeder::class,
             ProyekJawabanSeeder::class,
             ProyekJadwalSeeder::class,
-            ProyekNilaiSeeder::class,
+            // ProyekNilaiSeeder::class,
         ]);
 
         // User::factory()->create([

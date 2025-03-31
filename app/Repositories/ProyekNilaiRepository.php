@@ -17,7 +17,13 @@ class ProyekNilaiRepository
 
     public function create(array $data)
     {
-        return DB::table('proyek_nilais')->insertGetId($data);
+        // dd($data);
+        try {
+            return DB::table('proyek_nilais')->insertGetId($data);
+        } catch (\Exception $e) {
+            dd($e);
+            return false;
+        }
     }
 
     public function update(string $id, array $data)

@@ -8,6 +8,7 @@ type InputSelectProps = {
     placeholder?: string;
     error?: string;
     value?: string | number | (string | number)[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChange?: (e: any) => void;
     required?: boolean;
     disabled?: boolean;

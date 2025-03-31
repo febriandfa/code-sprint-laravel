@@ -98,7 +98,7 @@ export default function SyntaxSix() {
         },
         {
             name: 'Evaluasi',
-            cell: (row: ProyekNilai) => <span className="line-clamp-2">{stripHtml(row.evaluasi)}</span>,
+            cell: (row: ProyekNilai) => <span className="line-clamp-2">{row.evaluasi ? stripHtml(row.evaluasi) : 'Tidak ada evaluasi'}</span>,
             sortable: true,
             wrap: true,
         },
