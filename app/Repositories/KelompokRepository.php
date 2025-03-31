@@ -94,7 +94,7 @@ class KelompokRepository
         return $kelompok;
     }
 
-    public function getKelompokByCurrentProyek(string $proyekId)
+    public function getKelompokByCurrentProyekAndUser(string $proyekId)
     {
         $kelompok = DB::table('kelompoks')
             ->leftJoin('kelompok_anggotas', 'kelompok_anggotas.kelompok_id', '=', 'kelompoks.id')

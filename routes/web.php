@@ -9,11 +9,12 @@ use App\Http\Controllers\Guru\KuisController;
 use App\Http\Controllers\Guru\KuisSoalController;
 use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\ProyekController;
+use App\Http\Controllers\Guru\ProyekJawabanController;
 use App\Http\Controllers\Siswa\KelompokController as SiswaKelompokController;
 use App\Http\Controllers\Siswa\KuisController as SiswaKuisController;
 use App\Http\Controllers\Siswa\MateriController as SiswaMateriController;
 use App\Http\Controllers\Siswa\ProyekController as SiswaProyekController;
-use App\Http\Controllers\Siswa\ProyekJawabanController;
+use App\Http\Controllers\Siswa\ProyekJawabanController as SiswaProyekJawabanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -48,13 +49,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/kuis/{kuisId}/siswa', [KuisController::class, 'siswa'])->name('kuis.siswa');
         Route::get('/kuis/{kuisId}/siswa/{siswaId}', [KuisController::class, 'hasil'])->name('kuis.hasil');
 
-        Route::get('/proyek/{proyekId}/kelompok', [KelompokController::class, 'index'])->name('proyek.kelompok');
         Route::get('/proyek/{proyekId}/kelompok/create', [KelompokController::class, 'create'])->name('proyek.kelompokCreate');
         Route::post('/proyek/{proyekId}/kelompok', [KelompokController::class, 'store'])->name('proyek.kelompokStore');
         Route::get('/proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'show'])->name('proyek.kelompokShow');
         Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/edit', [KelompokController::class, 'edit'])->name('proyek.kelompokEdit');
         Route::patch('/proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'update'])->name('proyek.kelompokUpdate');
         Route::delete('/proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'destroy'])->name('proyek.kelompokDestroy');
+
+        Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/syntax/1', [ProyekController::class, 'syntaxOne'])->name('proyek.syntaxOne');
+        Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/syntax/2', [ProyekController::class, 'syntaxTwo'])->name('proyek.syntaxTwo');
+        Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/syntax/3', [ProyekController::class, 'syntaxThree'])->name('proyek.syntaxThree');
+        Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/syntax/4', [ProyekController::class, 'syntaxFour'])->name('proyek.syntaxFour');
+        Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/syntax/5', [ProyekController::class, 'syntaxFive'])->name('proyek.syntaxFive');
+        Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/syntax/6', [ProyekController::class, 'syntaxSix'])->name('proyek.syntaxSix');
+        Route::patch('/proyek/{proyekId}/jawab/{id}/update', [ProyekJawabanController::class, 'update'])->name('proyek.updateNilai');
+
 
         Route::get('/dashboard', function () {
             return Inertia::render('guru/dashboard-guru');
@@ -77,11 +86,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/proyek/{proyekId}/syntax/4', [SiswaProyekController::class, 'syntaxFour'])->name('proyek.syntaxFour');
             Route::get('/proyek/{proyekId}/syntax/5', [SiswaProyekController::class, 'syntaxFive'])->name('proyek.syntaxFive');
             Route::get('/proyek/{proyekId}/syntax/6', [SiswaProyekController::class, 'syntaxSix'])->name('proyek.syntaxSix');
-            Route::post('/proyek/{proyekId}/jawab', [ProyekJawabanController::class, 'store'])->name('proyek.storeAnswer');
-            Route::patch('/proyek/{proyekId}/jawab/{id}/update', [ProyekJawabanController::class, 'update'])->name('proyek.updateAnswer');
-            Route::post('/proyek/{proyekId}/jadwal', [ProyekJawabanController::class, 'storeJadwal'])->name('proyek.storeJadwal');
-            Route::patch('/proyek/{proyekId}/jadwal/{id}/update', [ProyekJawabanController::class, 'updateJadwal'])->name('proyek.updateJadwal');
-            Route::delete('/proyek/{proyekId}/jadwal/{id}/delete', [ProyekJawabanController::class, 'deleteJadwal'])->name('proyek.deleteJadwal');
+            Route::post('/proyek/{proyekId}/jawab', [SiswaProyekJawabanController::class, 'store'])->name('proyek.storeAnswer');
+            Route::patch('/proyek/{proyekId}/jawab/{id}/update', [SiswaProyekJawabanController::class, 'update'])->name('proyek.updateAnswer');
+            Route::post('/proyek/{proyekId}/jadwal', [SiswaProyekJawabanController::class, 'storeJadwal'])->name('proyek.storeJadwal');
+            Route::patch('/proyek/{proyekId}/jadwal/{id}/update', [SiswaProyekJawabanController::class, 'updateJadwal'])->name('proyek.updateJadwal');
+            Route::delete('/proyek/{proyekId}/jadwal/{id}/delete', [SiswaProyekJawabanController::class, 'deleteJadwal'])->name('proyek.deleteJadwal');
         });
 
         Route::middleware(['kuis_answered'])->group(function () {

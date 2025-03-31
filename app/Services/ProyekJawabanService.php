@@ -53,6 +53,29 @@ class ProyekJawabanService
         return Validator::make($data, $rules);
     }
 
+    public function validateNilai(array $data, string $step)
+    {
+        $rules = [];
+        if ($step == 2) {
+            $rules = [
+                'status_tahap_2' => 'required|in:' . implode(',', ProyekAnswerStatus::values()),
+                'feedback_tahap_2' => 'nullable|string',
+            ];
+        } elseif ($step == 3) {
+            $rules = [
+                'status_tahap_3' => 'required|in:' . implode(',', ProyekAnswerStatus::values()),
+                'feedback_tahap_3' => 'nullable|string',
+            ];
+        } elseif ($step == 4) {
+            $rules = [
+                'status_tahap_4' => 'required|in:' . implode(',', ProyekAnswerStatus::values()),
+                'feedback_tahap_4' => 'nullable|string',
+            ];
+        }
+
+        return Validator::make($data, $rules);
+    }
+
     public function validateJadwal(array $data)
     {
         return Validator::make($data, [
@@ -94,7 +117,14 @@ class ProyekJawabanService
     {
         try {
             $step = $request->step;
-            $validator = $this->validateUpdate($request->all(), $step);
+            $role = Auth::user()->role;
+
+            if ($role === 'siswa') {
+                $validator = $this->validateUpdate($request->all(), $step);
+            } elseif ($role === 'guru') {
+                $validator = $this->validateNilai($request->all(), $step);
+            }
+
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
@@ -103,117 +133,136 @@ class ProyekJawabanService
             $jawaban = $this->proyekJawabanRepository->getJawabanById($id);
 
             $answerToUpdate = [];
-            if ($step == 2) {
-                $answerToUpdate = [
-                    'jawaban_tahap_2' => $validatedData['rumusan_masalah'],
-                    'status_tahap_2' => ProyekAnswerStatus::PROSES,
-                ];
-            } elseif ($step == 3) {
-                $answerToUpdate = [
-                    'jawaban_tahap_3' => $validatedData['indikator'],
-                    'status_tahap_3' => ProyekAnswerStatus::PROSES,
-                ];
-            } elseif ($step == 4) {
-                $fileMasalahPath = null;
-                if ($request->hasFile('analisis_masalah')) {
-                    $fileMasalah = $request->file('analisis_masalah');
-                    $extension = $fileMasalah->getClientOriginalName();
-                    $fileMasalahName = date('YmdHis') . "." . $extension;
+            if ($role === 'siswa') {
+                if ($step == 2) {
+                    $answerToUpdate = [
+                        'jawaban_tahap_2' => $validatedData['rumusan_masalah'],
+                        'status_tahap_2' => ProyekAnswerStatus::PROSES,
+                    ];
+                } elseif ($step == 3) {
+                    $answerToUpdate = [
+                        'jawaban_tahap_3' => $validatedData['indikator'],
+                        'status_tahap_3' => ProyekAnswerStatus::PROSES,
+                    ];
+                } elseif ($step == 4) {
+                    $fileMasalahPath = null;
+                    if ($request->hasFile('analisis_masalah')) {
+                        $fileMasalah = $request->file('analisis_masalah');
+                        $extension = $fileMasalah->getClientOriginalName();
+                        $fileMasalahName = date('YmdHis') . "." . $extension;
 
-                    if ($jawaban->jawaban_tahap_4) {
-                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_4);
-                        if (file_exists($oldPath)) {
-                            unlink($oldPath);
+                        if ($jawaban->jawaban_tahap_4) {
+                            $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_4);
+                            if (file_exists($oldPath)) {
+                                unlink($oldPath);
+                            }
                         }
-                    }
 
-                    $fileMasalah->move(storage_path('app/public/proyek/analisis_masalah'), $fileMasalahName);
-                    $fileMasalahPath = '/storage/proyek/analisis_masalah/' . $fileMasalahName;
-                } else {
-                    $fileMasalahPath = $jawaban->jawaban_tahap_4;
-                };
+                        $fileMasalah->move(storage_path('app/public/proyek/analisis_masalah'), $fileMasalahName);
+                        $fileMasalahPath = '/storage/proyek/analisis_masalah/' . $fileMasalahName;
+                    } else {
+                        $fileMasalahPath = $jawaban->jawaban_tahap_4;
+                    };
 
-                $answerToUpdate = [
-                    'jawaban_tahap_4' => $fileMasalahPath,
-                    'status_tahap_4' => ProyekAnswerStatus::PROSES,
-                ];
-            } elseif ($step == 5) {
-                $answerToUpdate = [
-                    'jawaban_tahap_5' => $validatedData['rencana_proyek'],
-                    'status_tahap_5' => ProyekAnswerStatus::PROSES,
-                ];
-            } elseif ($step == 6) {
-                $fileJadwalPath = null;
-                if ($request->hasFile('jadwal_proyek')) {
-                    $fileJadwal = $request->file('jadwal_proyek');
-                    $extension = $fileJadwal->getClientOriginalName();
-                    $fileJadwalName = date('YmdHis') . "." . $extension;
+                    $answerToUpdate = [
+                        'jawaban_tahap_4' => $fileMasalahPath,
+                        'status_tahap_4' => ProyekAnswerStatus::PROSES,
+                    ];
+                } elseif ($step == 5) {
+                    $answerToUpdate = [
+                        'jawaban_tahap_5' => $validatedData['rencana_proyek'],
+                        'status_tahap_5' => ProyekAnswerStatus::PROSES,
+                    ];
+                } elseif ($step == 6) {
+                    $fileJadwalPath = null;
+                    if ($request->hasFile('jadwal_proyek')) {
+                        $fileJadwal = $request->file('jadwal_proyek');
+                        $extension = $fileJadwal->getClientOriginalName();
+                        $fileJadwalName = date('YmdHis') . "." . $extension;
 
-                    if ($jawaban->jawaban_tahap_6) {
-                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
-                        if (file_exists($oldPath)) {
-                            unlink($oldPath);
+                        if ($jawaban->jawaban_tahap_6) {
+                            $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                            if (file_exists($oldPath)) {
+                                unlink($oldPath);
+                            }
                         }
-                    }
 
-                    $fileJadwal->move(storage_path('app/public/proyek/jadwal_proyek'), $fileJadwalName);
-                    $fileJadwalPath = '/storage/proyek/jadwal_proyek/' . $fileJadwalName;
-                } else {
-                    $fileJadwalPath = $jawaban->jawaban_tahap_6;
-                };
+                        $fileJadwal->move(storage_path('app/public/proyek/jadwal_proyek'), $fileJadwalName);
+                        $fileJadwalPath = '/storage/proyek/jadwal_proyek/' . $fileJadwalName;
+                    } else {
+                        $fileJadwalPath = $jawaban->jawaban_tahap_6;
+                    };
 
-                $answerToUpdate = [
-                    'jawaban_tahap_6' => $fileJadwalPath,
-                    'status_tahap_6' => ProyekAnswerStatus::PROSES,
-                ];
-            } elseif ($step == 7) {
-                $answerToUpdate = [
-                    'status_tahap_7' => ProyekAnswerStatus::PROSES,
-                ];
-            } elseif ($step == 8) {
-                $fileProyekPath = null;
-                if ($request->hasFile('file_proyek')) {
-                    $fileProyek = $request->file('file_proyek');
-                    $extension = $fileProyek->getClientOriginalName();
-                    $fileProyekName = date('YmdHis') . "." . $extension;
+                    $answerToUpdate = [
+                        'jawaban_tahap_6' => $fileJadwalPath,
+                        'status_tahap_6' => ProyekAnswerStatus::PROSES,
+                    ];
+                } elseif ($step == 7) {
+                    $answerToUpdate = [
+                        'status_tahap_7' => ProyekAnswerStatus::PROSES,
+                    ];
+                } elseif ($step == 8) {
+                    $fileProyekPath = null;
+                    if ($request->hasFile('file_proyek')) {
+                        $fileProyek = $request->file('file_proyek');
+                        $extension = $fileProyek->getClientOriginalName();
+                        $fileProyekName = date('YmdHis') . "." . $extension;
 
-                    if ($jawaban->jawaban_tahap_6) {
-                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
-                        if (file_exists($oldPath)) {
-                            unlink($oldPath);
+                        if ($jawaban->jawaban_tahap_6) {
+                            $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                            if (file_exists($oldPath)) {
+                                unlink($oldPath);
+                            }
                         }
-                    }
 
-                    $fileProyek->move(storage_path('app/public/proyek/file_proyek'), $fileProyekName);
-                    $fileProyekPath = '/storage/proyek/file_proyek/' . $fileProyekName;
-                } else {
-                    $fileProyekPath = $jawaban->jawaban_tahap_6;
-                };
+                        $fileProyek->move(storage_path('app/public/proyek/file_proyek'), $fileProyekName);
+                        $fileProyekPath = '/storage/proyek/file_proyek/' . $fileProyekName;
+                    } else {
+                        $fileProyekPath = $jawaban->jawaban_tahap_6;
+                    };
 
-                $fileLaporanPath = null;
-                if ($request->hasFile('file_laporan')) {
-                    $fileLaporan = $request->file('file_laporan');
-                    $extension = $fileLaporan->getClientOriginalName();
-                    $fileLaporanName = date('YmdHis') . "." . $extension;
+                    $fileLaporanPath = null;
+                    if ($request->hasFile('file_laporan')) {
+                        $fileLaporan = $request->file('file_laporan');
+                        $extension = $fileLaporan->getClientOriginalName();
+                        $fileLaporanName = date('YmdHis') . "." . $extension;
 
-                    if ($jawaban->jawaban_tahap_6) {
-                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
-                        if (file_exists($oldPath)) {
-                            unlink($oldPath);
+                        if ($jawaban->jawaban_tahap_6) {
+                            $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                            if (file_exists($oldPath)) {
+                                unlink($oldPath);
+                            }
                         }
-                    }
 
-                    $fileLaporan->move(storage_path('app/public/proyek/file_laporan'), $fileLaporanName);
-                    $fileLaporanPath = '/storage/proyek/file_laporan/' . $fileLaporanName;
-                } else {
-                    $fileLaporanPath = $jawaban->jawaban_tahap_6;
-                };
+                        $fileLaporan->move(storage_path('app/public/proyek/file_laporan'), $fileLaporanName);
+                        $fileLaporanPath = '/storage/proyek/file_laporan/' . $fileLaporanName;
+                    } else {
+                        $fileLaporanPath = $jawaban->jawaban_tahap_6;
+                    };
 
-                $answerToUpdate = [
-                    'file_proyek' => $fileProyekPath,
-                    'file_laporan' => $fileLaporanPath,
-                    'status_tahap_8' => ProyekAnswerStatus::PROSES,
-                ];
+                    $answerToUpdate = [
+                        'file_proyek' => $fileProyekPath,
+                        'file_laporan' => $fileLaporanPath,
+                        'status_tahap_8' => ProyekAnswerStatus::PROSES,
+                    ];
+                }
+            } elseif ($role === 'guru') {
+                if ($step == 2) {
+                    $answerToUpdate = [
+                        'status_tahap_2' => $validatedData['status_tahap_2'],
+                        'feedback_tahap_2' => $validatedData['feedback_tahap_2'],
+                    ];
+                } elseif ($step == 3) {
+                    $answerToUpdate = [
+                        'status_tahap_3' => $validatedData['status_tahap_3'],
+                        'feedback_tahap_3' => $validatedData['feedback_tahap_3'],
+                    ];
+                } elseif ($step == 4) {
+                    $answerToUpdate = [
+                        'status_tahap_4' => $validatedData['status_tahap_4'],
+                        'feedback_tahap_4' => $validatedData['feedback_tahap_4'],
+                    ];
+                }
             }
 
             $this->proyekJawabanRepository->update($answerToUpdate, $id);

@@ -24,10 +24,7 @@ class KelompokController extends Controller
 
     public function index(string $proyekId)
     {
-        $proyek = $this->proyekRepository->getById($proyekId);
-        $kelompoks = $this->kelompokRepository->getAll($proyekId);
-
-        return Inertia::render('guru/kelompok/index', compact('proyek', 'kelompoks'));
+        ///
     }
 
     public function create(string $proyekId)

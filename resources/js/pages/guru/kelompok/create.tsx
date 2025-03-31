@@ -20,7 +20,7 @@ export default function CreateKelompok() {
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('guru.proyek.index') },
-        { title: 'Detail Project Based Learning', link: route('guru.proyek.kelompok', proyek?.id) },
+        { title: 'Detail Project Based Learning', link: route('guru.proyek.show', proyek?.id) },
         { title: 'Tambah Kelompok', link: '#' },
     ];
 

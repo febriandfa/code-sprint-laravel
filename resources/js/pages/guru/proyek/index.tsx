@@ -70,7 +70,7 @@ export default function IndexProyek() {
                 <ActionButton
                     routeEdit={route('guru.proyek.edit', row.id)}
                     routeDelete={route('guru.proyek.destroy', row.id)}
-                    routeShow={route('guru.proyek.kelompok', row.id)}
+                    routeShow={route('guru.proyek.show', row.id)}
                 />
             ),
             width: '11rem',

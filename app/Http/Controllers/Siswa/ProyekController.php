@@ -41,7 +41,7 @@ class ProyekController extends Controller
     public function show($id)
     {
         $proyek = $this->proyekRepository->getById($id);
-        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyekAndUser($id);
 
         return Inertia::render('siswa/proyek/show', compact('proyek', 'kelompok'));
     }
@@ -59,7 +59,7 @@ class ProyekController extends Controller
     {
         $currentSyntax = SyntaxEnum::SYNTAX_ONE;
         $proyek = $this->proyekRepository->getById($id);
-        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyekAndUser($id);
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
         $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
@@ -73,7 +73,7 @@ class ProyekController extends Controller
     {
         $currentSyntax = SyntaxEnum::SYNTAX_TWO;
         $proyek = $this->proyekRepository->getById($id);
-        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyekAndUser($id);
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
         $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
@@ -87,7 +87,7 @@ class ProyekController extends Controller
     {
         $currentSyntax = SyntaxEnum::SYNTAX_THREE;
         $proyek = $this->proyekRepository->getById($id);
-        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyekAndUser($id);
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
         $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
@@ -101,7 +101,7 @@ class ProyekController extends Controller
     {
         $currentSyntax = SyntaxEnum::SYNTAX_FOUR;
         $proyek = $this->proyekRepository->getById($id);
-        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyekAndUser($id);
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
         $jadwals = $this->proyekJawabanRepository->getJadwalByProyekIdKelompokId($proyek->id, $kelompok->id);
@@ -116,7 +116,7 @@ class ProyekController extends Controller
     {
         $currentSyntax = SyntaxEnum::SYNTAX_FIVE;
         $proyek = $this->proyekRepository->getById($id);
-        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyekAndUser($id);
         $joinedKelompok = $this->kelompokRepository->getJoinedKelompok($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
         $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
@@ -130,7 +130,7 @@ class ProyekController extends Controller
     {
         $currentSyntax = SyntaxEnum::SYNTAX_SIX;
         $proyek = $this->proyekRepository->getById($id);
-        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyek($id);
+        $kelompok = $this->kelompokRepository->getKelompokByCurrentProyekAndUser($id);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompok->id);
         $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompok->id);
 
