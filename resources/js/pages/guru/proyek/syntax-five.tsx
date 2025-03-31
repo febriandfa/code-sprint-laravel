@@ -5,7 +5,7 @@ import PjblHeader from '@/components/pjbl-header';
 import Embed from '@/components/ui/embed';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
+import { Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import React, { useEffect } from 'react';
 
@@ -15,17 +15,16 @@ type SyntaxFiveForm = {
 };
 
 export default function SyntaxFive() {
-    const { currentSyntax, proyek, kelompok, jawaban, nilai } = usePage().props as {
+    const { currentSyntax, proyek, kelompok, jawaban } = usePage().props as {
         currentSyntax?: number;
         proyek?: Proyek;
         kelompok?: Kelompok;
         jawaban?: ProyekJawaban;
-        nilai?: ProyekNilai;
     };
 
     const breadcrumbs = [
-        { title: 'Project Based Learning', link: route('siswa.proyek.index') },
-        { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },
+        { title: 'Project Based Learning', link: route('guru.proyek.index') },
+        { title: 'Detail Project Based Learning', link: route('guru.proyek.show', proyek?.id) },
         { title: `Progress Kelompok ${kelompok?.nama}`, link: '#' },
     ];
 
@@ -41,7 +40,7 @@ export default function SyntaxFive() {
     });
 
     const handleOnSubmit = () => {
-        patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 5 }), {
+        patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 8 }), {
             onSuccess: () => {
                 SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
             },
@@ -60,7 +59,7 @@ export default function SyntaxFive() {
 
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
-            <PjblHeader proyek={proyek} kelompok={kelompok} jawaban={jawaban} nilai={nilai} currentSyntax={currentSyntax ?? 1} view />
+            <PjblHeader proyek={proyek} kelompok={kelompok} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} view />
             <div className="my-5 space-y-6">
                 <Embed label="File Proyek Akhir (ZIP)" src={jawaban?.file_proyek} downloadable />
                 <Embed label="File Laporan/Media Presentasi" src={jawaban?.file_laporan} downloadable />

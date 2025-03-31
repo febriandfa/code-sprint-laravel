@@ -60,8 +60,9 @@ export default function PjblHeader({
     const [canProceedToSyntax6, setCanProceedToSyntax6] = useState<boolean>(false);
     const [canProceedResult, setCanProceedResult] = useState<boolean>(false);
 
+    const canNilai = view ? true : nilai !== null;
     const isCompleted = [canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, canProceedToSyntax6, canProceedResult];
-    const canProceedNextSyntax = [true, canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, nilai !== null];
+    const canProceedNextSyntax = [true, canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, canNilai];
 
     useEffect(() => {
         if (jawaban) {
@@ -70,7 +71,7 @@ export default function PjblHeader({
             setCanProceedToSyntax4(jawaban.status_tahap_6 === 'diterima');
             setCanProceedToSyntax5(jawaban.status_tahap_7 === 'diterima');
             setCanProceedToSyntax6(jawaban.status_tahap_8 === 'diterima');
-            setCanProceedResult(nilai !== null);
+            setCanProceedResult(canNilai);
         }
     }, [jawaban, nilai]);
 

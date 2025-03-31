@@ -8,6 +8,7 @@ use App\Repositories\GuruRepository;
 use App\Repositories\KelompokRepository;
 use App\Repositories\MateriRepository;
 use App\Repositories\ProyekJawabanRepository;
+use App\Repositories\ProyekNilaiRepository;
 use App\Repositories\ProyekRepository;
 use App\Services\ProyekService;
 use Illuminate\Http\Request;
@@ -21,6 +22,7 @@ class ProyekController extends Controller
     protected $materiRepository;
     protected $kelompokRepository;
     protected $proyekJawabanRepository;
+    protected $proyekNilaiRepository;
 
     public function __construct(
         ProyekRepository $proyekRepository,
@@ -28,7 +30,8 @@ class ProyekController extends Controller
         GuruRepository $guruRepository,
         MateriRepository $materiRepository,
         KelompokRepository $kelompokRepository,
-        ProyekJawabanRepository $proyekJawabanRepository
+        ProyekJawabanRepository $proyekJawabanRepository,
+        ProyekNilaiRepository $proyekNilaiRepository
     )
     {
         $this->proyekRepository = $proyekRepository;
@@ -37,6 +40,7 @@ class ProyekController extends Controller
         $this->materiRepository = $materiRepository;
         $this->kelompokRepository = $kelompokRepository;
         $this->proyekJawabanRepository = $proyekJawabanRepository;
+        $this->proyekNilaiRepository = $proyekNilaiRepository;
     }
 
     public function index()
@@ -92,10 +96,9 @@ class ProyekController extends Controller
         $proyek = $this->proyekRepository->getById($id);
         $kelompok = $this->kelompokRepository->getByIdWithAnggota($kelompokId);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompokId);
-        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompokId);
 
         return Inertia::render('guru/proyek/syntax-one', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'nilai'
+            'currentSyntax', 'proyek', 'kelompok', 'jawaban'
         ));
     }
 
@@ -105,10 +108,9 @@ class ProyekController extends Controller
         $proyek = $this->proyekRepository->getById($id);
         $kelompok = $this->kelompokRepository->getByIdWithAnggota($kelompokId);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompokId);
-        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompokId);
 
         return Inertia::render('guru/proyek/syntax-two', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'nilai'
+            'currentSyntax', 'proyek', 'kelompok', 'jawaban'
         ));
     }
 
@@ -118,10 +120,9 @@ class ProyekController extends Controller
         $proyek = $this->proyekRepository->getById($id);
         $kelompok = $this->kelompokRepository->getByIdWithAnggota($kelompokId);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompokId);
-        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompokId);
 
         return Inertia::render('guru/proyek/syntax-three', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'nilai'
+            'currentSyntax', 'proyek', 'kelompok', 'jawaban'
         ));
     }
 
@@ -132,10 +133,9 @@ class ProyekController extends Controller
         $kelompok = $this->kelompokRepository->getByIdWithAnggota($kelompokId);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompokId);
         $jadwals = $this->proyekJawabanRepository->getJadwalByProyekIdKelompokId($proyek->id, $kelompok->id);
-        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompokId);
 
         return Inertia::render('guru/proyek/syntax-four', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'jadwals', 'nilai'
+            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'jadwals'
         ));
     }
 
@@ -145,10 +145,9 @@ class ProyekController extends Controller
         $proyek = $this->proyekRepository->getById($id);
         $kelompok = $this->kelompokRepository->getByIdWithAnggota($kelompokId);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompokId);
-        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompokId);
 
         return Inertia::render('guru/proyek/syntax-five', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'nilai'
+            'currentSyntax', 'proyek', 'kelompok', 'jawaban'
         ));
     }
 
@@ -158,10 +157,10 @@ class ProyekController extends Controller
         $proyek = $this->proyekRepository->getById($id);
         $kelompok = $this->kelompokRepository->getByIdWithAnggota($kelompokId);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompokId);
-        $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompokId);
+        $nilais = $this->proyekNilaiRepository->getAllByProyekIdKelompokId($proyek->id, $kelompokId);
 
         return Inertia::render('guru/proyek/syntax-six', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'nilai'
+            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'nilais'
         ));
     }
 }

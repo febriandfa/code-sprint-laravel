@@ -5,7 +5,7 @@ import PjblHeader from '@/components/pjbl-header';
 import PjblJadwal from '@/components/pjbl-jadwal';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Kelompok, Proyek, ProyekJadwal, ProyekJawaban, ProyekNilai } from '@/types';
+import { Kelompok, Proyek, ProyekJadwal, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import React, { useEffect } from 'react';
 
@@ -15,13 +15,12 @@ type SyntaxFourForm = {
 };
 
 export default function SyntaxFour() {
-    const { currentSyntax, proyek, kelompok, jawaban, jadwals, nilai } = usePage().props as {
+    const { currentSyntax, proyek, kelompok, jawaban, jadwals } = usePage().props as {
         currentSyntax?: number;
         proyek?: Proyek;
         kelompok?: Kelompok;
         jawaban?: ProyekJawaban;
         jadwals?: ProyekJadwal[];
-        nilai?: ProyekNilai;
     };
 
     const breadcrumbs = [
@@ -42,7 +41,7 @@ export default function SyntaxFour() {
     });
 
     const handleOnSubmit = () => {
-        patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 5 }), {
+        patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 7 }), {
             onSuccess: () => {
                 SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
             },
@@ -61,7 +60,7 @@ export default function SyntaxFour() {
 
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
-            <PjblHeader proyek={proyek} kelompok={kelompok} jawaban={jawaban} nilai={nilai} currentSyntax={currentSyntax ?? 1} view />
+            <PjblHeader proyek={proyek} kelompok={kelompok} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} view />
             <div className="my-5 space-y-6">
                 <PjblJadwal proyek={proyek} kelompok={kelompok} jadwals={jadwals} view />
                 {jawaban && (

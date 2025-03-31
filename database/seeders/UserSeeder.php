@@ -27,8 +27,14 @@ class UserSeeder extends Seeder
                 'role' => RoleType::SISWA,
             ],
             [
-                'name' => 'Siswa Testing',
+                'name' => 'Siswa Testing Ketua',
                 'email' => 'siswa3@csprint.com',
+                'password' => bcrypt('siswa123'),
+                'role' => RoleType::SISWA,
+            ],
+            [
+                'name' => 'Siswa Testing Anggota',
+                'email' => 'siswa4@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
             ],

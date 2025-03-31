@@ -41,6 +41,11 @@ class KelompokSeeder extends Seeder
             [
                 'kelompok_id' => 2,
                 'anggota_id' => 3,
+                'status' => 'ketua',
+            ],
+            [
+                'kelompok_id' => 2,
+                'anggota_id' => 4,
                 'status' => 'anggota',
             ],
         ];

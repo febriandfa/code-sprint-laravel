@@ -10,6 +10,7 @@ use App\Http\Controllers\Guru\KuisSoalController;
 use App\Http\Controllers\Guru\MateriController;
 use App\Http\Controllers\Guru\ProyekController;
 use App\Http\Controllers\Guru\ProyekJawabanController;
+use App\Http\Controllers\Guru\ProyekNilaiController;
 use App\Http\Controllers\Siswa\KelompokController as SiswaKelompokController;
 use App\Http\Controllers\Siswa\KuisController as SiswaKuisController;
 use App\Http\Controllers\Siswa\MateriController as SiswaMateriController;
@@ -63,6 +64,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/syntax/5', [ProyekController::class, 'syntaxFive'])->name('proyek.syntaxFive');
         Route::get('/proyek/{proyekId}/kelompok/{kelompokId}/syntax/6', [ProyekController::class, 'syntaxSix'])->name('proyek.syntaxSix');
         Route::patch('/proyek/{proyekId}/jawab/{id}/update', [ProyekJawabanController::class, 'update'])->name('proyek.updateNilai');
+        Route::get('/proyek/{proyekId}/nilai', [ProyekNilaiController::class, 'create'])->name('proyek.nilaiCreate');
+        Route::post('/proyek/{proyekId}/nilai', [ProyekNilaiController::class, 'store'])->name('proyek.nilaiStore');
+        Route::get('/proyek/{proyekId}/nilai/{id}/edit', [ProyekNilaiController::class, 'edit'])->name('proyek.nilaiEdit');
+        Route::patch('/proyek/{proyekId}/nilai/{id}', [ProyekNilaiController::class, 'update'])->name('proyek.nilaiUpdate');
 
 
         Route::get('/dashboard', function () {

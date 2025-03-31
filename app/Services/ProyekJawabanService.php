@@ -262,6 +262,30 @@ class ProyekJawabanService
                         'status_tahap_4' => $validatedData['status_tahap_4'],
                         'feedback_tahap_4' => $validatedData['feedback_tahap_4'],
                     ];
+                } elseif ($step == 5) {
+                    $answerToUpdate = [
+                        'status_tahap_5' => $validatedData['status_tahap_5'],
+                        'feedback_tahap_5' => $validatedData['feedback_tahap_5'],
+                    ];
+                } elseif ($step == 6) {
+                    $answerToUpdate = [
+                        'status_tahap_6' => $validatedData['status_tahap_6'],
+                        'feedback_tahap_6' => $validatedData['feedback_tahap_6'],
+                    ];
+                } elseif ($step == 7) {
+                    $answerToUpdate = [
+                        'status_tahap_7' => $validatedData['status_tahap_7'],
+                        'feedback_tahap_7' => $validatedData['feedback_tahap_7'],
+                    ];
+                } elseif ($step == 8) {
+                    $answerToUpdate = [
+                        'status_tahap_8' => $validatedData['status_tahap_8'],
+                        'feedback_tahap_8' => $validatedData['feedback_tahap_8'],
+                    ];
+                } elseif ($step == 9) {
+                    $answerToUpdate = [
+                        'refleksi' => $validatedData['refleksi'],
+                    ];
                 }
             }
 

@@ -105,12 +105,4 @@ class ProyekRepository
     {
         return DB::table('proyeks')->where('id', $id)->delete();
     }
-
-    public function getNilaiByProyekIdKelompokId(string $proyekId, string $kelompokId)
-    {
-        return DB::table('proyek_nilais')
-            ->where('proyek_id', $proyekId)
-            ->where('kelompok_id', $kelompokId)
-            ->first();
-    }
 }

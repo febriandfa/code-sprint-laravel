@@ -208,6 +208,7 @@ export type ProyekNilai = {
     kelompok_id: string;
     proyek_id: string;
     user_id: string;
+    siswa: string;
     nilai_orientasi_masalah: number;
     nilai_kerja_sama: number;
     nilai_proses: number;

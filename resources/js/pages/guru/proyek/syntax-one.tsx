@@ -7,7 +7,7 @@ import Embed from '@/components/ui/embed';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
+import { Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { CircleCheck } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
@@ -38,12 +38,11 @@ type FormData = {
 };
 
 export default function SyntaxOne() {
-    const { currentSyntax, proyek, kelompok, jawaban, nilai } = usePage().props as {
+    const { currentSyntax, proyek, kelompok, jawaban } = usePage().props as {
         currentSyntax?: number;
         proyek?: Proyek;
         kelompok?: Kelompok;
         jawaban?: ProyekJawaban;
-        nilai?: ProyekNilai;
     };
 
     const [currentStep, setCurrentStep] = useState<number>(1);
@@ -219,7 +218,7 @@ export default function SyntaxOne() {
 
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
-            <PjblHeader proyek={proyek} kelompok={kelompok} jawaban={jawaban} nilai={nilai} currentSyntax={currentSyntax ?? 1} view />
+            <PjblHeader proyek={proyek} kelompok={kelompok} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} view />
             <div className="my-5 space-y-6">
                 <div className="item-center flex gap-6">
                     {stepDatas.map((data, index) => {

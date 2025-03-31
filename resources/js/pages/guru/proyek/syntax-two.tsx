@@ -5,7 +5,7 @@ import PjblHeader from '@/components/pjbl-header';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { SwalSuccess } from '@/lib/swal';
-import { Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
+import { Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import React, { useEffect } from 'react';
 
@@ -15,17 +15,16 @@ type SyntaxTwoForm = {
 };
 
 export default function SyntaxTwo() {
-    const { currentSyntax, proyek, kelompok, jawaban, nilai } = usePage().props as {
+    const { currentSyntax, proyek, kelompok, jawaban } = usePage().props as {
         currentSyntax?: number;
         proyek?: Proyek;
         kelompok?: Kelompok;
         jawaban?: ProyekJawaban;
-        nilai?: ProyekNilai;
     };
 
     const breadcrumbs = [
-        { title: 'Project Based Learning', link: route('siswa.proyek.index') },
-        { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },
+        { title: 'Project Based Learning', link: route('guru.proyek.index') },
+        { title: 'Detail Project Based Learning', link: route('guru.proyek.show', proyek?.id) },
         { title: `Progress Kelompok ${kelompok?.nama}`, link: '#' },
     ];
 
@@ -60,7 +59,7 @@ export default function SyntaxTwo() {
 
     return (
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
-            <PjblHeader proyek={proyek} kelompok={kelompok} jawaban={jawaban} nilai={nilai} currentSyntax={currentSyntax ?? 1} view />
+            <PjblHeader proyek={proyek} kelompok={kelompok} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} view />
             <div className="my-5 space-y-6">
                 <RichTextView label="Merencanakan Proyek" value={jawaban?.jawaban_tahap_5} />
                 {jawaban && (

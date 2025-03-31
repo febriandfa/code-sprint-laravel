@@ -39,6 +39,20 @@ class ProyekJawabanSeeder extends Seeder
                 'feedback_tahap_8' => 'Ini adalah feedback tahap 8',
                 'status_tahap_8' => 'diterima',
                 'refleksi' => 'Ini adalah refleksi',
+            ],
+            [
+                'proyek_id' => 1,
+                'kelompok_id' => 2,
+                'user_id' => 3,
+                'jawaban_tahap_2' => 'Ini adalah jawaban tahap 2',
+                'feedback_tahap_2' => 'Ini adalah feedback tahap 2',
+                'status_tahap_2' => 'diterima',
+                'jawaban_tahap_3' => 'Ini adalah jawaban tahap 3',
+                'feedback_tahap_3' => 'Ini adalah feedback tahap 3',
+                'status_tahap_3' => 'diterima',
+                'jawaban_tahap_4' => 'jawaban_tahap_4.pdf',
+                'feedback_tahap_4' => 'Ini adalah feedback tahap 4',
+                'status_tahap_4' => 'diterima',
             ]
         ];
 
