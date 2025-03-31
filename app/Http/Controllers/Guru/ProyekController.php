@@ -131,10 +131,11 @@ class ProyekController extends Controller
         $proyek = $this->proyekRepository->getById($id);
         $kelompok = $this->kelompokRepository->getByIdWithAnggota($kelompokId);
         $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $kelompokId);
+        $jadwals = $this->proyekJawabanRepository->getJadwalByProyekIdKelompokId($proyek->id, $kelompok->id);
         $nilai = $this->proyekRepository->getNilaiByProyekIdKelompokId($proyek->id, $kelompokId);
 
         return Inertia::render('guru/proyek/syntax-four', compact(
-            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'nilai'
+            'currentSyntax', 'proyek', 'kelompok', 'jawaban', 'jadwals', 'nilai'
         ));
     }
 
