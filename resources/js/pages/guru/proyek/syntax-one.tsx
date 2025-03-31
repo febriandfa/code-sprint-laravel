@@ -74,7 +74,7 @@ export default function SyntaxOne() {
         processing: processingOne,
         errors: errorsOne,
     } = useForm<Required<StepOneForm>>({
-        status_tahap_2: '',
+        status_tahap_2: 'diproses',
         feedback_tahap_2: '',
     });
 
@@ -85,7 +85,7 @@ export default function SyntaxOne() {
         processing: processingTwo,
         errors: errorsTwo,
     } = useForm<Required<StepTwoForm>>({
-        status_tahap_3: '',
+        status_tahap_3: 'diproses',
         feedback_tahap_3: '',
     });
 
@@ -96,7 +96,7 @@ export default function SyntaxOne() {
         processing: processingThree,
         errors: errorsThree,
     } = useForm<Required<StepThreeForm>>({
-        status_tahap_4: '',
+        status_tahap_4: 'diproses',
         feedback_tahap_4: '',
     });
 
@@ -249,7 +249,7 @@ export default function SyntaxOne() {
                             <React.Fragment>
                                 <InputSelect
                                     id={`status_tahap_${currentStep}`}
-                                    label="status"
+                                    label="Status"
                                     placeholder="Pilih status"
                                     required
                                     options={statusOptions}

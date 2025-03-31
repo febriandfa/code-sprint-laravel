@@ -66,7 +66,7 @@ export default function SyntaxThreeProyek() {
                 <div className="space-y-3">
                     <LabelStatus status="PERHATIAN!" />
                     <p className="text-justify text-lg">
-                        Pada Sinatks 3 : Menyusun Jadwal, peserta didik berdiskusi tentang penyusunan jadwan yang akan dikerjakan dalam mengerjakan
+                        Pada Sintaks 3 : Menyusun Jadwal, peserta didik berdiskusi tentang penyusunan jadwan yang akan dikerjakan dalam mengerjakan
                         studi kasus, untuk jawaban hanya diinputkan oleh ketua kelompok.
                         <br />
                         <br />
