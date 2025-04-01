@@ -30,6 +30,7 @@ export default function SyntaxFiveProyek() {
     const siswaStatus = joinedKelompok?.status ?? 'anggota';
     const fileProyekRef = useRef<HTMLInputElement | null>(null);
     const fileLaporanRef = useRef<HTMLInputElement | null>(null);
+    const showSubmit = proyek?.status === 'berjalan' && jawaban?.status_tahap_8 !== 'diterima';
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
@@ -95,7 +96,7 @@ export default function SyntaxFiveProyek() {
                 </div>
                 {jawaban && jawaban.feedback_tahap_8 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_8} />}
 
-                {jawaban?.status_tahap_8 !== 'diterima' && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />}
+                {showSubmit && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />}
             </div>
         </AuthLayout>
     );

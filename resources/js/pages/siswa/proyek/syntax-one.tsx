@@ -159,6 +159,7 @@ export default function SyntaxOneProyek() {
 
     const isCompleted = [true, canProceedToStep3, canProceedToStep4, canProceedToStep5];
     const canProceedNextStep = [true, true, canProceedToStep3, canProceedToStep4];
+    const showSubmit = currentStep > 1 && proyek?.status === 'berjalan' && jawaban?.[`status_tahap_${currentStep}`] !== 'diterima';
 
     useEffect(() => {
         if (jawaban) {
@@ -274,9 +275,7 @@ export default function SyntaxOneProyek() {
                             </Button>
                         )}
                     </div>
-                    {currentStep > 1 && jawaban?.[`status_tahap_${currentStep}`] !== 'diterima' && (
-                        <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={isProcessing} />
-                    )}
+                    {showSubmit && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={isProcessing} />}
                 </div>
             </div>
         </AuthLayout>

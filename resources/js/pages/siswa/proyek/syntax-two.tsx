@@ -26,6 +26,7 @@ export default function SyntaxTwoProyek() {
     };
 
     const siswaStatus = joinedKelompok?.status ?? 'anggota';
+    const showSubmit = proyek?.status === 'berjalan' && jawaban?.status_tahap_5 !== 'diterima';
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
@@ -73,7 +74,7 @@ export default function SyntaxTwoProyek() {
                 </div>
                 {jawaban && jawaban.feedback_tahap_5 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_5} />}
 
-                {jawaban?.status_tahap_5 !== 'diterima' && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />}
+                {showSubmit && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />}
             </div>
         </AuthLayout>
     );

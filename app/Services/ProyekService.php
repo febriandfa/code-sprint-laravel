@@ -78,4 +78,15 @@ class ProyekService
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function changeStatus(string $id, string $status)
+    {
+        try {
+            $this->proyekRepository->update(['status' => $status], $id);
+
+            return redirect()->back()->with('success', 'Proyek berhasil diubah statusnya');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Guru;
 
+use App\Enums\ProyekStatus;
 use App\Enums\SyntaxEnum;
 use App\Http\Controllers\Controller;
 use App\Repositories\GuruRepository;
@@ -88,6 +89,16 @@ class ProyekController extends Controller
         $this->proyekRepository->delete($id);
 
         return redirect()->back()->with('success', 'Proyek berhasil dihapus');
+    }
+
+    public function start(string $id)
+    {
+        return $this->proyekService->changeStatus($id, ProyekStatus::BERJALAN);
+    }
+
+    public function end(string $id)
+    {
+        return $this->proyekService->changeStatus($id, ProyekStatus::SELESAI);
     }
 
     public function syntaxOne(string $id, string $kelompokId)

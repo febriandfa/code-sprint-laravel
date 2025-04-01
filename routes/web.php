@@ -50,6 +50,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/kuis/{kuisId}/siswa', [KuisController::class, 'siswa'])->name('kuis.siswa');
         Route::get('/kuis/{kuisId}/siswa/{siswaId}', [KuisController::class, 'hasil'])->name('kuis.hasil');
 
+        Route::patch('/proyek/{proyekId}/start', [ProyekController::class, 'start'])->name('proyek.start');
+        Route::patch('/proyek/{proyekId}/end', [ProyekController::class, 'end'])->name('proyek.end');
+
         Route::get('/proyek/{proyekId}/kelompok/create', [KelompokController::class, 'create'])->name('proyek.kelompokCreate');
         Route::post('/proyek/{proyekId}/kelompok', [KelompokController::class, 'store'])->name('proyek.kelompokStore');
         Route::get('/proyek/{proyekId}/kelompok/{kelompokId}', [KelompokController::class, 'show'])->name('proyek.kelompokShow');

@@ -1,7 +1,7 @@
 import AppLogo from '@/components/app-logo';
 import InputField from '@/components/input-field';
 import Button from '@/components/ui/button';
-import { useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
@@ -25,6 +25,7 @@ export default function Login() {
 
     return (
         <div className="min-h-svh">
+            <Head title={'Login'} />
             <div className="grid min-h-svh grid-cols-2 bg-gray-200">
                 <div className="flex h-full flex-col items-center justify-center gap-32">
                     <img src="/assets/images/illust-login.svg" alt="illust login" className="size-80" />

@@ -10,7 +10,9 @@ import Title from './ui/title';
 type ProyekTemplateProps = {
     proyek: Proyek;
     kelompok?: Kelompok;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     columns: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: any[];
     searchBy: string[];
     view?: boolean;
@@ -72,13 +74,19 @@ export default function ProyekTemplate({ proyek, kelompok, columns, data, search
                     {view ? (
                         <Link href={route('siswa.proyek.syntaxOne', proyek?.id)}>
                             <Button variant="primary" className="w-full">
-                                Kerjakan Proyek
+                                {proyek?.status !== 'berjalan' ? 'Lihat Proyek' : 'Kerjakan Proyek'}
                             </Button>
                         </Link>
                     ) : (
-                        <Button variant={proyek?.status === 'belum' ? 'primary' : 'danger'} className="w-full">
-                            {proyek?.status === 'belum' ? 'Mulai Proyek' : 'Akhiri Proyek'}
-                        </Button>
+                        <Link
+                            method="patch"
+                            href={proyek?.status === 'belum' ? route('guru.proyek.start', proyek?.id) : route('guru.proyek.end', proyek?.id)}
+                            className="w-full"
+                        >
+                            <Button variant={proyek?.status === 'belum' ? 'primary' : 'danger'} className="w-full">
+                                {proyek?.status === 'belum' ? 'Mulai Proyek' : 'Akhiri Proyek'}
+                            </Button>
+                        </Link>
                     )}
                 </div>
             </div>

@@ -29,6 +29,7 @@ export default function SyntaxThreeProyek() {
 
     const siswaStatus = joinedKelompok?.status ?? 'anggota';
     const rencanaProyekRef = useRef<HTMLInputElement | null>(null);
+    const showSubmit = proyek?.status === 'berjalan' && jawaban?.status_tahap_6 !== 'diterima';
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
@@ -99,7 +100,7 @@ export default function SyntaxThreeProyek() {
                 </div>
                 {jawaban && jawaban.feedback_tahap_6 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_6} />}
 
-                {jawaban?.status_tahap_6 !== 'diterima' && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />}
+                {showSubmit && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />}
             </div>
         </AuthLayout>
     );

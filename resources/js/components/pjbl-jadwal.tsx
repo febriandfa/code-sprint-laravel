@@ -80,7 +80,7 @@ export default function PjblJadwal({
                                             </div>
                                         );
                                     })}
-                                {isCurrentUser && !view && (
+                                {isCurrentUser && !view && proyek?.status === 'berjalan' && (
                                     <Button onClick={() => handleOpenModal()} variant="outline-primary" className="w-full">
                                         <Plus /> Tambah Kegiatan
                                     </Button>
