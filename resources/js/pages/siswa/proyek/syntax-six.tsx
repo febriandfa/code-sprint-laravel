@@ -39,7 +39,7 @@ export default function SyntaxSixProyek() {
                             <InputField key={key} id={key} label={label} value={nilai?.[key] ?? 'Belum dinilai'} disabled />
                         ))}
                     </div>
-                    <p className="text-xs text-gray-400">Indeks Nilai 1-5</p>
+                    <p className="text-xs text-gray-400">Indeks Nilai 0-5</p>
                 </div>
                 <InputField id="nilai" label="Nilai" value={nilai?.nilai ?? 'Belum dinilai'} disabled />
                 <RichTextView label="Refleksi" value={nilai?.evaluasi ?? '<p>Tidak ada evaluasi</p>'} />

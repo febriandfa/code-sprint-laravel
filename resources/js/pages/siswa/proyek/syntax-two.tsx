@@ -73,7 +73,7 @@ export default function SyntaxTwoProyek() {
                 </div>
                 {jawaban && jawaban.feedback_tahap_5 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_5} />}
 
-                <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />
+                {jawaban?.status_tahap_5 !== 'diterima' && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />}
             </div>
         </AuthLayout>
     );

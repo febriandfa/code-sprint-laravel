@@ -52,9 +52,13 @@ class ProyekNilaiController extends Controller
 
     public function edit(string $proyekId, string $id)
     {
+        $currentSyntax = SyntaxEnum::SYNTAX_SIX;
         $nilai = $this->proyekNilaiRepository->getById($id);
+        $proyek = $this->proyekRepository->getById($proyekId);
+        $kelompok = $this->kelompokRepository->getById($nilai->kelompok_id);
+        $jawaban = $this->proyekJawabanRepository->getJawabanByProyekIdKelompokId($proyek->id, $nilai->kelompok_id);
 
-        return Inertia::render('guru/proyek-nilai/edit', compact('nilai'));
+        return Inertia::render('guru/proyek-nilai/edit', compact('currentSyntax', 'proyek', 'kelompok', 'jawaban', 'nilai'));
     }
 
     public function update(Request $request, string $proyekId, string $id)

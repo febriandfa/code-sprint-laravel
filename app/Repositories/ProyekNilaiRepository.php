@@ -17,18 +17,17 @@ class ProyekNilaiRepository
 
     public function create(array $data)
     {
-        // dd($data);
+        return DB::table('proyek_nilais')->insertGetId($data);
+    }
+
+    public function update( array $data, string $id)
+    {
         try {
-            return DB::table('proyek_nilais')->insertGetId($data);
+            return DB::table('proyek_nilais')->where('id', $id)->update($data);
         } catch (\Exception $e) {
             dd($e);
             return false;
         }
-    }
-
-    public function update(string $id, array $data)
-    {
-        return DB::table('proyek_nilais')->where('id', $id)->update($data);
     }
 
     public function delete(string $id)

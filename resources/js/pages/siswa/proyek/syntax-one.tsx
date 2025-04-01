@@ -274,7 +274,9 @@ export default function SyntaxOneProyek() {
                             </Button>
                         )}
                     </div>
-                    {currentStep > 1 && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={isProcessing} />}
+                    {currentStep > 1 && jawaban?.[`status_tahap_${currentStep}`] !== 'diterima' && (
+                        <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={isProcessing} />
+                    )}
                 </div>
             </div>
         </AuthLayout>

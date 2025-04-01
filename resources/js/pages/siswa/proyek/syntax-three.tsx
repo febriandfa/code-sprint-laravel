@@ -99,7 +99,7 @@ export default function SyntaxThreeProyek() {
                 </div>
                 {jawaban && jawaban.feedback_tahap_6 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_6} />}
 
-                <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />
+                {jawaban?.status_tahap_6 !== 'diterima' && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />}
             </div>
         </AuthLayout>
     );

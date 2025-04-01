@@ -104,7 +104,7 @@ export default function SyntaxSix() {
         },
         {
             name: 'Aksi',
-            cell: (row: ProyekNilai) => <ActionButton routeEdit={route('guru.materi.edit', row.id)} />,
+            cell: (row: ProyekNilai) => <ActionButton routeEdit={route('guru.proyek.nilaiEdit', { proyekId: proyek?.id, id: row.id })} />,
             width: '11rem',
         },
     ];

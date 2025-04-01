@@ -35,6 +35,19 @@ class ProyekNilaiService
         ]);
     }
 
+    public function validateUpdate(array $data)
+    {
+        return Validator::make($data, [
+            'nilai_orientasi_masalah' => 'required|numeric|in:0,1,2,3,4,5',
+            'nilai_kerja_sama' => 'required|numeric|in:0,1,2,3,4,5',
+            'nilai_proses' => 'required|numeric|in:0,1,2,3,4,5',
+            'nilai_waktu' => 'required|numeric|in:0,1,2,3,4,5',
+            'nilai_hasil_proyek' => 'required|numeric|in:0,1,2,3,4,5',
+            'evaluasi' => 'nullable|string',
+            'nilai' => 'required|numeric',
+        ]);
+    }
+
     public function create(Request $request, string $proyekId)
     {
         try {
@@ -59,14 +72,14 @@ class ProyekNilaiService
     public function update(Request $request, string $id)
     {
         try {
-            $validator = $this->validateInput($request->all());
+            $validator = $this->validateUpdate($request->all());
 
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             $validatedData = $validator->validated();
 
-            $this->proyekNilaiRepository->update($id, $validatedData);
+            $this->proyekNilaiRepository->update($validatedData, $id);
 
             return redirect()->back()->with('success', 'Proyek Nilai updated successfully');
         } catch (\Exception $e) {

@@ -95,7 +95,7 @@ export default function SyntaxFiveProyek() {
                 </div>
                 {jawaban && jawaban.feedback_tahap_8 && <RichTextView label="Feedback Guru" value={jawaban.feedback_tahap_8} />}
 
-                <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />
+                {jawaban?.status_tahap_8 !== 'diterima' && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={processing} />}
             </div>
         </AuthLayout>
     );

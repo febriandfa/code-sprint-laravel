@@ -188,6 +188,8 @@ export type ProyekJawaban = {
 
     created_at?: string;
     updated_at?: string;
+
+    [key: `status_tahap_${number}`]: ProyekAnswerStatus | undefined;
 };
 
 export type ProyekJadwal = {
