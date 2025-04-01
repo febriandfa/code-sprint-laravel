@@ -7,6 +7,11 @@ import { usePage } from '@inertiajs/react';
 export default function SiswaKuis() {
     const { kuis, hasilSiswas } = usePage().props as { kuis?: Kuis; hasilSiswas?: HasilKuis[] };
 
+    const breadcrumbs = [
+        { title: 'Kuis', link: route('guru.kuis.index') },
+        { title: 'Hasil Kuis', link: '#' },
+    ];
+
     const columns = [
         {
             name: 'Nama',
@@ -43,7 +48,7 @@ export default function SiswaKuis() {
     const searchBy = ['nama_siswa', 'total_poin', 'created_at'];
 
     return (
-        <AuthLayout title={`Hasil Kuis ${kuis?.judul ?? ''}`} index>
+        <AuthLayout title={`Hasil Kuis ${kuis?.judul ?? ''}`} breadcrumbs={breadcrumbs}>
             <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
         </AuthLayout>
     );

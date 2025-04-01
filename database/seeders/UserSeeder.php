@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Enums\RoleType;
+use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -11,6 +13,14 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function run(): void
     {
         $users = [
@@ -71,7 +81,7 @@ class UserSeeder extends Seeder
             if ($user['role'] === RoleType::SISWA) {
                 \App\Models\UserDetail::create([
                     'user_id' => $createdUser->id,
-                    'no_absen' => 1,
+                    'no_absen' => $this->userRepository->getUserCount(RoleType::SISWA, 1) + 1,
                     'kelas_id' => 1,
                 ]);
             }

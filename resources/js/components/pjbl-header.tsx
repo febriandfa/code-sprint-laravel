@@ -60,17 +60,17 @@ export default function PjblHeader({
     const [canProceedToSyntax6, setCanProceedToSyntax6] = useState<boolean>(false);
     const [canProceedResult, setCanProceedResult] = useState<boolean>(false);
 
-    const canNilai = view ? true : nilai !== null;
+    const canNilai = view ? true : nilai !== null || proyek?.status === 'selesai';
     const isCompleted = [canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, canProceedToSyntax6, canProceedResult];
     const canProceedNextSyntax = [true, canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, canNilai];
 
     useEffect(() => {
         if (jawaban) {
-            setCanProceedToSyntax2(jawaban.status_tahap_4 === 'diterima');
-            setCanProceedToSyntax3(jawaban.status_tahap_5 === 'diterima');
-            setCanProceedToSyntax4(jawaban.status_tahap_6 === 'diterima');
-            setCanProceedToSyntax5(jawaban.status_tahap_7 === 'diterima');
-            setCanProceedToSyntax6(jawaban.status_tahap_8 === 'diterima');
+            setCanProceedToSyntax2(jawaban.status_tahap_4 === 'diterima' || proyek?.status === 'selesai');
+            setCanProceedToSyntax3(jawaban.status_tahap_5 === 'diterima' || proyek?.status === 'selesai');
+            setCanProceedToSyntax4(jawaban.status_tahap_6 === 'diterima' || proyek?.status === 'selesai');
+            setCanProceedToSyntax5(jawaban.status_tahap_7 === 'diterima' || proyek?.status === 'selesai');
+            setCanProceedToSyntax6(jawaban.status_tahap_8 === 'diterima' || proyek?.status === 'selesai');
             setCanProceedResult(canNilai);
         }
     }, [jawaban, nilai]);

@@ -223,6 +223,18 @@ export type ProyekNilai = {
     [key: string]: number | string;
 };
 
+export type Nilai = {
+    id: number;
+    user_id: string;
+    kelas_id: string;
+    judul: string;
+    nilai_kuis: number;
+    nilai_proyek: number;
+    created_at: string;
+    updated_at: string;
+    [key: string]: number | string;
+};
+
 export interface BreadcrumbItem {
     title: string;
     link: string;

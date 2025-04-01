@@ -8,6 +8,7 @@ use App\Http\Controllers\Guru\KelompokController;
 use App\Http\Controllers\Guru\KuisController;
 use App\Http\Controllers\Guru\KuisSoalController;
 use App\Http\Controllers\Guru\MateriController;
+use App\Http\Controllers\Guru\NilaiController;
 use App\Http\Controllers\Guru\ProyekController;
 use App\Http\Controllers\Guru\ProyekJawabanController;
 use App\Http\Controllers\Guru\ProyekNilaiController;
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'materi' => MateriController::class,
             'kuis' => KuisController::class,
             'proyek' => ProyekController::class,
+            'nilai' => NilaiController::class,
         ]);
         Route::get('/kuis/{kuisId}/soal/create', [KuisSoalController::class, 'create'])->name('kuis.soalCreate');
         Route::post('/kuis/{kuisId}/soal', [KuisSoalController::class, 'store'])->name('kuis.soalStore');
@@ -72,6 +74,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/proyek/{proyekId}/nilai/{id}/edit', [ProyekNilaiController::class, 'edit'])->name('proyek.nilaiEdit');
         Route::patch('/proyek/{proyekId}/nilai/{id}', [ProyekNilaiController::class, 'update'])->name('proyek.nilaiUpdate');
 
+        Route::get('/nilai/{kelasId}/kelas', [NilaiController::class, 'siswa'])->name('nilai.siswa');
 
         Route::get('/dashboard', function () {
             return Inertia::render('guru/dashboard-guru');

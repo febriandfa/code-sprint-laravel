@@ -54,7 +54,7 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Nilai',
                 icon: <Category />,
-                // link: route('guru.nilai.index'),
+                link: route('guru.nilai.index'),
             },
         ],
         siswa: [

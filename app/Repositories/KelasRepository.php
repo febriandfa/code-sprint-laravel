@@ -19,6 +19,17 @@ class KelasRepository
         return DB::table('users')->where('role', 'guru')->get();
     }
 
+    public function getSiswa(string $id)
+    {
+        return DB::table('users')
+            ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
+            ->leftJoin('kelases', 'user_details.kelas_id', '=', 'kelases.id')
+            ->where('user_details.kelas_id', $id)
+            ->where('users.role', 'siswa')
+            ->select('users.*', 'user_details.kelas_id', 'kelases.nama as kelas', 'user_details.no_absen')
+            ->get();
+    }
+
     public function create(array $data)
     {
         return DB::table('kelases')->insertGetId($data);
