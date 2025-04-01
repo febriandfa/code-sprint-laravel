@@ -81,7 +81,7 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Nilai',
                 icon: <Category />,
-                // link: route('siswa.nilai.index'),
+                link: route('siswa.nilai.index'),
             },
         ],
     };

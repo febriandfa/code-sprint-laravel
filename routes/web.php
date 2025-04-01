@@ -15,6 +15,7 @@ use App\Http\Controllers\Guru\ProyekNilaiController;
 use App\Http\Controllers\Siswa\KelompokController as SiswaKelompokController;
 use App\Http\Controllers\Siswa\KuisController as SiswaKuisController;
 use App\Http\Controllers\Siswa\MateriController as SiswaMateriController;
+use App\Http\Controllers\Siswa\NilaiController as SiswaNilaiController;
 use App\Http\Controllers\Siswa\ProyekController as SiswaProyekController;
 use App\Http\Controllers\Siswa\ProyekJawabanController as SiswaProyekJawabanController;
 use Illuminate\Support\Facades\Route;
@@ -85,6 +86,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/kuis', [SiswaKuisController::class, 'index'])->name('kuis.index');
         Route::resources([
             'materi' => SiswaMateriController::class,
+            'nilai' => SiswaNilaiController::class,
         ]);
 
         Route::middleware(['already_joined'])->group(function () {
