@@ -41,7 +41,7 @@ export default function SyntaxFour() {
     });
 
     const handleOnSubmit = () => {
-        patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 7 }), {
+        patch(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 7 }), {
             onSuccess: () => {
                 SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
             },

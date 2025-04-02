@@ -91,7 +91,7 @@ export default function SyntaxOne() {
     const {
         data: dataThree,
         setData: setDataThree,
-        post: postThree,
+        patch: patchThree,
         processing: processingThree,
         errors: errorsThree,
     } = useForm<Required<StepThreeForm>>({
@@ -126,7 +126,7 @@ export default function SyntaxOne() {
     };
 
     const submitStepTwo = () => {
-        patchTwo(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 3 }), {
+        patchTwo(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 3 }), {
             onSuccess: () => {
                 SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
             },
@@ -134,7 +134,7 @@ export default function SyntaxOne() {
     };
 
     const submitStepThree = () => {
-        postThree(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 4 }), {
+        patchThree(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 4 }), {
             onSuccess: () => {
                 SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
             },

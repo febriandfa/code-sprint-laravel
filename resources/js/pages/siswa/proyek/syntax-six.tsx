@@ -15,6 +15,8 @@ export default function SyntaxSixProyek() {
         nilai?: ProyekNilai;
     };
 
+    console.log(nilai);
+
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
         { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },
@@ -42,7 +44,7 @@ export default function SyntaxSixProyek() {
                     <p className="text-xs text-gray-400">Indeks Nilai 0-5</p>
                 </div>
                 <InputField id="nilai" label="Nilai" value={nilai?.nilai ?? 'Belum dinilai'} disabled />
-                <RichTextView label="Refleksi" value={nilai?.evaluasi ?? '<p>Tidak ada evaluasi</p>'} />
+                <RichTextView label="Evaluasi" value={nilai?.evaluasi ?? '<p>Tidak ada evaluasi</p>'} />
                 {jawaban && jawaban.refleksi && (
                     <div>
                         <RichTextView label="Refleksi" value={jawaban.refleksi} />

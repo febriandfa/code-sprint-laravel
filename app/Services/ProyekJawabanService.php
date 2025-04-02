@@ -71,6 +71,30 @@ class ProyekJawabanService
                 'status_tahap_4' => 'required|in:' . implode(',', ProyekAnswerStatus::values()),
                 'feedback_tahap_4' => 'nullable|string',
             ];
+        } elseif ($step == 5) {
+            $rules = [
+                'status_tahap_5' => 'required|in:' . implode(',', ProyekAnswerStatus::values()),
+                'feedback_tahap_5' => 'nullable|string',
+            ];
+        } elseif ($step == 6) {
+            $rules = [
+                'status_tahap_6' => 'required|in:' . implode(',', ProyekAnswerStatus::values()),
+                'feedback_tahap_6' => 'nullable|string',
+            ];
+        } elseif ($step == 7) {
+            $rules = [
+                'status_tahap_7' => 'required|in:' . implode(',', ProyekAnswerStatus::values()),
+                'feedback_tahap_7' => 'nullable|string',
+            ];
+        } elseif ($step == 8) {
+            $rules = [
+                'status_tahap_8' => 'required|in:' . implode(',', ProyekAnswerStatus::values()),
+                'feedback_tahap_8' => 'nullable|string',
+            ];
+        } elseif ($step == 9) {
+            $rules = [
+                'refleksi' => 'required|string',
+            ];
         }
 
         return Validator::make($data, $rules);
@@ -343,9 +367,11 @@ class ProyekJawabanService
                 $extension = $fileKegiatan->getClientOriginalName();
                 $fileKegiatanName = date('YmdHis') . "." . $extension;
 
-                $oldPath = storage_path('app/public') . str_replace('/storage', '', $jadwal->file_kegiatan);
-                if (file_exists($oldPath)) {
-                    unlink($oldPath);
+                if ($jadwal->file_kegiatan) {
+                    $oldPath = storage_path('app/public') . str_replace('/storage', '', $jadwal->file_kegiatan);
+                    if (file_exists($oldPath)) {
+                        unlink($oldPath);
+                    }
                 }
 
                 $fileKegiatan->move(storage_path('app/public/proyek/file_kegiatan'), $fileKegiatanName);

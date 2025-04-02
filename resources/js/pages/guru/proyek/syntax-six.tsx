@@ -24,7 +24,7 @@ export default function SyntaxSix() {
         nilais?: ProyekNilai[];
     };
 
-    console.log('nilais', nilais);
+    console.log('jawaban', jawaban);
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('guru.proyek.index') },
@@ -33,11 +33,11 @@ export default function SyntaxSix() {
     ];
 
     const { data, setData, patch, processing, errors } = useForm<Required<SyntaxSixForm>>({
-        refleksi: '',
+        refleksi: jawaban?.refleksi ?? '',
     });
 
     const handleOnSubmit = () => {
-        patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 9 }), {
+        patch(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 9 }), {
             onSuccess: () => {
                 SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
             },
