@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/react';
 import React from 'react';
 import DataTables from './data-tables';
 import Button from './ui/button';
+import Container from './ui/container';
 import LabelStatus from './ui/label-status';
 import RichText from './ui/rich-text';
 import Title from './ui/title';
@@ -29,11 +30,11 @@ export default function ProyekTemplate({ proyek, kelompok, columns, data, search
     return (
         <React.Fragment>
             <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-4 rounded-lg bg-white p-8">
+                <Container className="space-y-4">
                     <Title title="Deskripsi Proyek" />
                     <RichText content={proyek?.deskripsi} />
-                </div>
-                <div className="space-y-4 rounded-lg bg-white p-8">
+                </Container>
+                <Container className="space-y-4">
                     <Title title="Detail Proyek" />
                     <div className="grid grid-cols-2">
                         <div className="space-y-2">
@@ -88,9 +89,9 @@ export default function ProyekTemplate({ proyek, kelompok, columns, data, search
                             </Button>
                         </Link>
                     )}
-                </div>
+                </Container>
             </div>
-            <div className="mt-4 rounded-lg bg-white p-8">
+            <Container className="mt-4">
                 <div className="flex items-center gap-4">
                     <Title title={kelompok ? `Anggota ${kelompok.nama}` : 'Data Kelompok'} />
                     {view && kelompok && <LabelStatus variant={isFull ? 'danger' : 'success'} size="small" status={`Kuota: ${totalAnggota}`} />}
@@ -107,7 +108,7 @@ export default function ProyekTemplate({ proyek, kelompok, columns, data, search
                     )}
                 </div>
                 <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
-            </div>
+            </Container>
         </React.Fragment>
     );
 }

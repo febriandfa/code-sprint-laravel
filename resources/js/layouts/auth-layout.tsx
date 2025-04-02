@@ -4,7 +4,8 @@ import Breadcrumb from '@/components/ui/breadcrumb';
 import Title from '@/components/ui/title';
 import { Auth, BreadcrumbItem, UserRole } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 interface AuthLayoutProps {
     title: string;
@@ -14,9 +15,37 @@ interface AuthLayoutProps {
 }
 
 export default function AuthLayout({ children, title, breadcrumbs, index = false, siswa = false }: PropsWithChildren<AuthLayoutProps>) {
-    const { auth } = usePage().props as { auth?: Auth };
+    const { auth, flash } = usePage().props as { auth?: Auth; flash?: { error: string; success: string } };
 
     const userRole: UserRole = auth?.user.role ?? 'siswa';
+
+    console.log(usePage());
+
+    useEffect(() => {
+        if (flash?.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: flash.error,
+                timer: 1500,
+                timerProgressBar: true,
+                showConfirmButton: false,
+            });
+        }
+    }, [flash?.error]);
+
+    useEffect(() => {
+        if (flash?.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: flash.success,
+                timer: 1500,
+                timerProgressBar: true,
+                showConfirmButton: false,
+            });
+        }
+    }, [flash?.success]);
 
     return (
         <React.Fragment>

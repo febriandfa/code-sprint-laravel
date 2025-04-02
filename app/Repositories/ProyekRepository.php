@@ -40,27 +40,22 @@ class ProyekRepository
 
         return DB::table('proyeks')
             ->leftJoin('materis', 'proyeks.materi_id', '=', 'materis.id')
-            ->leftJoin('kelompok_anggotas', function($join) use ($userId) {
-                $join->where('kelompok_anggotas.anggota_id', $userId);
-            })
-            ->leftJoin('kelompoks', function($join) {
-                $join->on('kelompoks.id', '=', 'kelompok_anggotas.kelompok_id')
-                    ->on('kelompoks.proyek_id', '=', 'proyeks.id');
+            ->leftJoin('kelompoks', function($join) use ($userId) {
+                $join->on('kelompoks.proyek_id', '=', 'proyeks.id')
+                    ->whereExists(function($query) use ($userId) {
+                        $query->select(DB::raw(1))
+                            ->from('kelompok_anggotas')
+                            ->whereColumn('kelompok_anggotas.kelompok_id', 'kelompoks.id')
+                            ->where('kelompok_anggotas.anggota_id', $userId);
+                    });
             })
             ->leftJoin('proyek_jawabans', function($join) {
-                $join->on('proyeks.id', '=', 'proyek_jawabans.proyek_id')
-                    ->whereRaw('proyek_jawabans.user_id IN (
-                        SELECT anggota_id FROM kelompok_anggotas
-                        WHERE kelompok_id = kelompoks.id
-                    )');
+                $join->on('proyek_jawabans.proyek_id', '=', 'proyeks.id')
+                    ->on('proyek_jawabans.kelompok_id', '=', 'kelompoks.id');
             })
-            // ->leftJoin('proyek_jawabans', function($join) use ($userId) {
-            //     $join->on('proyeks.id', '=', 'proyek_jawabans.proyek_id')
-            //             ->where('proyek_jawabans.user_id', $userId);
-            // })
             ->leftJoin('proyek_nilais', function($join) use ($userId) {
-                $join->on('proyeks.id', '=', 'proyek_nilais.proyek_id')
-                        ->where('proyek_nilais.user_id', $userId);
+                $join->on('proyek_nilais.proyek_id', '=', 'proyeks.id')
+                    ->where('proyek_nilais.user_id', $userId);
             })
             ->select(
                 'proyeks.*',
@@ -70,13 +65,7 @@ class ProyekRepository
                 'proyek_nilais.nilai'
             )
             ->where('materis.kelas_id', $kelasId)
-            ->groupBy(
-                'proyeks.id',
-                'materis.judul',
-                'proyek_jawabans.id',
-                'proyek_nilais.id',
-                'proyek_nilais.nilai'
-            )
+            ->distinct()
             ->get();
     }
 

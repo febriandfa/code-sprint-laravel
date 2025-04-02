@@ -39,6 +39,8 @@ class KelompokService
             }
             $validatedData = $validator->validated();
             $validatedData['proyek_id'] = $proyekId;
+            $validatedData['created_at'] = now();
+            $validatedData['updated_at'] = now();
 
             $this->kelompokRepository->create($validatedData);
 

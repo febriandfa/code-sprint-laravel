@@ -41,6 +41,8 @@ class ProyekService
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             $validatedData = $validator->validated();
+            $validatedData['created_at'] = now();
+            $validatedData['updated_at'] = now();
 
             $this->proyekRepository->create($validatedData);
 

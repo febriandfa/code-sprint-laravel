@@ -38,11 +38,11 @@ class ProyekJawabanService
         } elseif ($step == 3) {
             $rules = ['indikator' => 'required|string',];
         } elseif ($step == 4) {
-            $rules = ['analisis_masalah' => 'file|mimes:pdf|max:2048',];
+            $rules = ['analisis_masalah' => 'file|mimes:pdf',];
         } elseif ($step == 5) {
             $rules = ['rencana_proyek' => 'required|string',];
         } elseif ($step == 6) {
-            $rules = ['jadwal_proyek' => 'file|mimes:xlsx,xls,csv|max:2048',];
+            $rules = ['jadwal_proyek' => 'file|mimes:xlsx,xls,csv',];
         } elseif ($step == 8) {
             $rules = [
                 'file_proyek' => 'file|mimes:zip,rar',
@@ -109,7 +109,7 @@ class ProyekJawabanService
             'kegiatan' => 'required|string',
             'tenggat' => 'required|date',
             'status' => 'required|in:' . implode(',', ProyekStatus::values()),
-            'file_kegiatan' => 'nullable|file|max:2048',
+            'file_kegiatan' => 'nullable|file',
         ]);
     }
 
@@ -128,6 +128,8 @@ class ProyekJawabanService
                 'user_id' => Auth::user()->id,
                 'jawaban_tahap_2' => $validatedData['rumusan_masalah'],
                 'status_tahap_2' => ProyekAnswerStatus::PROSES,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
 
             return redirect()->back()->with('success', 'Jawaban berhasil dikirim');
@@ -173,7 +175,7 @@ class ProyekJawabanService
                     if ($request->hasFile('analisis_masalah')) {
                         $fileMasalah = $request->file('analisis_masalah');
                         $extension = $fileMasalah->getClientOriginalName();
-                        $fileMasalahName = date('YmdHis') . "." . $extension;
+                        $fileMasalahName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_4) {
                             $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_4);
@@ -202,7 +204,7 @@ class ProyekJawabanService
                     if ($request->hasFile('jadwal_proyek')) {
                         $fileJadwal = $request->file('jadwal_proyek');
                         $extension = $fileJadwal->getClientOriginalName();
-                        $fileJadwalName = date('YmdHis') . "." . $extension;
+                        $fileJadwalName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_6) {
                             $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
@@ -230,7 +232,7 @@ class ProyekJawabanService
                     if ($request->hasFile('file_proyek')) {
                         $fileProyek = $request->file('file_proyek');
                         $extension = $fileProyek->getClientOriginalName();
-                        $fileProyekName = date('YmdHis') . "." . $extension;
+                        $fileProyekName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_6) {
                             $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
@@ -249,7 +251,7 @@ class ProyekJawabanService
                     if ($request->hasFile('file_laporan')) {
                         $fileLaporan = $request->file('file_laporan');
                         $extension = $fileLaporan->getClientOriginalName();
-                        $fileLaporanName = date('YmdHis') . "." . $extension;
+                        $fileLaporanName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_6) {
                             $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
@@ -334,7 +336,7 @@ class ProyekJawabanService
             if ($request->hasFile('file_kegiatan')) {
                 $fileKegiatan = $request->file('file_kegiatan');
                 $extension = $fileKegiatan->getClientOriginalName();
-                $fileKegiatanName = date('YmdHis') . "." . $extension;
+                $fileKegiatanName = date('YmdHis') . "-" . $extension;
                 $fileKegiatan->move(storage_path('app/public/proyek/file_kegiatan'), $fileKegiatanName);
                 $fileKegiatanPath = '/storage/proyek/file_kegiatan/' . $fileKegiatanName;
             };
@@ -365,7 +367,7 @@ class ProyekJawabanService
             if ($request->hasFile('file_kegiatan')) {
                 $fileKegiatan = $request->file('file_kegiatan');
                 $extension = $fileKegiatan->getClientOriginalName();
-                $fileKegiatanName = date('YmdHis') . "." . $extension;
+                $fileKegiatanName = date('YmdHis') . "-" . $extension;
 
                 if ($jadwal->file_kegiatan) {
                     $oldPath = storage_path('app/public') . str_replace('/storage', '', $jadwal->file_kegiatan);

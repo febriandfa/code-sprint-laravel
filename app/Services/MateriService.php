@@ -28,13 +28,14 @@ class MateriService
             'judul' => 'required|string',
             'deskripsi' => 'required|string',
             'file_materi' => 'nullable|file|mimes:pdf|max:2048',
-            'file_modul' => 'nullable|file|mimes:pdf|max:2048',
+            'file_modul' => 'nullable|file|mimes:pdf',
         ]);
     }
 
     public function create(Request $request)
     {
         try {
+            // return redirect()->back()->with('error', 'Unauthorized action.');
             $validator = $this->validateInput($request->all());
 
             if ($validator->fails()) {
@@ -46,7 +47,7 @@ class MateriService
             if ($request->hasFile('file_materi')) {
                 $fileMateri = $request->file('file_materi');
                 $extension = $fileMateri->getClientOriginalName();
-                $materiName = date('YmdHis') . "." . $extension;
+                $materiName = date('YmdHis') . "-" . $extension;
                 $fileMateri->move(storage_path('app/public/materi'), $materiName);
                 $materiPath = '/storage/materi/' . $materiName;
             };
@@ -55,7 +56,7 @@ class MateriService
             if ($request->hasFile('file_modul')) {
                 $fileModul = $request->file('file_modul');
                 $extension = $fileModul->getClientOriginalName();
-                $modulName = date('YmdHis') . "." . $extension;
+                $modulName = date('YmdHis') . "-" . $extension;
                 $fileModul->move(storage_path('app/public/modul'), $modulName);
                 $modulPath = '/storage/modul/' . $modulName;
             };
@@ -67,6 +68,8 @@ class MateriService
                 'deskripsi' => $validatedData['deskripsi'],
                 'file_materi' => $materiPath,
                 'file_modul' => $modulPath,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
 
             return redirect()->back()->with('success', 'Materi berhasil ditambahkan');
@@ -92,7 +95,7 @@ class MateriService
             if ($request->hasFile('file_materi')) {
                 $fileMateri = $request->file('file_materi');
                 $extension = $fileMateri->getClientOriginalName();
-                $materiName = date('YmdHis') . "." . $extension;
+                $materiName = date('YmdHis') . "-" . $extension;
 
                 if ($materi->file_materi) {
                     $oldPath = storage_path('app/public') . str_replace('/storage', '', $materi->file_materi);
@@ -110,7 +113,7 @@ class MateriService
             if ($request->hasFile('file_modul')) {
                 $fileModul = $request->file('file_modul');
                 $extension = $fileModul->getClientOriginalName();
-                $modulName = date('YmdHis') . "." . $extension;
+                $modulName = date('YmdHis') . "-" . $extension;
 
                 if ($materi->file_modul) {
                     $oldPath = storage_path('app/public') . str_replace('/storage', '', $materi->file_modul);

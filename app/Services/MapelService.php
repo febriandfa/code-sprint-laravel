@@ -39,6 +39,8 @@ class MapelService
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             $validatedData = $validator->validated();
+            $validatedData['created_at'] = now();
+            $validatedData['updated_at'] = now();
 
             $this->mapelRepository->create($validatedData);
 

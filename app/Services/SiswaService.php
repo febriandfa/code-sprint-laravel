@@ -56,7 +56,9 @@ class SiswaService
                 'no_absen' => $noAbsen,
                 'password' => $password,
                 'combination' => $combination,
-                'role' => RoleType::SISWA
+                'role' => RoleType::SISWA,
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
 
             return redirect()->back()->with('success', 'Siswa berhasil ditambahkan');

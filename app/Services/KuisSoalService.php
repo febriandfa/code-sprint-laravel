@@ -45,12 +45,14 @@ class KuisSoalService
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             $validatedData = $validator->validated();
+            $validatedData['created_at'] = now();
+            $validatedData['updated_at'] = now();
 
             $lampiranPath = null;
             if ($request->hasFile('lampiran')) {
                 $fileLampiran = $request->file('lampiran');
                 $extension = $fileLampiran->getClientOriginalName();
-                $lampiranName = date('YmdHis') . "." . $extension;
+                $lampiranName = date('YmdHis') . "-" . $extension;
                 $fileLampiran->move(storage_path('app/public/kuis/lampiran'), $lampiranName);
                 $lampiranPath = '/storage/kuis/lampiran/' . $lampiranName;
             };
@@ -88,7 +90,7 @@ class KuisSoalService
                 if ($request->hasFile('lampiran')) {
                     $fileLampiran = $request->file('lampiran');
                     $extension = $fileLampiran->getClientOriginalName();
-                    $lampiranName = date('YmdHis') . "." . $extension;
+                    $lampiranName = date('YmdHis') . "-" . $extension;
 
                     if ($kuisSoal->lampiran) {
                         $oldPath = storage_path('app/public') . str_replace('/storage', '', $kuisSoal->lampiran);

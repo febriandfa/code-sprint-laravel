@@ -60,6 +60,8 @@ class ProyekNilaiService
 
             foreach ($validatedData['nilais'] as $nilai) {
                 $nilai['proyek_id'] = $proyekId;
+                $nilai['created_at'] = now();
+                $nilai['updated_at'] = now();
                 $this->proyekNilaiRepository->create($nilai);
             }
 

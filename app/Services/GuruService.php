@@ -58,7 +58,9 @@ class GuruService
                 'kelas_id' => $validatedData['kelas_id'],
                 'password' => $password,
                 'combination' => $combination,
-                'role' => RoleType::GURU
+                'role' => RoleType::GURU,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
 
             return redirect()->back()->with('success', 'Guru berhasil ditambahkan');
