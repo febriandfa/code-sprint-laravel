@@ -4,7 +4,6 @@ import PjblFooter from '@/components/pjbl-footer';
 import PjblHeader from '@/components/pjbl-header';
 import Embed from '@/components/ui/embed';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import React, { useEffect } from 'react';
@@ -41,9 +40,7 @@ export default function SyntaxFive() {
 
     const handleOnSubmit = () => {
         patch(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 8 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
-            },
+            onSuccess: () => {},
         });
     };
 

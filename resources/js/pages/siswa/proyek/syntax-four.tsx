@@ -6,7 +6,6 @@ import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { getProyekAnswerStatusInfo } from '@/lib/helper';
-import { SwalSuccess } from '@/lib/swal';
 import { Auth, JoinedKelompok, Kelompok, Proyek, ProyekJadwal, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 
@@ -37,9 +36,7 @@ export default function SyntaxTwoProyek() {
 
     const handleOnSubmit = () => {
         patch(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 7 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
-            },
+            onSuccess: () => {},
         });
     };
 

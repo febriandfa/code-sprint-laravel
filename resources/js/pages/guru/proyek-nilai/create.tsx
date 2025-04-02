@@ -5,7 +5,6 @@ import PjblHeader from '@/components/pjbl-header';
 import Button from '@/components/ui/button';
 import Subtitle from '@/components/ui/subtitle';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -85,9 +84,7 @@ export default function CreateProyekNilai() {
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         post(route('guru.proyek.nilaiStore', proyek?.id), {
-            onSuccess: () => {
-                SwalSuccess({ content: 'nilai' });
-            },
+            onSuccess: () => {},
         });
     };
 

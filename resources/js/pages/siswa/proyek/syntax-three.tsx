@@ -7,7 +7,6 @@ import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
-import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { useRef } from 'react';
@@ -37,16 +36,14 @@ export default function SyntaxThreeProyek() {
         { title: 'Pengerjaan Project Based Learning', link: '#' },
     ];
 
-    const { data, setData, post, processing, errors } = useForm<Required<SyntaxThreeForm>>({
+    const { setData, post, processing, errors } = useForm<Required<SyntaxThreeForm>>({
         _method: 'PATCH',
         jadwal_proyek: null,
     });
 
     const handleOnSubmit = () => {
         post(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 6 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
-            },
+            onSuccess: () => {},
         });
     };
 
@@ -87,9 +84,6 @@ export default function SyntaxThreeProyek() {
                         onChange={(e) => setData('jadwal_proyek', e.target.files?.[0] ?? null)}
                         error={errors.jadwal_proyek}
                     />
-                    {data.jadwal_proyek && typeof data.jadwal_proyek === 'object' && (
-                        <p className="text-sm text-slate-500">File terpilih: {data.jadwal_proyek.name}</p>
-                    )}
                     {jawaban && jawaban.jawaban_tahap_6 && (
                         <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jawaban.jawaban_tahap_6, 'jadwal_proyek')}</p>
                     )}

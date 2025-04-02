@@ -5,7 +5,6 @@ import PjblHeader from '@/components/pjbl-header';
 import Button from '@/components/ui/button';
 import Subtitle from '@/components/ui/subtitle';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -44,6 +43,7 @@ export default function EditProyekNilai() {
     }));
 
     const { data, setData, patch, processing, errors } = useForm<Required<NilaiForm>>({
+        kelompok_id: nilai?.kelompok_id ?? '',
         nilai_orientasi_masalah: nilai?.nilai_orientasi_masalah ?? 0,
         nilai_kerja_sama: nilai?.nilai_kerja_sama ?? 0,
         nilai_proses: nilai?.nilai_proses ?? 0,
@@ -73,9 +73,7 @@ export default function EditProyekNilai() {
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         patch(route('guru.proyek.nilaiUpdate', { proyekId: proyek?.id, id: nilai?.id }), {
-            onSuccess: () => {
-                SwalSuccess({ type: 'edit', content: 'nilai' });
-            },
+            onSuccess: () => {},
         });
     };
 

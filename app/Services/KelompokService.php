@@ -50,7 +50,7 @@ class KelompokService
         }
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $proyekId, string $id)
     {
         try {
             $validator = $this->validateInput($request->all());
@@ -62,7 +62,7 @@ class KelompokService
 
             $this->kelompokRepository->update($validatedData, $id);
 
-            return redirect()->back()->with('success', 'Kelompok berhasil diubah');
+            return to_route('guru.proyek.show', $proyekId)->with('success', 'Kelompok berhasil diubah');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

@@ -6,7 +6,6 @@ import PjblHeader from '@/components/pjbl-header';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { stripHtml } from '@/lib/helper';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect } from 'react';
@@ -38,9 +37,7 @@ export default function SyntaxSix() {
 
     const handleOnSubmit = () => {
         patch(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 9 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
-            },
+            onSuccess: () => {},
         });
     };
 

@@ -2,7 +2,6 @@ import InputField from '@/components/input-field';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelas } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -36,7 +35,6 @@ export default function CreateSiswa() {
         e.preventDefault();
         post(route('admin.siswa.store'), {
             onSuccess: () => {
-                SwalSuccess({ content: 'siswa' });
                 reset();
             },
         });

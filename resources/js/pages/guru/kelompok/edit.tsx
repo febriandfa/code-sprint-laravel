@@ -3,7 +3,6 @@ import InputQuill from '@/components/input-quill';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelompok, Proyek, User } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -51,9 +50,7 @@ export default function EditKelompok() {
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         patch(route('guru.proyek.kelompokUpdate', { proyekId: proyek?.id, kelompokId: kelompok?.id }), {
-            onSuccess: () => {
-                SwalSuccess({ content: 'kelompok' });
-            },
+            onSuccess: () => {},
         });
     };
 

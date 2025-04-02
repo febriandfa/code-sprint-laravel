@@ -8,7 +8,6 @@ import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
-import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { CircleCheck, Lock } from 'lucide-react';
@@ -83,7 +82,6 @@ export default function SyntaxOneProyek() {
     });
 
     const {
-        data: dataThree,
         setData: setDataThree,
         post: postThree,
         processing: processingThree,
@@ -117,25 +115,19 @@ export default function SyntaxOneProyek() {
             ? route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 2 })
             : route('siswa.proyek.storeAnswer', proyek?.id);
         method(routeName, {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
-            },
+            onSuccess: () => {},
         });
     };
 
     const submitIndikator = () => {
         patchTwo(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 3 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
-            },
+            onSuccess: () => {},
         });
     };
 
     const submitAnalisisMasalah = () => {
         postThree(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 4 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
-            },
+            onSuccess: () => {},
         });
     };
 
@@ -237,9 +229,6 @@ export default function SyntaxOneProyek() {
                             onChange={(e) => setDataThree('analisis_masalah', e.target.files?.[0] ?? null)}
                             error={errorsThree.analisis_masalah}
                         />
-                        {dataThree.analisis_masalah && typeof dataThree.analisis_masalah === 'object' && (
-                            <p>File terpilih: {dataThree.analisis_masalah.name}</p>
-                        )}
                         {jawaban && jawaban.jawaban_tahap_4 && (
                             <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jawaban.jawaban_tahap_4, 'analisis_masalah')}</p>
                         )}

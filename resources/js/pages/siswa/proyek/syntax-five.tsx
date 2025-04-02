@@ -6,7 +6,6 @@ import LabelStatus from '@/components/ui/label-status';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
 import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
-import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { useRef } from 'react';
@@ -38,7 +37,7 @@ export default function SyntaxFiveProyek() {
         { title: 'Pengerjaan Project Based Learning', link: '#' },
     ];
 
-    const { data, setData, post, processing, errors } = useForm<Required<SyntaxFiveForm>>({
+    const { setData, post, processing, errors } = useForm<Required<SyntaxFiveForm>>({
         _method: 'PATCH',
         file_proyek: null,
         file_laporan: null,
@@ -46,9 +45,7 @@ export default function SyntaxFiveProyek() {
 
     const handleOnSubmit = () => {
         post(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 8 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil mengirimkan jawaban!' });
-            },
+            onSuccess: () => {},
         });
     };
 
@@ -66,9 +63,6 @@ export default function SyntaxFiveProyek() {
                         onChange={(e) => setData('file_proyek', e.target.files?.[0] ?? null)}
                         error={errors.file_proyek}
                     />
-                    {data.file_proyek && typeof data.file_proyek === 'object' && (
-                        <p className="text-sm text-slate-500">File terpilih: {data.file_proyek.name}</p>
-                    )}
                     {jawaban && jawaban.file_proyek && (
                         <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jawaban.file_proyek, 'file_proyek')}</p>
                     )}
@@ -83,9 +77,6 @@ export default function SyntaxFiveProyek() {
                         onChange={(e) => setData('file_laporan', e.target.files?.[0] ?? null)}
                         error={errors.file_laporan}
                     />
-                    {data.file_laporan && typeof data.file_laporan === 'object' && (
-                        <p className="text-sm text-slate-500">File terpilih: {data.file_laporan.name}</p>
-                    )}
                     {jawaban && jawaban.file_laporan && (
                         <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jawaban.file_laporan, 'file_laporan')}</p>
                     )}

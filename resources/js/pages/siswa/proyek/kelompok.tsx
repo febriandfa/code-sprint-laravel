@@ -3,7 +3,6 @@ import Button from '@/components/ui/button';
 import LabelStatus from '@/components/ui/label-status';
 import Title from '@/components/ui/title';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { JoinedKelompok, Kelompok, Proyek } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -26,7 +25,6 @@ export default function KelompokProyek() {
 
         post(route('siswa.kelompok.join', kelompokId), {
             onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil bergabung ke kelompok!' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);

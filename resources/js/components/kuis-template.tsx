@@ -1,5 +1,4 @@
 import { formatTwoDigit } from '@/lib/helper';
-import { SwalSuccess } from '@/lib/swal';
 import { Kuis, KuisJawaban, KuisSoal } from '@/types';
 import { router, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -61,9 +60,6 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
         setIsSubmitting(true);
         post(route('siswa.kuis.answer'), {
             onSuccess: () => {
-                SwalSuccess({
-                    text: 'Waktu habis! Jawaban otomatis dikirim.',
-                });
                 localStorage.removeItem(`kuis_${kuis?.id}_answers`);
                 localStorage.removeItem(`kuis_${kuis?.id}_end_time`);
 
@@ -152,7 +148,6 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
             if (result.isConfirmed) {
                 post(route('siswa.kuis.answer'), {
                     onSuccess: () => {
-                        SwalSuccess({ text: 'Jawaban berhasil dikirim!' });
                         localStorage.removeItem(`kuis_${kuis?.id}_answers`);
                         localStorage.removeItem(`kuis_${kuis?.id}_end_time`);
 

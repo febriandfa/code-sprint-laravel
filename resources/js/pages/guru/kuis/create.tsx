@@ -2,7 +2,6 @@ import InputField from '@/components/input-field';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Materi } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -40,7 +39,6 @@ export default function CreateKuis() {
         e.preventDefault();
         post(route('guru.kuis.store'), {
             onSuccess: () => {
-                SwalSuccess({ content: 'kuis' });
                 reset();
             },
         });

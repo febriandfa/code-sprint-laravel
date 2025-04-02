@@ -6,7 +6,6 @@ import Button from '@/components/ui/button';
 import Embed from '@/components/ui/embed';
 import LabelStatus from '@/components/ui/label-status';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import React, { useEffect } from 'react';
@@ -43,9 +42,7 @@ export default function SyntaxThree() {
 
     const handleOnSubmit = () => {
         patch(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 6 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
-            },
+            onSuccess: () => {},
         });
     };
 

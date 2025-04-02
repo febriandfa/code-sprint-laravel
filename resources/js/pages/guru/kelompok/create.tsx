@@ -3,7 +3,6 @@ import InputQuill from '@/components/input-quill';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Proyek, User } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -40,7 +39,6 @@ export default function CreateKelompok() {
         e.preventDefault();
         post(route('guru.proyek.kelompokStore', proyek?.id), {
             onSuccess: () => {
-                SwalSuccess({ content: 'kelompok' });
                 reset();
             },
         });

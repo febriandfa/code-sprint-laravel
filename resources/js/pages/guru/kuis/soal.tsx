@@ -4,7 +4,6 @@ import InputQuill from '@/components/input-quill';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kuis, KuisSoal } from '@/types';
 import { router, useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -126,7 +125,6 @@ export default function SoalKuis() {
                 : route('guru.kuis.soalStore', kuis?.id),
             {
                 onSuccess: () => {
-                    SwalSuccess({ type: isEdit ? 'edit' : 'create', content: 'soal' });
                     if (lampiranRef.current) lampiranRef.current.value = '';
                 },
             },
@@ -148,7 +146,6 @@ export default function SoalKuis() {
                     route('guru.kuis.soalDestroy', { kuisId: kuis?.id, soalId: soals?.find((soal) => soal.urutan === currentNumber)?.id }),
                     {
                         onSuccess: () => {
-                            SwalSuccess({ text: 'Soal berhasil dihapus' });
                             setTimeout(() => {
                                 window.location.reload();
                             }, 1500);

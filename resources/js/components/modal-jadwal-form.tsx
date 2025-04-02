@@ -1,5 +1,4 @@
 import { getFileName } from '@/lib/helper';
-import { SwalSuccess } from '@/lib/swal';
 import { ProyekJadwal } from '@/types';
 import { router, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -58,7 +57,6 @@ export default function ModalJadwalForm({ isOpen, onClose, anggotaId, kelompokId
             : route('siswa.proyek.storeJadwal', proyekId);
         post(routeName, {
             onSuccess: () => {
-                SwalSuccess({ type: jadwal ? 'edit' : 'create', content: 'kegiatan' });
                 if (fileKegiatanRef.current) fileKegiatanRef.current.value = '';
                 reset();
                 onClose();

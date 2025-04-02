@@ -2,7 +2,6 @@ import InputField from '@/components/input-field';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelas, UserDetail } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -35,9 +34,7 @@ export default function EditSiswa() {
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         patch(route('admin.siswa.update', siswa?.id), {
-            onSuccess: () => {
-                SwalSuccess({ type: 'edit', content: 'siswa' });
-            },
+            onSuccess: () => {},
         });
     };
 

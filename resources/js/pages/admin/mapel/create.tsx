@@ -3,7 +3,6 @@ import InputQuill from '@/components/input-quill';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
@@ -42,7 +41,6 @@ export default function CreateMapel() {
         e.preventDefault();
         post(route('admin.mapel.store'), {
             onSuccess: () => {
-                SwalSuccess({ content: 'mata pelajaran' });
                 reset();
             },
         });

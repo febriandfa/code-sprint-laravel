@@ -1,4 +1,3 @@
-import { SwalSuccess } from '@/lib/swal';
 import { Link, router } from '@inertiajs/react';
 import { Eye, PenIcon, TrashIcon } from 'lucide-react';
 import Swal from 'sweetalert2';
@@ -24,7 +23,6 @@ export default function ActionButton({ routeShow, routeEdit, routeDelete }: Acti
             if (result.isConfirmed && routeDelete) {
                 router.delete(routeDelete, {
                     onSuccess: () => {
-                        SwalSuccess({ text: 'Data berhasil dihapus' });
                         setTimeout(() => {
                             window.location.reload();
                         }, 1500);

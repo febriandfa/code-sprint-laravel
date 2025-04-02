@@ -317,7 +317,11 @@ class ProyekJawabanService
 
             $this->proyekJawabanRepository->update($answerToUpdate, $id);
 
-            return redirect()->back()->with('success', 'Jawaban berhasil diperbarui');
+            if ($role === 'siswa') {
+                return redirect()->back()->with('success', 'Jawaban berhasil dikirim');
+            } elseif ($role === 'guru') {
+                return redirect()->back()->with('success', 'Status jawaban berhasil diberikan');
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -345,8 +349,6 @@ class ProyekJawabanService
             $this->proyekJawabanRepository->createJadwal($validatedData);
 
             return redirect()->back()->with('success', 'Jadwal berhasil dikirim');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -385,7 +387,7 @@ class ProyekJawabanService
 
             $this->proyekJawabanRepository->updateJadwal($validatedData, $id);
 
-            return redirect()->back()->with('success', 'Jadwal berhasil diperbarui');
+            return redirect()->back()->with('success', 'Jadwal berhasil diubah');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

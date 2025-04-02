@@ -2,7 +2,6 @@ import InputField from '@/components/input-field';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kuis, Materi } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -39,9 +38,7 @@ export default function EditKuis() {
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         patch(route('guru.kuis.update', kuis?.id), {
-            onSuccess: () => {
-                SwalSuccess({ type: 'edit', content: 'kuis' });
-            },
+            onSuccess: () => {},
         });
     };
 

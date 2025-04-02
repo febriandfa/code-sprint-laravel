@@ -63,6 +63,6 @@ class ProyekNilaiController extends Controller
 
     public function update(Request $request, string $proyekId, string $id)
     {
-        return $this->proyekNilaiService->update($request, $id);
+        return $this->proyekNilaiService->update($request, $proyekId, $id);
     }
 }

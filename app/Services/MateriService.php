@@ -35,7 +35,6 @@ class MateriService
     public function create(Request $request)
     {
         try {
-            // return redirect()->back()->with('error', 'Unauthorized action.');
             $validator = $this->validateInput($request->all());
 
             if ($validator->fails()) {
@@ -73,8 +72,6 @@ class MateriService
             ]);
 
             return redirect()->back()->with('success', 'Materi berhasil ditambahkan');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -137,7 +134,7 @@ class MateriService
                 'file_modul' => $modulPath,
             ], $id);
 
-            return redirect()->back()->with('success', 'Materi berhasil diubah');
+            return to_route('guru.materi.index')->with('success', 'Materi berhasil diubah');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

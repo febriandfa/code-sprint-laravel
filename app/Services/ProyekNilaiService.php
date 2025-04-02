@@ -65,13 +65,13 @@ class ProyekNilaiService
                 $this->proyekNilaiRepository->create($nilai);
             }
 
-            return redirect()->back()->with('success', 'Proyek Nilai created successfully');
+            return to_route('guru.proyek.syntaxSix', [$proyekId, $request->kelompok_id])->with('success', 'Nilai berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage())->withInput();
         }
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $proyekId, string $id)
     {
         try {
             $validator = $this->validateUpdate($request->all());
@@ -83,7 +83,7 @@ class ProyekNilaiService
 
             $this->proyekNilaiRepository->update($validatedData, $id);
 
-            return redirect()->back()->with('success', 'Proyek Nilai updated successfully');
+            return to_route('guru.proyek.syntaxSix', [$proyekId, $request->kelompok_id])->with('success', 'Nilai berhasil diubah');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage())->withInput();
         }

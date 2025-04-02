@@ -6,7 +6,6 @@ import Button from '@/components/ui/button';
 import Embed from '@/components/ui/embed';
 import RichTextView from '@/components/ui/rich-text-view';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { CircleCheck } from 'lucide-react';
@@ -119,25 +118,19 @@ export default function SyntaxOne() {
 
     const submitStepOne = () => {
         patchOne(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 2 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
-            },
+            onSuccess: () => {},
         });
     };
 
     const submitStepTwo = () => {
         patchTwo(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 3 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
-            },
+            onSuccess: () => {},
         });
     };
 
     const submitStepThree = () => {
         patchThree(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 4 }), {
-            onSuccess: () => {
-                SwalSuccess({ text: 'Berhasil menyimpan nilai!' });
-            },
+            onSuccess: () => {},
         });
     };
 

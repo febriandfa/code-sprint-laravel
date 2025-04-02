@@ -59,7 +59,7 @@ class KelompokController extends Controller
 
     public function update(Request $request, string $proyekId, string $id)
     {
-        return $this->kelompokService->update($request, $id);
+        return $this->kelompokService->update($request, $proyekId, $id);
     }
 
     public function destroy($id)

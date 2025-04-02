@@ -2,7 +2,6 @@ import InputField from '@/components/input-field';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { UserDetail } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -34,7 +33,6 @@ export default function CreateKelas() {
         e.preventDefault();
         post(route('admin.kelas.store'), {
             onSuccess: () => {
-                SwalSuccess({ content: 'kelas' });
                 reset();
             },
         });

@@ -64,7 +64,7 @@ class ProyekService
 
             $this->proyekRepository->update($validatedData, $id);
 
-            return redirect()->back()->with('success', 'Proyek berhasil diperbarui');
+            return to_route('guru.proyek.index')->with('success', 'Proyek berhasil diubah');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

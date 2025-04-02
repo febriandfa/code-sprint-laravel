@@ -3,7 +3,6 @@ import InputQuill from '@/components/input-quill';
 import InputSelect from '@/components/input-select';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { SwalSuccess } from '@/lib/swal';
 import { Kelas, Mapel, Materi } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -59,9 +58,7 @@ export default function EditMateri() {
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         post(route('guru.materi.update', materi?.id), {
-            onSuccess: () => {
-                SwalSuccess({ type: 'edit', content: 'materi' });
-            },
+            onSuccess: () => {},
         });
     };
 
