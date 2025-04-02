@@ -33,13 +33,14 @@ export default function SiswaKuis() {
         },
         {
             name: 'Aksi',
-            cell: (row: HasilKuis) => <ActionButton routeShow={route('guru.kuis.hasil', { kuisId: kuis?.id, siswaId: row.id })} />,
+            cell: (row: HasilKuis) => <ActionButton routeShow={route('guru.kuis.hasil', { kuisId: kuis?.id, siswaId: row.user_id })} />,
             width: '11rem',
         },
     ];
 
     const data = hasilSiswas?.map((hasil) => ({
         id: hasil.id,
+        user_id: hasil.user_id,
         nama_siswa: hasil.nama_siswa,
         total_poin: hasil.total_poin,
         created_at: hasil.created_at,
