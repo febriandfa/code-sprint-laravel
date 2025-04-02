@@ -71,10 +71,12 @@ export default function PjblJadwal({
                                                 />
                                                 <p>{jadwal.kegiatan}</p>
                                                 {jadwal.file_kegiatan && (
-                                                    <div className="flex items-center gap-1">
+                                                    <a href={jadwal.file_kegiatan} target="_blank" className="flex items-center gap-1">
                                                         <FileText size={17} />{' '}
-                                                        <p className="w-60 truncate">{getFileName(jadwal.file_kegiatan, 'file_kegiatan')}</p>
-                                                    </div>
+                                                        <p className="text-primary w-60 truncate underline">
+                                                            {getFileName(jadwal.file_kegiatan, 'file_kegiatan')}
+                                                        </p>
+                                                    </a>
                                                 )}
                                                 <p className="text-xs">Tenggat: {jadwal.tenggat}</p>
                                             </div>

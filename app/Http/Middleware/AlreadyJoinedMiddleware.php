@@ -31,7 +31,7 @@ class AlreadyJoinedMiddleware
             ->exists();
 
         if (!$hasJoinedGroup) {
-            return to_route('siswa.proyek.kelompok', $proyekId);
+            return to_route('siswa.proyek.kelompok', $proyekId)->with('warning', 'Silakan bergabung kedalam kelompok terlebih dahulu!');
         }
 
         return $next($request);

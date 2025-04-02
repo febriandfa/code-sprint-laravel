@@ -44,7 +44,7 @@ export default function SyntaxTwoProyek() {
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
             <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} nilai={nilai} currentSyntax={currentSyntax ?? 1} />
             <div className="my-5 space-y-6">
-                <PjblJadwal proyek={proyek} kelompok={kelompok} jadwals={jadwals} auth={auth} joinedKelompok={joinedKelompok} />
+                <PjblJadwal proyek={proyek} kelompok={kelompok} jadwals={jadwals} auth={auth} joinedKelompok={joinedKelompok} view={!showSubmit} />
                 <div>
                     <Label id={`status_tahap_7`} label="Status Pengerjaan" />
                     <LabelStatus variant={getProyekAnswerStatusInfo(7, jawaban).variant} status={getProyekAnswerStatusInfo(7, jawaban).text} />

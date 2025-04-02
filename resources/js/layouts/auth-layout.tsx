@@ -15,7 +15,7 @@ interface AuthLayoutProps {
 }
 
 export default function AuthLayout({ children, title, breadcrumbs, index = false, siswa = false }: PropsWithChildren<AuthLayoutProps>) {
-    const { auth, flash } = usePage().props as { auth?: Auth; flash?: { error: string; success: string } };
+    const { auth, flash } = usePage().props as { auth?: Auth; flash?: { error: string; success: string; warning: string } };
 
     const userRole: UserRole = auth?.user.role ?? 'siswa';
 
@@ -46,6 +46,19 @@ export default function AuthLayout({ children, title, breadcrumbs, index = false
             });
         }
     }, [flash?.success]);
+
+    useEffect(() => {
+        if (flash?.warning) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Informasi',
+                text: flash.warning,
+                timer: 1500,
+                timerProgressBar: true,
+                showConfirmButton: false,
+            });
+        }
+    }, [flash?.warning]);
 
     return (
         <React.Fragment>

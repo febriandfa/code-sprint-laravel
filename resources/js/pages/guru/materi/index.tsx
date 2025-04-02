@@ -2,7 +2,7 @@ import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
-import { stripHtml } from '@/lib/helper';
+import { getFileName, stripHtml } from '@/lib/helper';
 import { Materi } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
@@ -36,12 +36,20 @@ export default function IndexMateri() {
         },
         {
             name: 'File Materi',
-            selector: (row: Materi) => row.file_materi,
+            cell: (row: Materi) => (
+                <a href={row.file_materi} target="_blank" className="text-primary line-clamp-2 underline">
+                    {getFileName(row.file_materi, 'materi')}
+                </a>
+            ),
             wrap: true,
         },
         {
             name: 'File Modul',
-            selector: (row: Materi) => row.file_modul,
+            cell: (row: Materi) => (
+                <a href={row.file_materi} target="_blank" className="text-primary line-clamp-2 underline">
+                    {getFileName(row.file_modul, 'modul')}
+                </a>
+            ),
             wrap: true,
         },
         {
