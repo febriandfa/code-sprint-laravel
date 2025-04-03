@@ -67,8 +67,9 @@ class ProyekController extends Controller
     {
         $proyek = $this->proyekRepository->getById($id);
         $kelompoks = $this->kelompokRepository->getAll($id);
+        $jawabans = $this->proyekJawabanRepository->getJawabanByProyekId($id);
 
-        return Inertia::render('guru/proyek/show', compact('proyek', 'kelompoks'));
+        return Inertia::render('guru/proyek/show', compact('proyek', 'kelompoks', 'jawabans'));
     }
 
     public function edit($id)

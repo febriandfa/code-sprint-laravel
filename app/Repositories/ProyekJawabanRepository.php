@@ -22,6 +22,13 @@ class ProyekJawabanRepository
         return DB::table('proyek_jawabans')->where('id', $id)->first();
     }
 
+    public function getJawabanByProyekId(string $proyekId)
+    {
+        return DB::table('proyek_jawabans')
+            ->where('proyek_id', $proyekId)
+            ->get();
+    }
+
     public function getJawabanByProyekIdKelompokId(string $proyekId, string $kelompokId)
     {
         return DB::table('proyek_jawabans')

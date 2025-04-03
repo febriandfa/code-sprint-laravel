@@ -3,11 +3,11 @@ import ProyekTemplate from '@/components/proyek-template';
 import Button from '@/components/ui/button';
 import LabelStatus from '@/components/ui/label-status';
 import AuthLayout from '@/layouts/auth-layout';
-import { Kelompok, Proyek } from '@/types';
+import { Kelompok, Proyek, ProyekJawaban } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function ShowProyek() {
-    const { proyek, kelompoks } = usePage().props as { proyek?: Proyek; kelompoks?: Kelompok[] };
+    const { proyek, kelompoks, jawabans } = usePage().props as { proyek?: Proyek; kelompoks?: Kelompok[]; jawabans?: ProyekJawaban[] };
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('guru.proyek.index') },
@@ -33,7 +33,33 @@ export default function ShowProyek() {
             wrap: true,
         },
         {
-            name: 'Progress',
+            name: 'Progres Saat Ini',
+            cell: (row: Kelompok) => {
+                const kelompokJawaban = jawabans?.find((jawaban) => jawaban.kelompok_id === row.id) as ProyekJawaban;
+                const progressMap: Record<string, string> = {
+                    refleksi: 'Selesai',
+                    status_tahap_8: 'Sintaks 5',
+                    status_tahap_7: 'Sintaks 4',
+                    status_tahap_6: 'Sintaks 3',
+                    status_tahap_5: 'Sintaks 2',
+                    status_tahap_4: 'Sintaks 1 Tahap 4',
+                    status_tahap_3: 'Sintaks 1 Tahap 3',
+                    status_tahap_2: 'Sintaks 1 Tahap 2',
+                    status_tahap_1: 'Sintaks 1 Tahap 1',
+                };
+                let progres = 'Sintaks 1 Tahap 1';
+                if (kelompokJawaban) {
+                    progres = Object.keys(progressMap).find((key) => kelompokJawaban[key as keyof ProyekJawaban])
+                        ? progressMap[Object.keys(progressMap).find((key) => kelompokJawaban[key as keyof ProyekJawaban])!]
+                        : progres;
+                }
+
+                return progres;
+            },
+            wrap: true,
+        },
+        {
+            name: 'Progres',
             cell: (row: Kelompok) => (
                 <Link href={route('guru.proyek.syntaxOne', { proyekId: proyek?.id, kelompokId: row.id })}>
                     <Button>Lihat</Button>
