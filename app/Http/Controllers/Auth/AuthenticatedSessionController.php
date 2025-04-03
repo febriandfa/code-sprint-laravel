@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return to_route('dashboard');
+        return to_route('dashboard')->with('success', 'Login berhasil. Selamat datang di Code Sprint!');
     }
 
     /**

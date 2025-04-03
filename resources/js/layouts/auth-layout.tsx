@@ -36,7 +36,7 @@ export default function AuthLayout({ children, title, breadcrumbs, index = false
         if (flash?.success) {
             Swal.fire({
                 icon: 'success',
-                title: 'Success',
+                title: 'Berhasil',
                 text: flash.success,
                 timer: 1500,
                 timerProgressBar: true,
