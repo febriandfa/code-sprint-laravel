@@ -278,6 +278,7 @@ export interface User {
     user_detail?: {
         kelas?: Kelas;
         no_absen?: number;
+        photo?: string;
     };
     [key: string]: unknown;
 }

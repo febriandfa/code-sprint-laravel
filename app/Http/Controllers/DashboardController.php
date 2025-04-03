@@ -91,4 +91,15 @@ class DashboardController extends Controller
 
         return Inertia::render('admin/dashboard-admin', compact('kelases', 'mapels', 'siswas', 'gurus'));
     }
+
+    public function dashboard(Request $request)
+    {
+        if ($request->user()->role == 'admin') {
+            return $this->admin();
+        } elseif ($request->user()->role == 'guru') {
+            return $this->guru();
+        } else {
+            return $this->siswa();
+        }
+    }
 }

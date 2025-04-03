@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Guru\KelompokController;
 use App\Http\Controllers\Guru\KuisController;
 use App\Http\Controllers\Guru\KuisSoalController;
@@ -48,6 +47,4 @@ Route::prefix('guru')->name('guru.')->middleware('role:guru')->group(function ()
     Route::patch('/proyek/{proyekId}/nilai/{id}', [ProyekNilaiController::class, 'update'])->name('proyek.nilaiUpdate');
 
     Route::get('/nilai/{kelasId}/kelas', [NilaiController::class, 'siswa'])->name('nilai.siswa');
-
-    Route::get('/dashboard', [DashboardController::class, 'guru'])->name('dashboard');
 });

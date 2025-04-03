@@ -9,8 +9,8 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Dashboard',
                 icon: <Category />,
-                link: route('admin.dashboard'),
-                active: currentRoute.startsWith('admin.dashboard'),
+                link: route('dashboard'),
+                active: currentRoute.startsWith('dashboard'),
             },
             {
                 name: 'Guru',
@@ -41,8 +41,8 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Dashboard',
                 icon: <Category />,
-                link: route('guru.dashboard'),
-                active: currentRoute.startsWith('guru.dashboard'),
+                link: route('dashboard'),
+                active: currentRoute.startsWith('dashboard'),
             },
             {
                 name: 'Materi',
@@ -73,8 +73,8 @@ export const sidebarMenus = (userRole: UserRole) => {
             {
                 name: 'Dashboard',
                 icon: <Category />,
-                link: route('siswa.dashboard'),
-                active: currentRoute.startsWith('siswa.dashboard'),
+                link: route('dashboard'),
+                active: currentRoute.startsWith('dashboard'),
             },
             {
                 name: 'Materi',

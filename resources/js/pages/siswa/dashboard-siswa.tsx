@@ -7,7 +7,7 @@ import Subtitle from '@/components/ui/subtitle';
 import AuthLayout from '@/layouts/auth-layout';
 import { Auth, Kuis, Materi, Proyek, User } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Files, MessageCircleQuestion } from 'lucide-react';
+import { Files, MessageCircleQuestion, User as UserIcon } from 'lucide-react';
 
 type ProyekNilai = {
     nama: string;
@@ -52,7 +52,13 @@ export default function DashboardSiswa() {
                         </Link>
                     </div>
                     <div className="flex gap-6">
-                        <div className="size-40 rounded-lg bg-green-100" />
+                        {user?.user_detail?.photo ? (
+                            <img src={user?.user_detail?.photo} alt="foto profil" className="size-40 rounded-lg object-cover" />
+                        ) : (
+                            <div className="flex size-40 items-center justify-center rounded-lg bg-gray-200">
+                                <UserIcon size={96} className="text-gray-500" />
+                            </div>
+                        )}
                         <div>
                             <p className="text-2xl font-medium">{user?.name}</p>
                             <div className="mt-2 grid grid-cols-2 gap-16">

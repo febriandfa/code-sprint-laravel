@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Siswa\KelompokController;
 use App\Http\Controllers\Siswa\KuisController;
 use App\Http\Controllers\Siswa\MateriController;
@@ -47,6 +46,4 @@ Route::prefix('siswa')->name('siswa.')->middleware('role:siswa')->group(function
 
     Route::post('/kelompok/{kelompokId}/join', [KelompokController::class, 'join'])->name('kelompok.join');
     Route::get('/proyek/{proyekId}/kelompok', [ProyekController::class, 'kelompok'])->name('proyek.kelompok');
-
-    Route::get('/dashboard', [DashboardController::class, 'siswa'])->name('dashboard');
 });
