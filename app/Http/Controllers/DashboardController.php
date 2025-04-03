@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\GuruRepository;
+use App\Repositories\KelasRepository;
 use App\Repositories\KuisJawabanRepository;
 use App\Repositories\KuisRepository;
+use App\Repositories\MapelRepository;
 use App\Repositories\MateriRepository;
 use App\Repositories\ProyekJawabanRepository;
 use App\Repositories\ProyekRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,6 +22,9 @@ class DashboardController extends Controller
     protected $kuisRepository;
     protected $materiRepository;
     protected $guruRepository;
+    protected $userRepository;
+    protected $kelasRepository;
+    protected $mapelRepository;
 
     public function __construct(
         ProyekJawabanRepository $proyekJawabanRepository,
@@ -26,7 +32,10 @@ class DashboardController extends Controller
         ProyekRepository $proyekRepository,
         KuisRepository $kuisRepository,
         MateriRepository $materiRepository,
-        GuruRepository $guruRepository
+        GuruRepository $guruRepository,
+        UserRepository $userRepository,
+        KelasRepository $kelasRepository,
+        MapelRepository $mapelRepository
     )
     {
         $this->proyekJawabanRepository = $proyekJawabanRepository;
@@ -35,6 +44,9 @@ class DashboardController extends Controller
         $this->kuisRepository = $kuisRepository;
         $this->materiRepository = $materiRepository;
         $this->guruRepository = $guruRepository;
+        $this->userRepository = $userRepository;
+        $this->kelasRepository = $kelasRepository;
+        $this->mapelRepository = $mapelRepository;
     }
 
     public function siswa()
@@ -72,6 +84,11 @@ class DashboardController extends Controller
 
     public function admin()
     {
-        return Inertia::render('admin/dashboard-admin', compact(''));
+        $kelases = $this->kelasRepository->getAll()->count();
+        $mapels = $this->mapelRepository->getAll()->count();
+        $siswas = $this->userRepository->getAll('siswa')->count();
+        $gurus = $this->userRepository->getAll('guru')->count();
+
+        return Inertia::render('admin/dashboard-admin', compact('kelases', 'mapels', 'siswas', 'gurus'));
     }
 }
