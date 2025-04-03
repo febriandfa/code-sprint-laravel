@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\MapelController;
 use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Guru\KelompokController;
 use App\Http\Controllers\Guru\KuisController;
 use App\Http\Controllers\Guru\KuisSoalController;
@@ -85,9 +86,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('siswa')->name('siswa.')->middleware('role:siswa')->group(function () {
         Route::get('/kuis', [SiswaKuisController::class, 'index'])->name('kuis.index');
         Route::resources([
-            'materi' => SiswaMateriController::class,
             'nilai' => SiswaNilaiController::class,
         ]);
+
+        Route::middleware(['read_materi'])->group(function() {
+            Route::resources([
+                'materi' => SiswaMateriController::class,
+            ]);
+        });
 
         Route::middleware(['already_joined'])->group(function () {
             Route::resources([
@@ -116,9 +122,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/kelompok/{kelompokId}/join', [SiswaKelompokController::class, 'join'])->name('kelompok.join');
         Route::get('/proyek/{proyekId}/kelompok', [SiswaProyekController::class, 'kelompok'])->name('proyek.kelompok');
 
-        Route::get('/dashboard', function () {
-            return Inertia::render('siswa/dashboard-siswa');
-        })->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'siswa'])->name('dashboard');
     });
 });
 

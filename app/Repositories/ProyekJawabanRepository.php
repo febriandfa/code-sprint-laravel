@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProyekJawabanRepository
@@ -44,12 +45,7 @@ class ProyekJawabanRepository
 
     public function createJadwal(array $data)
     {
-        try {
-            return DB::table('proyek_jadwals')->insertGetId($data);
-        } catch (\Exception $e) {
-            dd($e);
-            return false;
-        }
+        return DB::table('proyek_jadwals')->insertGetId($data);
     }
 
     public function updateJadwal(array $data, string $id)
@@ -60,5 +56,28 @@ class ProyekJawabanRepository
     public function deleteJadwal(string $id)
     {
         return DB::table('proyek_jadwals')->where('id', $id)->delete();
+    }
+
+    public function getLatestNilai()
+    {
+        $kelompokIds = DB::table('kelompok_anggotas')
+            ->where('anggota_id', Auth::user()->id)
+            ->pluck('kelompok_id')
+            ->toArray();
+
+        return DB::table('proyek_jawabans')
+            ->leftJoin('proyeks', 'proyek_jawabans.proyek_id', '=', 'proyeks.id')
+            ->leftJoin('proyek_nilais', function ($join) {
+                $join->on('proyek_nilais.proyek_id', '=', 'proyek_jawabans.proyek_id')
+                    ->on('proyek_nilais.kelompok_id', '=', 'proyek_jawabans.kelompok_id');
+            })
+            ->whereIn('proyek_jawabans.kelompok_id', $kelompokIds)
+            ->select(
+                'proyek_jawabans.created_at',
+                'proyeks.nama',
+                'proyek_nilais.nilai',
+            )
+            ->orderBy('proyek_jawabans.created_at', 'desc')
+            ->first();
     }
 }

@@ -9,7 +9,7 @@ export default function Sidebar({ userRole = 'siswa' }: { userRole: UserRole }) 
     const menus = sidebarMenus(userRole);
 
     return (
-        <aside className="fixed left-0 z-10 flex h-screen w-80 flex-col items-center gap-9 border-r border-gray-200 bg-white p-8">
+        <aside className="fixed left-0 z-10 flex h-screen w-72 flex-col items-center gap-9 border-r border-gray-200 bg-white p-8">
             <AppLogo />
             <div className="flex h-full w-full flex-col justify-between">
                 <nav className="w-full">

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\KuisJawabanRepository;
 use App\Repositories\KuisRepository;
 use App\Repositories\KuisSoalRepository;
+use App\Repositories\MateriRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,16 +20,19 @@ class KuisService
     protected $kuisRepository;
     protected $kuisSoalRepository;
     protected $kuisJawabanRepository;
+    protected $materiRepository;
 
     public function __construct(
         KuisRepository $kuisRepository,
         KuisSoalRepository $kuisSoalRepository,
-        KuisJawabanRepository $kuisJawabanRepository
+        KuisJawabanRepository $kuisJawabanRepository,
+        MateriRepository $materiRepository
     )
     {
         $this->kuisRepository = $kuisRepository;
         $this->kuisSoalRepository = $kuisSoalRepository;
         $this->kuisJawabanRepository = $kuisJawabanRepository;
+        $this->materiRepository = $materiRepository;
     }
 
     public function validateInput(array $data)
@@ -54,6 +58,11 @@ class KuisService
             $validatedData['created_at'] = now();
             $validatedData['updated_at'] = now();
 
+            $kuisExistInMateri = $this->materiRepository->checkKuisOrProyek($validatedData['materi_id'], 'kuis');
+            if ($kuisExistInMateri) {
+                return redirect()->back()->with('warning', 'Materi ini sudah memiliki kuis');
+            }
+
             $this->kuisRepository->create($validatedData);
 
             return redirect()->back()->with('success', 'Kuis berhasil ditambahkan');
@@ -71,6 +80,11 @@ class KuisService
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             $validatedData = $validator->validated();
+
+            $kuisExistInMateri = $this->materiRepository->checkKuisOrProyek($validatedData['materi_id'], 'kuis');
+            if ($kuisExistInMateri) {
+                return redirect()->back()->with('warning', 'Materi ini sudah memiliki kuis');
+            }
 
             $this->kuisRepository->update($validatedData, $id);
 
@@ -113,7 +127,9 @@ class KuisService
                     'user_id' => Auth::user()->id,
                     'jawaban' => $answer,
                     'poin' => $point,
-                    'is_benar' => $isCorrect
+                    'is_benar' => $isCorrect,
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ];
 
                 if ($answer) {

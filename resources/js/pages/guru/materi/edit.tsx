@@ -16,6 +16,7 @@ type MateriForm = {
     deskripsi: string;
     file_materi: File | null;
     file_modul: File | null;
+    video_materi: File | null;
 };
 
 export default function EditMateri() {
@@ -32,6 +33,7 @@ export default function EditMateri() {
 
     const fileMateriRef = useRef<HTMLInputElement | null>(null);
     const fileModulRef = useRef<HTMLInputElement | null>(null);
+    const videoMateriRef = useRef<HTMLInputElement | null>(null);
 
     const { materi, kelases, mapels } = usePage().props as { materi?: Materi; kelases?: Kelas[]; mapels?: Mapel[] };
 
@@ -53,6 +55,7 @@ export default function EditMateri() {
         deskripsi: materi?.deskripsi ?? '',
         file_materi: null,
         file_modul: null,
+        video_materi: null,
     });
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -122,6 +125,15 @@ export default function EditMateri() {
                     value={materi?.file_modul}
                     onChange={(e) => setData('file_modul', e.target.files?.[0] ?? null)}
                     error={errors.file_modul}
+                />
+                <InputField
+                    id="video_materi"
+                    label="Video Materi"
+                    type="file"
+                    ref={videoMateriRef}
+                    value={materi?.video_materi}
+                    onChange={(e) => setData('video_materi', e.target.files?.[0] ?? null)}
+                    error={errors.video_materi}
                 />
                 <div className="mt-3 w-fit">
                     <Button type="submit" disabled={processing} className="w-full">

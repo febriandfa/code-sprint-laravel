@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\ProyekAnswerStatus;
 use App\Enums\ProyekStatus;
+use App\Repositories\MateriRepository;
 use App\Repositories\ProyekRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,12 @@ class ProyekService
      */
 
     protected $proyekRepository;
+    protected $materiRepository;
 
-    public function __construct(ProyekRepository $proyekRepository)
+    public function __construct(ProyekRepository $proyekRepository, MateriRepository $materiRepository)
     {
         $this->proyekRepository = $proyekRepository;
+        $this->materiRepository = $materiRepository;
     }
 
     public function validateInput(array $data)
@@ -44,6 +47,11 @@ class ProyekService
             $validatedData['created_at'] = now();
             $validatedData['updated_at'] = now();
 
+            $proyekExistInMateri = $this->materiRepository->checkKuisOrProyek($validatedData['materi_id'], 'kuis');
+            if ($proyekExistInMateri) {
+                return redirect()->back()->with('warning', 'Materi ini sudah memiliki proyek');
+            }
+
             $this->proyekRepository->create($validatedData);
 
             return redirect()->back()->with('success', 'Proyek berhasil ditambahkan');
@@ -61,6 +69,11 @@ class ProyekService
                 return redirect()->back()->withErrors($validator)->withInput();
             }
             $validatedData = $validator->validated();
+
+            $proyekExistInMateri = $this->materiRepository->checkKuisOrProyek($validatedData['materi_id'], 'kuis');
+            if ($proyekExistInMateri) {
+                return redirect()->back()->with('warning', 'Materi ini sudah memiliki proyek');
+            }
 
             $this->proyekRepository->update($validatedData, $id);
 

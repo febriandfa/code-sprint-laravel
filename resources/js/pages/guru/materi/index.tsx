@@ -53,6 +53,15 @@ export default function IndexMateri() {
             wrap: true,
         },
         {
+            name: 'Video Materi',
+            cell: (row: Materi) => (
+                <a href={row.video_materi} target="_blank" className="text-primary line-clamp-2 underline">
+                    {getFileName(row.video_materi, 'video')}
+                </a>
+            ),
+            wrap: true,
+        },
+        {
             name: 'Aksi',
             cell: (row: Materi) => (
                 <ActionButton
@@ -73,6 +82,7 @@ export default function IndexMateri() {
         mapel: materi.mapel,
         file_materi: materi.file_materi,
         file_modul: materi.file_modul,
+        video_materi: materi.video_materi,
     }));
 
     const searchBy = ['judul', 'kelas', 'mapel'];

@@ -19,8 +19,6 @@ export default function AuthLayout({ children, title, breadcrumbs, index = false
 
     const userRole: UserRole = auth?.user.role ?? 'siswa';
 
-    console.log(usePage());
-
     useEffect(() => {
         if (flash?.error) {
             Swal.fire({

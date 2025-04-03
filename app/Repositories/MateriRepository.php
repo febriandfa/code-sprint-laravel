@@ -34,12 +34,18 @@ class MateriRepository
 
     public function getBySiswa()
     {
-        $kelasId = Auth::user()->userDetail->kelas_id;
+        $user = Auth::user();
+        $userId = $user->id;
+        $kelasId = $user->userDetail->kelas_id;
 
         return DB::table('materis')
             ->leftJoin('kelases', 'materis.kelas_id', '=', 'kelases.id')
             ->leftJoin('mapels', 'materis.mapel_id', '=', 'mapels.id')
-            ->select('materis.*', 'kelases.nama as kelas', 'mapels.nama as mapel')
+            ->leftJoin('materi_siswas', function($join) use ($userId) {
+                $join->on('materi_siswas.materi_id', '=', 'materis.id')
+                    ->where('materi_siswas.user_id', $userId);
+            })
+            ->select('materis.*', 'kelases.nama as kelas', 'mapels.nama as mapel', 'materi_siswas.is_read')
             ->where('materis.kelas_id', $kelasId)
             ->get();
     }
@@ -67,5 +73,33 @@ class MateriRepository
     public function delete(string $id)
     {
         return DB::table('materis')->where('id', $id)->delete();
+    }
+
+    public function checkKuisOrProyek(string $id, string $type)
+    {
+        $table = $type === 'kuis' ? 'kuises' : 'proyeks';
+
+        return DB::table($table)
+            ->where('materi_id', $id)
+            ->exists();
+    }
+
+    public function read(string $id)
+    {
+        return DB::table('materi_siswas')->insert([
+            'user_id' => Auth::user()->id,
+            'materi_id' => $id,
+            'is_read' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
+    public function checkIsRead(string $id)
+    {
+        return DB::table('materi_siswas')
+            ->where('user_id', Auth::user()->id)
+            ->where('materi_id', $id)
+            ->exists();
     }
 }

@@ -25,7 +25,7 @@ class KuisAnsweredMiddleware
             ->first();
 
         if ($existingResult) {
-            return redirect()->route('siswa.kuis.index')->with('error', 'Kuis sudah dikerjakan');
+            return redirect()->route('siswa.kuis.index')->with('warning', 'Kuis sudah dikerjakan');
         }
 
         return $next($request);

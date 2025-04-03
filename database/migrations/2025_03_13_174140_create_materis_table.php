@@ -19,6 +19,15 @@ return new class extends Migration
             $table->longText('deskripsi');
             $table->string('file_materi');
             $table->string('file_modul');
+            $table->string('video_materi');
+            $table->timestamps();
+        });
+
+        Schema::create('materi_siswas', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('materi_id')->constrained('materis')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->integer('is_read')->default(0);
             $table->timestamps();
         });
     }

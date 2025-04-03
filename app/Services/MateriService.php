@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\MateriRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,8 +28,9 @@ class MateriService
             'mapel_id' => 'required|exists:mapels,id',
             'judul' => 'required|string',
             'deskripsi' => 'required|string',
-            'file_materi' => 'nullable|file|mimes:pdf|max:2048',
+            'file_materi' => 'nullable|file|mimes:pdf',
             'file_modul' => 'nullable|file|mimes:pdf',
+            'video_materi' => 'nullable|file|mimes:mp4,mov,avi,wmv',
         ]);
     }
 
@@ -60,6 +62,15 @@ class MateriService
                 $modulPath = '/storage/modul/' . $modulName;
             };
 
+            $videoPath = null;
+            if ($request->hasFile('video_materi')) {
+                $fileVideo = $request->file('video_materi');
+                $extension = $fileVideo->getClientOriginalName();
+                $videoName = date('YmdHis') . "-" . $extension;
+                $fileVideo->move(storage_path('app/public/video'), $videoName);
+                $videoPath = '/storage/video/' . $videoName;
+            };
+
             $this->materiRepository->create([
                 'kelas_id' => $validatedData['kelas_id'],
                 'mapel_id' => $validatedData['mapel_id'],
@@ -67,6 +78,7 @@ class MateriService
                 'deskripsi' => $validatedData['deskripsi'],
                 'file_materi' => $materiPath,
                 'file_modul' => $modulPath,
+                'video_materi' => $videoPath,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -125,6 +137,24 @@ class MateriService
                 $modulPath = $materi->file_modul;
             };
 
+            if ($request->hasFile('video_materi')) {
+                $fileVideo = $request->file('video_materi');
+                $extension = $fileVideo->getClientOriginalName();
+                $videoName = date('YmdHis') . "-" . $extension;
+
+                if ($materi->video_materi) {
+                    $oldPath = storage_path('app/public') . str_replace('/storage', '', $materi->video_materi);
+                    if (file_exists($oldPath)) {
+                        unlink($oldPath);
+                    }
+                }
+
+                $fileVideo->move(storage_path('app/public/video'), $videoName);
+                $videoPath = '/storage/video/' . $videoName;
+            } else {
+                $videoPath = $materi->video_materi;
+            };
+
             $this->materiRepository->update([
                 'kelas_id' => $validatedData['kelas_id'],
                 'mapel_id' => $validatedData['mapel_id'],
@@ -132,6 +162,7 @@ class MateriService
                 'deskripsi' => $validatedData['deskripsi'],
                 'file_materi' => $materiPath,
                 'file_modul' => $modulPath,
+                'video_materi' => $videoPath,
             ], $id);
 
             return to_route('guru.materi.index')->with('success', 'Materi berhasil diubah');
@@ -154,6 +185,13 @@ class MateriService
 
             if ($materi->file_modul) {
                 $oldPath = storage_path('app/public') . str_replace('/storage', '', $materi->file_modul);
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+            }
+
+            if ($materi->video_materi) {
+                $oldPath = storage_path('app/public') . str_replace('/storage', '', $materi->video_materi);
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }

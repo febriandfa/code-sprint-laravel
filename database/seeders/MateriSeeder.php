@@ -18,6 +18,7 @@ class MateriSeeder extends Seeder
                 'deskripsi' => 'Deskripsi Materi 1',
                 'file_materi' => 'materi1.pdf',
                 'file_modul' => 'modul1.pdf',
+                'video_materi' => 'video1.mp4',
                 'kelas_id' => 1,
                 'mapel_id' => 1,
             ]

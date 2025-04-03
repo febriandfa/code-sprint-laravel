@@ -35,6 +35,8 @@ export type Materi = {
     deskripsi: string;
     file_materi: string;
     file_modul: string;
+    video_materi: string;
+    is_read?: boolean;
     created_at: string;
     updated_at: string;
 };
@@ -275,6 +277,7 @@ export interface User {
     updated_at: string;
     user_detail?: {
         kelas?: Kelas;
+        no_absen?: number;
     };
     [key: string]: unknown;
 }

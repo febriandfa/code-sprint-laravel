@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class KuisJawabanRepository
@@ -44,5 +45,16 @@ class KuisJawabanRepository
             ->where('kuis_jawabans.user_id', $siswaId)
             ->select('kuis_jawabans.*', 'kuis_soals.kuis_id')
             ->get();
+    }
+
+    public function getLatestNilai()
+    {
+        return DB::table('kuis_jawabans')
+            ->leftJoin('kuises', 'kuises.id', '=', 'kuis_jawabans.kuis_soal_id')
+            ->leftJoin('kuis_nilais', 'kuis_nilais.kuis_id', '=', 'kuises.id')
+            ->orderBy('kuis_jawabans.created_at', 'desc')
+            ->select('kuis_jawabans.created_at', 'kuis_nilais.total_poin', 'kuises.judul')
+            ->where('kuis_jawabans.user_id', Auth::user()->id)
+            ->first();
     }
 }

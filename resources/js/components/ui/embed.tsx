@@ -24,6 +24,11 @@ export default function Embed({ label, src, downloadable }: { label?: string; sr
             {src ? (
                 src.endsWith('.pdf') ? (
                     <embed src={src} type="application/pdf" className="h-[30rem] w-full rounded-md" />
+                ) : src.match(/\.(mp4|mov|avi|wmv)$/i) ? (
+                    <video controls className="h-[30rem] w-full rounded-md">
+                        <source src={src} type={`video/${src.split('.').pop()}`} />
+                        Browser Anda tidak mendukung pemutaran video.
+                    </video>
                 ) : (
                     <div className="flex h-80 flex-col items-center justify-center rounded-md bg-gray-200">
                         <p className="mb-2 text-gray-400">File tidak dapat ditampilkan</p>

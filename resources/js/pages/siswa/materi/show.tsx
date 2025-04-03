@@ -18,7 +18,8 @@ export default function ShowMateri() {
             <div className="flex flex-col gap-4">
                 <Subtitle subtitle="Deskripsi Materi" />
                 <RichText content={materi?.deskripsi} />
-                <Embed src={materi?.file_materi ?? ''} />
+                <Embed label="File Materi" src={materi?.file_materi ?? ''} />
+                <Embed label="Video Materi" src={materi?.video_materi ?? ''} />
             </div>
         </AuthLayout>
     );

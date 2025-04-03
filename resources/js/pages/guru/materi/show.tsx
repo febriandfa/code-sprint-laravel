@@ -29,6 +29,7 @@ export default function ShowMateri() {
                 <RichTextView label="Deskripsi" value={materi?.deskripsi} />
                 <Embed label="File Materi" src={materi?.file_materi ?? ''} />
                 <Embed label="File Modul" src={materi?.file_modul ?? ''} />
+                <Embed label="Video Materi" src={materi?.video_materi ?? ''} />
                 <div className="mt-3 w-fit">
                     <Button className="w-full" onClick={() => router.visit(route('guru.materi.index'))}>
                         Kembali
