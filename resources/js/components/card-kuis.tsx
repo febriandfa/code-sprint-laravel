@@ -8,6 +8,7 @@ export default function CardKuis({
     totalSoal,
     duration,
     totalPoin,
+    guru = false,
 }: {
     title: string;
     kuisId: number;
@@ -15,9 +16,12 @@ export default function CardKuis({
     totalSoal: number;
     duration: number;
     totalPoin: number | string;
+    guru?: boolean;
 }) {
+    const routeShow = guru ? 'guru.kuis.show' : 'siswa.kuis.show';
+
     return (
-        <Card title={title} content="kuis" routeShow={route('siswa.kuis.show', kuisId)} disabled={isCompleted} isKuis>
+        <Card title={title} content="kuis" routeShow={route(routeShow, kuisId)} disabled={isCompleted} isKuis={!guru}>
             <div className="grid grid-cols-2">
                 <div>
                     <p className="flex justify-between pr-4">

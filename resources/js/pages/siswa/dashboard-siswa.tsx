@@ -34,7 +34,7 @@ export default function DashboardSiswa() {
         latestKuis?: Kuis[];
     };
 
-    console.log('latestMateri', latestMateri);
+    console.log('latestMateri', proyeks);
 
     const user = auth?.user as User;
     const finishedMateri = materis?.filter((materi) => materi.is_read).length;
@@ -93,63 +93,81 @@ export default function DashboardSiswa() {
                 </Container>
                 <Container className="col-span-2">
                     <Subtitle subtitle="Grafik Pembelajaran" className="mb-2" />
+                    {latestProyek?.length === 0 && latestKuis?.length === 0 && latestMateri?.length === 0 && (
+                        <p className="text-center text-lg text-slate-400 capitalize">Tidak ada data proyek, materi, kuis</p>
+                    )}
                     <div className="grid grid-cols-3 gap-6">
-                        <div>
-                            <DoughnutChart
-                                datas={[finishedMateri ?? 0, (materis?.length ?? 0) - (finishedMateri ?? 0)]}
-                                title="Materi"
-                                labels={['Selesai', 'Belum Selesai']}
-                            />
-                        </div>
-                        <div>
-                            <DoughnutChart
-                                datas={[finishedKuis ?? 0, (kuises?.length ?? 0) - (finishedKuis ?? 0)]}
-                                title="Kuis"
-                                labels={['Selesai', 'Belum Selesai']}
-                                colors={['#22c55e', '#d5d9e2']}
-                            />
-                        </div>
-                        <div>
-                            <DoughnutChart
-                                datas={[finishedProyek ?? 0, (proyeks?.length ?? 0) - (finishedProyek ?? 0)]}
-                                title="Proyek"
-                                labels={['Selesai', 'Belum Selesai']}
-                                colors={['#fac215', '#d5d9e2']}
-                            />
-                        </div>
+                        {materis?.length !== 0 && (
+                            <div>
+                                <DoughnutChart
+                                    datas={[finishedMateri ?? 0, (materis?.length ?? 0) - (finishedMateri ?? 0)]}
+                                    title="Materi"
+                                    labels={['Selesai', 'Belum Selesai']}
+                                />
+                            </div>
+                        )}
+                        {kuises?.length !== 0 && (
+                            <div>
+                                <DoughnutChart
+                                    datas={[finishedKuis ?? 0, (kuises?.length ?? 0) - (finishedKuis ?? 0)]}
+                                    title="Kuis"
+                                    labels={['Selesai', 'Belum Selesai']}
+                                    colors={['#22c55e', '#d5d9e2']}
+                                />
+                            </div>
+                        )}
+                        {proyeks?.length !== 0 && (
+                            <div>
+                                <DoughnutChart
+                                    datas={[finishedProyek ?? 0, (proyeks?.length ?? 0) - (finishedProyek ?? 0)]}
+                                    title="Proyek"
+                                    labels={['Selesai', 'Belum Selesai']}
+                                    colors={['#fac215', '#d5d9e2']}
+                                />
+                            </div>
+                        )}
                     </div>
                 </Container>
                 <Container className="col-span-2">
                     <Subtitle subtitle="Pembelajaran Terbaru" className="mb-2" />
+                    {latestProyek?.length === 0 && latestKuis?.length === 0 && latestMateri?.length === 0 && (
+                        <p className="text-center text-lg text-slate-400 capitalize">Tidak ada data proyek, materi, kuis</p>
+                    )}
                     <div className="grid grid-cols-3 gap-6">
                         {/* Card Proyek */}
-                        <CardProyek
-                            proyekId={latestProyek?.[0]?.id ?? 1}
-                            title={latestProyek?.[0]?.nama ?? ''}
-                            deadline={latestProyek?.[0]?.tenggat ?? ''}
-                            score={latestProyek?.[0]?.nilai ?? '-'}
-                            isCompleted={latestProyek?.[0]?.is_completed ?? false}
-                            isProcessed={latestProyek?.[0]?.is_processed ?? false}
-                        />
+                        {latestProyek?.length !== 0 && (
+                            <CardProyek
+                                proyekId={latestProyek?.[0]?.id ?? 1}
+                                title={latestProyek?.[0]?.nama ?? ''}
+                                deadline={latestProyek?.[0]?.tenggat ?? ''}
+                                score={latestProyek?.[0]?.nilai ?? '-'}
+                                isCompleted={latestProyek?.[0]?.is_completed ?? false}
+                                isProcessed={latestProyek?.[0]?.is_processed ?? false}
+                            />
+                        )}
 
                         {/* Card Kuis */}
-                        <CardKuis
-                            kuisId={latestKuis?.[0]?.id ?? 1}
-                            title={latestKuis?.[0]?.judul ?? ''}
-                            totalSoal={latestKuis?.[0]?.total_soal ?? 0}
-                            totalPoin={latestKuis?.[0]?.total_poin ?? '-'}
-                            duration={latestKuis?.[0]?.durasi ?? 0}
-                            isCompleted={latestKuis?.[0]?.is_completed ?? false}
-                        />
+                        {latestKuis?.length !== 0 && (
+                            <CardKuis
+                                kuisId={latestKuis?.[0]?.id ?? 1}
+                                title={latestKuis?.[0]?.judul ?? ''}
+                                totalSoal={latestKuis?.[0]?.total_soal ?? 0}
+                                totalPoin={latestKuis?.[0]?.total_poin ?? '-'}
+                                duration={latestKuis?.[0]?.durasi ?? 0}
+                                isCompleted={latestKuis?.[0]?.is_completed ?? false}
+                            />
+                        )}
 
                         {/* Card Materi */}
-                        <CardMateri
-                            materiId={latestMateri?.[0]?.id ?? 1}
-                            title={latestMateri?.[0]?.judul ?? ''}
-                            description={latestMateri?.[0]?.deskripsi ?? ''}
-                            createdAt={latestMateri?.[0]?.created_at ?? ''}
-                            isRead={latestMateri?.[0]?.is_read ?? false}
-                        />
+                        {latestMateri?.length !== 0 && (
+                            <CardMateri
+                                materiId={latestMateri?.[0]?.id ?? 1}
+                                title={latestMateri?.[0]?.judul ?? ''}
+                                description={latestMateri?.[0]?.deskripsi ?? ''}
+                                createdAt={latestMateri?.[0]?.created_at ?? ''}
+                                isRead={latestMateri?.[0]?.is_read ?? false}
+                            />
+                        )}
                     </div>
                 </Container>
             </div>

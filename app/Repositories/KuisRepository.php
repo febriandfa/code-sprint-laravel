@@ -27,6 +27,7 @@ class KuisRepository
             ->select('kuises.*', 'materis.judul as materi')
             ->whereIn('materis.kelas_id', $kelasIds)
             ->whereIn('materis.mapel_id', $mapelIds)
+            ->orderBy('kuises.created_at', 'desc')
             ->get();
     }
 

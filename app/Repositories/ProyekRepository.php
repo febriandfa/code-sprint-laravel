@@ -30,6 +30,7 @@ class ProyekRepository
             ->select('proyeks.*', 'kelases.nama as kelas', 'mapels.nama as mapel', 'materis.judul as materi')
             ->whereIn('materis.kelas_id', $kelasIds)
             ->whereIn('materis.mapel_id', $mapelIds)
+            ->orderBy('proyeks.created_at', 'desc')
             ->get();
     }
 

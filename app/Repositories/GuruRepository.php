@@ -34,4 +34,20 @@ class GuruRepository
             ->whereIn('kelases.id', $kelasIds)
             ->get();
     }
+
+    public function getSiswaGuru()
+    {
+        $userId = Auth::user()->id;
+
+        $kelasIds = DB::table('user_kelases')
+            ->where('guru_id', $userId)
+            ->pluck('kelas_id')
+            ->toArray();
+
+        return DB::table('users')
+            ->join('user_details', 'users.id', '=', 'user_details.user_id')
+            ->whereIn('user_details.kelas_id', $kelasIds)
+            ->select('users.*', 'user_details.kelas_id')
+            ->get();
+    }
 }

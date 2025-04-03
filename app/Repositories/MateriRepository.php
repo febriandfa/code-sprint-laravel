@@ -29,6 +29,7 @@ class MateriRepository
             ->select('materis.*', 'kelases.nama as kelas', 'mapels.nama as mapel')
             ->whereIn('materis.kelas_id', $kelasIds)
             ->whereIn('materis.mapel_id', $mapelIds)
+            ->orderBy('materis.created_at', 'desc')
             ->get();
     }
 

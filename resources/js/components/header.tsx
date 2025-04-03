@@ -14,7 +14,7 @@ export default function Header({ user }: { user?: User }) {
     });
 
     return (
-        <header className="relative flex h-20 w-full items-center bg-white pl-80">
+        <header className="relative flex h-20 w-full items-center bg-white pl-72">
             <div className="flex w-full items-center justify-between px-8 py-2">
                 <div>
                     {user?.role == 'siswa' ? (
@@ -43,16 +43,6 @@ export default function Header({ user }: { user?: User }) {
                                     <a href="/profile" className="block px-4 py-2 hover:bg-gray-100">
                                         Profil
                                     </a>
-                                </li>
-                                <li>
-                                    <a href="/settings" className="block px-4 py-2 hover:bg-gray-100">
-                                        Pengaturan
-                                    </a>
-                                </li>
-                                <li>
-                                    <button className="w-full px-4 py-2 text-left hover:bg-gray-100" onClick={() => alert('Logout!')}>
-                                        Logout
-                                    </button>
                                 </li>
                             </ul>
                         </div>

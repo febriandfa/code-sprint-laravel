@@ -9,6 +9,7 @@ export default function CardProyek({
     score,
     isCompleted,
     isProcessed,
+    guru = false,
 }: {
     title: string;
     proyekId: number;
@@ -16,9 +17,12 @@ export default function CardProyek({
     score: number | string;
     isCompleted: boolean;
     isProcessed: boolean;
+    guru?: boolean;
 }) {
+    const routeShow = guru ? 'guru.proyek.show' : 'siswa.proyek.show';
+
     return (
-        <Card title={title} content="project based learning" routeShow={route('siswa.proyek.show', proyekId)}>
+        <Card title={title} content="project based learning" routeShow={route(routeShow, proyekId)}>
             <div className="grid grid-cols-2">
                 <div>
                     <p className="flex justify-between pr-4">
