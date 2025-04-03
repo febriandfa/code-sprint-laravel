@@ -1,5 +1,5 @@
 import { User } from '@/types';
-import { Bell, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import UserIcon from './icons/user-icon';
 
@@ -27,7 +27,7 @@ export default function Header({ user }: { user?: User }) {
                     <p className="text-slate-400">{currentDate}</p>
                 </div>
                 <div className="relative flex items-center">
-                    <Bell className="mr-6 cursor-pointer" />
+                    {/* <Bell className="mr-6 cursor-pointer" /> */}
                     <div className="relative flex cursor-pointer items-center gap-3" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
                         <div className="rounded bg-slate-100 p-2">
                             <UserIcon />
