@@ -47,6 +47,7 @@ class MateriRepository
             })
             ->select('materis.*', 'kelases.nama as kelas', 'mapels.nama as mapel', 'materi_siswas.is_read')
             ->where('materis.kelas_id', $kelasId)
+            ->orderBy('materis.created_at', 'desc')
             ->get();
     }
 

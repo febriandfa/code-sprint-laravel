@@ -50,6 +50,7 @@ class KuisRepository
                 'kuis_nilais.total_poin'
             )
             ->where('materis.kelas_id', $kelasId)
+            ->orderBy('kuises.created_at', 'desc')
             ->groupBy('kuises.id', 'materis.judul', 'kuis_nilais.id', 'kuis_nilais.total_poin')
             ->havingRaw('COUNT(DISTINCT kuis_soals.id) > 1')
             ->get();

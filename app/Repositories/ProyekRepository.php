@@ -65,6 +65,7 @@ class ProyekRepository
                 'proyek_nilais.nilai'
             )
             ->where('materis.kelas_id', $kelasId)
+            ->orderBy('proyeks.created_at', 'desc')
             ->distinct()
             ->get();
     }
