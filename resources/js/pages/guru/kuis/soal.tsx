@@ -182,7 +182,7 @@ export default function SoalKuis() {
                             />
                             {currentLampiran && (
                                 <div className="relative mt-1 w-60">
-                                    <img src={currentLampiran} alt="Lampiran Soal" className="w-full rounded" />
+                                    <img src={`/storage/${currentLampiran}`} alt="Lampiran Soal" className="w-full rounded" />
                                     <Button
                                         variant="danger"
                                         size="small"

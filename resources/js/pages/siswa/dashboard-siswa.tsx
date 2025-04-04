@@ -53,7 +53,7 @@ export default function DashboardSiswa() {
                     </div>
                     <div className="flex gap-6">
                         {user?.user_detail?.foto ? (
-                            <img src={user?.user_detail?.foto} alt="foto profil" className="size-40 rounded-lg object-cover" />
+                            <img src={`/storage/${user?.user_detail?.foto}`} alt="foto profil" className="size-40 rounded-lg object-cover" />
                         ) : (
                             <div className="flex size-40 items-center justify-center rounded-lg bg-gray-200">
                                 <UserIcon size={96} className="text-gray-500" />
@@ -170,6 +170,7 @@ export default function DashboardSiswa() {
                                 materiId={latestMateri?.[0]?.id ?? 1}
                                 title={latestMateri?.[0]?.judul ?? ''}
                                 description={latestMateri?.[0]?.deskripsi ?? ''}
+                                mapel={latestMateri?.[0]?.mapel ?? ''}
                                 createdAt={latestMateri?.[0]?.created_at ?? ''}
                                 isRead={latestMateri?.[0]?.is_read ?? false}
                             />

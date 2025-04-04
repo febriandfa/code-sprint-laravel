@@ -14,7 +14,7 @@ class KuisSeeder extends Seeder
     {
         $datas = [
             [
-                'judul' => 'Kuis 1',
+                'judul' => 'Kuis Materi DKV MTK',
                 'durasi' => 60,
                 'tanggal_mulai' => '2025-03-01 08:00:00',
                 'tanggal_selesai' => '2025-05-01 09:00:00',

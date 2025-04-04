@@ -40,7 +40,7 @@ class ProfileController extends Controller
             $extension = $fileFoto->getClientOriginalName();
             $fotoName = date('YmdHis') . "-" . $extension;
             $fileFoto->move(storage_path('app/public/foto'), $fotoName);
-            $foto = '/storage/foto/' . $fotoName;
+            $foto = '/foto/' . $fotoName;
             $userDetail->foto = $foto;
         } else {
             $foto = $userDetail->foto;

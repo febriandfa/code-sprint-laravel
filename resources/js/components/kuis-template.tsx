@@ -175,7 +175,7 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
                 )}
             </div>
             <div className="mt-6 space-y-4">
-                {currentSoal?.lampiran && <img src={currentSoal?.lampiran} alt="Gambar Soal" className="object-cover" />}
+                {currentSoal?.lampiran && <img src={`/storage/${currentSoal?.lampiran}`} alt="Gambar Soal" className="object-cover" />}
                 <RichText content={currentSoal?.soal} />
             </div>
             <div className="my-6 space-y-2">

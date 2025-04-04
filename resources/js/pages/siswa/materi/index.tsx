@@ -16,6 +16,7 @@ export default function IndexMateri() {
                             materiId={materi.id}
                             title={materi.judul}
                             description={materi.deskripsi}
+                            mapel={materi.mapel}
                             createdAt={materi.created_at}
                             isRead={materi.is_read ?? false}
                         />

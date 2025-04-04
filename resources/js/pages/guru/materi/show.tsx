@@ -27,9 +27,9 @@ export default function ShowMateri() {
                 <InputField id="mapel" label="Mata Pelajaran" value={materi?.mapel} disabled />
                 <InputField id="judul" label="Nama Materi" value={materi?.judul} disabled />
                 <RichTextView label="Deskripsi" value={materi?.deskripsi} />
-                <Embed label="File Materi" src={materi?.file_materi ?? ''} />
-                <Embed label="File Modul" src={materi?.file_modul ?? ''} />
-                <Embed label="Video Materi" src={materi?.video_materi ?? ''} />
+                <Embed label="File Materi" src={`/storage/${materi?.file_materi ?? ''}`} />
+                <Embed label="File Modul" src={`/storage/${materi?.file_modul ?? ''}`} />
+                <Embed label="Video Materi" src={`/storage/${materi?.video_materi ?? ''}`} />
                 <div className="mt-3 w-fit">
                     <Button className="w-full" onClick={() => router.visit(route('guru.materi.index'))}>
                         Kembali

@@ -23,10 +23,10 @@ export default function Embed({ label, src, downloadable }: { label?: string; sr
             {label && <label className="text-lg capitalize">{label}</label>}
             {src ? (
                 src.endsWith('.pdf') ? (
-                    <embed src={src} type="application/pdf" className="h-[30rem] w-full rounded-md" />
+                    <embed src={`/storage/${src}`} type="application/pdf" className="h-[30rem] w-full rounded-md" />
                 ) : src.match(/\.(mp4|mov|avi|wmv)$/i) ? (
                     <video controls className="h-[30rem] w-full rounded-md">
-                        <source src={src} type={`video/${src.split('.').pop()}`} />
+                        <source src={`/storage/${src}`} type={`video/${src.split('.').pop()}`} />
                         Browser Anda tidak mendukung pemutaran video.
                     </video>
                 ) : (

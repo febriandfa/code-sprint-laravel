@@ -178,14 +178,14 @@ class ProyekJawabanService
                         $fileMasalahName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_4) {
-                            $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_4);
+                            $oldPath = storage_path('app/public') .  $jawaban->jawaban_tahap_4;
                             if (file_exists($oldPath)) {
                                 unlink($oldPath);
                             }
                         }
 
                         $fileMasalah->move(storage_path('app/public/proyek/analisis_masalah'), $fileMasalahName);
-                        $fileMasalahPath = '/storage/proyek/analisis_masalah/' . $fileMasalahName;
+                        $fileMasalahPath = 'proyek/analisis_masalah/' . $fileMasalahName;
                     } else {
                         $fileMasalahPath = $jawaban->jawaban_tahap_4;
                     };
@@ -207,14 +207,14 @@ class ProyekJawabanService
                         $fileJadwalName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_6) {
-                            $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                            $oldPath = storage_path('app/public') . $jawaban->jawaban_tahap_6;
                             if (file_exists($oldPath)) {
                                 unlink($oldPath);
                             }
                         }
 
                         $fileJadwal->move(storage_path('app/public/proyek/jadwal_proyek'), $fileJadwalName);
-                        $fileJadwalPath = '/storage/proyek/jadwal_proyek/' . $fileJadwalName;
+                        $fileJadwalPath = 'proyek/jadwal_proyek/' . $fileJadwalName;
                     } else {
                         $fileJadwalPath = $jawaban->jawaban_tahap_6;
                     };
@@ -235,14 +235,14 @@ class ProyekJawabanService
                         $fileProyekName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_6) {
-                            $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                            $oldPath = storage_path('app/public') . $jawaban->jawaban_tahap_6;
                             if (file_exists($oldPath)) {
                                 unlink($oldPath);
                             }
                         }
 
                         $fileProyek->move(storage_path('app/public/proyek/file_proyek'), $fileProyekName);
-                        $fileProyekPath = '/storage/proyek/file_proyek/' . $fileProyekName;
+                        $fileProyekPath = 'proyek/file_proyek/' . $fileProyekName;
                     } else {
                         $fileProyekPath = $jawaban->jawaban_tahap_6;
                     };
@@ -254,14 +254,14 @@ class ProyekJawabanService
                         $fileLaporanName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_6) {
-                            $oldPath = storage_path('app/public') . str_replace('/storage', '', $jawaban->jawaban_tahap_6);
+                            $oldPath = storage_path('app/public') . $jawaban->jawaban_tahap_6;
                             if (file_exists($oldPath)) {
                                 unlink($oldPath);
                             }
                         }
 
                         $fileLaporan->move(storage_path('app/public/proyek/file_laporan'), $fileLaporanName);
-                        $fileLaporanPath = '/storage/proyek/file_laporan/' . $fileLaporanName;
+                        $fileLaporanPath = 'proyek/file_laporan/' . $fileLaporanName;
                     } else {
                         $fileLaporanPath = $jawaban->jawaban_tahap_6;
                     };
@@ -342,7 +342,7 @@ class ProyekJawabanService
                 $extension = $fileKegiatan->getClientOriginalName();
                 $fileKegiatanName = date('YmdHis') . "-" . $extension;
                 $fileKegiatan->move(storage_path('app/public/proyek/file_kegiatan'), $fileKegiatanName);
-                $fileKegiatanPath = '/storage/proyek/file_kegiatan/' . $fileKegiatanName;
+                $fileKegiatanPath = 'proyek/file_kegiatan/' . $fileKegiatanName;
             };
             $validatedData['file_kegiatan'] = $fileKegiatanPath;
 
@@ -372,14 +372,14 @@ class ProyekJawabanService
                 $fileKegiatanName = date('YmdHis') . "-" . $extension;
 
                 if ($jadwal->file_kegiatan) {
-                    $oldPath = storage_path('app/public') . str_replace('/storage', '', $jadwal->file_kegiatan);
+                    $oldPath = storage_path('app/public') . $jadwal->file_kegiatan;
                     if (file_exists($oldPath)) {
                         unlink($oldPath);
                     }
                 }
 
                 $fileKegiatan->move(storage_path('app/public/proyek/file_kegiatan'), $fileKegiatanName);
-                $fileKegiatanPath = '/storage/proyek/file_kegiatan/' . $fileKegiatanName;
+                $fileKegiatanPath = 'proyek/file_kegiatan/' . $fileKegiatanName;
                 $validatedData['file_kegiatan'] = $fileKegiatanPath;
             } else {
                 $validatedData['file_kegiatan'] = $jadwal->file_kegiatan;
@@ -399,7 +399,7 @@ class ProyekJawabanService
             $jadwal = $this->proyekJawabanRepository->getJadwalById($id);
 
             if ($jadwal->file_kegiatan) {
-                $oldPath = storage_path('app/public') . str_replace('/storage', '', $jadwal->file_kegiatan);
+                $oldPath = storage_path('app/public') . $jadwal->file_kegiatan;
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }

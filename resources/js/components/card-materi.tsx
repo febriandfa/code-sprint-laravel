@@ -6,6 +6,7 @@ export default function CardMateri({
     title,
     materiId,
     description,
+    mapel,
     createdAt,
     isRead,
     guru = false,
@@ -13,6 +14,7 @@ export default function CardMateri({
     title: string;
     materiId: number;
     description: string;
+    mapel: string;
     createdAt: string;
     isRead?: boolean;
     guru?: boolean;
@@ -25,6 +27,9 @@ export default function CardMateri({
             <div className="grid grid-cols-2">
                 <div>
                     <p className="flex justify-between pr-4">
+                        Mapel <span>:</span>
+                    </p>
+                    <p className="flex justify-between pr-4">
                         Diupload <span>:</span>
                     </p>
                     {!guru && (
@@ -34,6 +39,7 @@ export default function CardMateri({
                     )}
                 </div>
                 <div>
+                    <p>{mapel}</p>
                     <p>{formatDate(createdAt)}</p>
                     {!guru && (
                         <span>

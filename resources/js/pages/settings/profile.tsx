@@ -7,7 +7,7 @@ import { convertSecondsToTime } from '@/lib/helper';
 import { Auth } from '@/types';
 import { useForm, usePage } from '@inertiajs/react';
 import { LoaderCircle, User as UserIcon } from 'lucide-react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 
 type ProfileForm = {
     _method: 'PATCH' | 'POST';
@@ -47,7 +47,7 @@ export default function Profile() {
                 <Subtitle subtitle="Data Diri" />
                 <div className="flex gap-6">
                     {user?.user_detail?.foto ? (
-                        <img src={user?.user_detail?.foto} alt="foto profil" className="size-40 rounded-lg object-cover" />
+                        <img src={`/storage/${user?.user_detail?.foto}`} alt="foto profil" className="size-40 rounded-lg object-cover" />
                     ) : (
                         <div className="flex size-40 items-center justify-center rounded-lg bg-gray-200">
                             <UserIcon size={96} className="text-gray-500" />
@@ -56,14 +56,18 @@ export default function Profile() {
                     <div>
                         <p className="text-2xl font-medium">{user?.name}</p>
                         <div className="mt-2 grid grid-cols-2 gap-x-64 gap-y-4">
-                            <div>
-                                <p className="text-sm text-slate-400">Kelas</p>
-                                <p className="text-lg font-medium">{user?.user_detail?.kelas?.nama}</p>
-                            </div>
-                            <div>
-                                <p className="text-sm text-slate-400">No Absen</p>
-                                <p className="text-lg font-medium">{user?.user_detail?.no_absen}</p>
-                            </div>
+                            {auth?.user?.role === 'siswa' && (
+                                <React.Fragment>
+                                    <div>
+                                        <p className="text-sm text-slate-400">Kelas</p>
+                                        <p className="text-lg font-medium">{user?.user_detail?.kelas?.nama}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-slate-400">No Absen</p>
+                                        <p className="text-lg font-medium">{user?.user_detail?.no_absen}</p>
+                                    </div>
+                                </React.Fragment>
+                            )}
                             <div>
                                 <p className="text-sm text-slate-400">Email</p>
                                 <p className="text-lg font-medium">{user?.email}</p>

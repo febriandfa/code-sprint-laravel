@@ -234,7 +234,7 @@ export default function SyntaxOne() {
                 {currentStep === 1 && <RichTextView label="Studi Kasus" value={kelompok?.masalah} />}
                 {currentStep === 2 && <RichTextView label="Rumusan Masalah" value={jawaban?.jawaban_tahap_2} />}
                 {currentStep === 3 && <RichTextView label="Menentukan Indikator" value={jawaban?.jawaban_tahap_3} />}
-                {currentStep === 4 && <Embed label="Analisis Masalah" src={jawaban?.jawaban_tahap_4 ?? ''} />}
+                {currentStep === 4 && <Embed label="Analisis Masalah" src={`/storage/${jawaban?.jawaban_tahap_4 ?? ''}`} />}
                 {currentStep !== 1 && (
                     <React.Fragment>
                         {jawaban && currentFormData && (

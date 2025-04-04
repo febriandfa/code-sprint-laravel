@@ -104,6 +104,7 @@ export default function DashboardGuru() {
                                     materiId={latestMateri?.[0]?.id ?? 1}
                                     title={latestMateri?.[0]?.judul ?? ''}
                                     description={latestMateri?.[0]?.deskripsi ?? ''}
+                                    mapel={latestMateri?.[0]?.mapel ?? ''}
                                     createdAt={latestMateri?.[0]?.created_at ?? ''}
                                     guru
                                 />

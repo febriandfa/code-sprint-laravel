@@ -54,7 +54,7 @@ class KuisSoalService
                 $extension = $fileLampiran->getClientOriginalName();
                 $lampiranName = date('YmdHis') . "-" . $extension;
                 $fileLampiran->move(storage_path('app/public/kuis/lampiran'), $lampiranName);
-                $lampiranPath = '/storage/kuis/lampiran/' . $lampiranName;
+                $lampiranPath = 'kuis/lampiran/' . $lampiranName;
             };
             $validatedData['lampiran'] = $lampiranPath;
 
@@ -81,7 +81,7 @@ class KuisSoalService
             $kuisSoal = $this->kuisSoalRepository->getById($id);
 
             if ($request->hapus_lampiran) {
-                $oldPath = storage_path('app/public') . str_replace('/storage', '', $kuisSoal->lampiran);
+                $oldPath = storage_path('app/public') . $kuisSoal->lampiran;
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }
@@ -93,14 +93,14 @@ class KuisSoalService
                     $lampiranName = date('YmdHis') . "-" . $extension;
 
                     if ($kuisSoal->lampiran) {
-                        $oldPath = storage_path('app/public') . str_replace('/storage', '', $kuisSoal->lampiran);
+                        $oldPath = storage_path('app/public') . $kuisSoal->lampiran;
                         if (file_exists($oldPath)) {
                             unlink($oldPath);
                         }
                     }
 
                     $fileLampiran->move(storage_path('app/public/kuis/lampiran'), $lampiranName);
-                    $lampiranPath = '/storage/kuis/lampiran/' . $lampiranName;
+                    $lampiranPath = 'kuis/lampiran/' . $lampiranName;
                     $validatedData['lampiran'] = $lampiranPath;
                 } else {
                     $validatedData['lampiran'] = $kuisSoal->lampiran;
@@ -121,7 +121,7 @@ class KuisSoalService
             $kuisSoal = $this->kuisSoalRepository->getById($id);
 
             if ($kuisSoal->lampiran) {
-                $oldPath = storage_path('app/public') . str_replace('/storage', '', $kuisSoal->lampiran);
+                $oldPath = storage_path('app/public') . $kuisSoal->lampiran;
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }

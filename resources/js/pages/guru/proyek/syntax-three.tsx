@@ -83,7 +83,7 @@ export default function SyntaxThree() {
                         Unduh Contoh GanttChart
                     </Button>
                 </div>
-                <Embed label="Jadwal Proyek" src={jawaban?.jawaban_tahap_6} downloadable />
+                <Embed label="Jadwal Proyek" src={`/storage/${jawaban?.jawaban_tahap_6}`} downloadable />
                 {jawaban && (
                     <React.Fragment>
                         <InputSelect

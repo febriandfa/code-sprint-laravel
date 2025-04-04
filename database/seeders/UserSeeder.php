@@ -25,34 +25,63 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Siswa Ketua',
+                'name' => 'Siswa DKV Ketua 1',
                 'email' => 'siswa1@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
+                'kelas_id' => 1,
             ],
             [
-                'name' => 'Siswa Anggota',
+                'name' => 'Siswa DKV Anggota 1',
                 'email' => 'siswa2@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
+                'kelas_id' => 1,
             ],
             [
-                'name' => 'Siswa Testing Ketua',
+                'name' => 'Siswa DKV Ketua 2',
                 'email' => 'siswa3@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
+                'kelas_id' => 1,
             ],
             [
-                'name' => 'Siswa Testing Anggota',
+                'name' => 'Siswa DKV Anggota 2',
                 'email' => 'siswa4@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
+                'kelas_id' => 1,
             ],
             [
-                'name' => 'Guru',
-                'email' => 'guru@csprint.com',
+                'name' => 'Siswa RPL',
+                'email' => 'siswa5@csprint.com',
+                'password' => bcrypt('siswa123'),
+                'role' => RoleType::SISWA,
+                'kelas_id' => 2,
+            ],
+            [
+                'name' => 'Guru DKV MTK',
+                'email' => 'guru1@csprint.com',
                 'password' => bcrypt('guru123'),
                 'role' => RoleType::GURU,
+                'mapel_id' => 1,
+                'kelas_id' => 1,
+            ],
+            [
+                'name' => 'Guru DKV BINDO',
+                'email' => 'guru2@csprint.com',
+                'password' => bcrypt('guru123'),
+                'role' => RoleType::GURU,
+                'mapel_id' => 2,
+                'kelas_id' => 1,
+            ],
+            [
+                'name' => 'Guru RPL BINDO',
+                'email' => 'guru3@csprint.com',
+                'password' => bcrypt('guru123'),
+                'role' => RoleType::GURU,
+                'mapel_id' => 2,
+                'kelas_id' => 2,
             ],
             [
                 'name' => 'Admin',
@@ -63,18 +92,23 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            $createdUser = \App\Models\User::create($user);
+            $createdUser = \App\Models\User::create([
+                'name' => $user['name'],
+                'email' => $user['email'],
+                'password' => $user['password'],
+                'role' => $user['role'],
+            ]);
             $createdUser->assignRole($user['role']);
 
             if ($user['role'] === RoleType::GURU) {
                 \App\Models\UserMapel::create([
                     'guru_id' => $createdUser->id,
-                    'mapel_id' => 1,
+                    'mapel_id' => $user['mapel_id'],
                 ]);
 
                 \App\Models\UserKelas::create([
                     'guru_id' => $createdUser->id,
-                    'kelas_id' => 1,
+                    'kelas_id' => $user['kelas_id'],
                 ]);
             }
 
@@ -82,7 +116,7 @@ class UserSeeder extends Seeder
                 \App\Models\UserDetail::create([
                     'user_id' => $createdUser->id,
                     'no_absen' => $this->userRepository->getUserCount(RoleType::SISWA, 1) + 1,
-                    'kelas_id' => 1,
+                    'kelas_id' => $user['kelas_id'],
                 ]);
             }
         }

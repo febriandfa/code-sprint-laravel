@@ -37,8 +37,8 @@ export default function IndexMateri() {
         {
             name: 'File Materi',
             cell: (row: Materi) => (
-                <a href={row.file_materi} target="_blank" className="text-primary line-clamp-2 underline">
-                    {getFileName(row.file_materi, 'materi')}
+                <a href={`/storage${row.file_materi}`} target="_blank" className="text-primary line-clamp-2 underline">
+                    {getFileName(row.file_materi, 'materi/materi')}
                 </a>
             ),
             wrap: true,
@@ -46,7 +46,7 @@ export default function IndexMateri() {
         {
             name: 'File Modul',
             cell: (row: Materi) => (
-                <a href={row.file_materi} target="_blank" className="text-primary line-clamp-2 underline">
+                <a href={`/storage${row.file_modul}`} target="_blank" className="text-primary line-clamp-2 underline">
                     {getFileName(row.file_modul, 'modul')}
                 </a>
             ),
@@ -55,7 +55,7 @@ export default function IndexMateri() {
         {
             name: 'Video Materi',
             cell: (row: Materi) => (
-                <a href={row.video_materi} target="_blank" className="text-primary line-clamp-2 underline">
+                <a href={`/storage${row.video_materi}`} target="_blank" className="text-primary line-clamp-2 underline">
                     {getFileName(row.video_materi, 'video')}
                 </a>
             ),

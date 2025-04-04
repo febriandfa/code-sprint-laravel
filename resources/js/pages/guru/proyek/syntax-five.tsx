@@ -58,8 +58,8 @@ export default function SyntaxFive() {
         <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
             <PjblHeader proyek={proyek} kelompok={kelompok} jawaban={jawaban} currentSyntax={currentSyntax ?? 1} view />
             <div className="my-5 space-y-6">
-                <Embed label="File Proyek Akhir (ZIP)" src={jawaban?.file_proyek} downloadable />
-                <Embed label="File Laporan/Media Presentasi" src={jawaban?.file_laporan} downloadable />
+                <Embed label="File Proyek Akhir (ZIP)" src={`/storage/${jawaban?.file_proyek}`} downloadable />
+                <Embed label="File Laporan/Media Presentasi" src={`/storage/${jawaban?.file_laporan}`} downloadable />
                 {jawaban && (
                     <React.Fragment>
                         <InputSelect

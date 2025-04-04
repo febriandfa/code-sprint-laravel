@@ -14,13 +14,31 @@ class MateriSeeder extends Seeder
     {
         $datas = [
             [
-                'judul' => 'Materi 1',
-                'deskripsi' => 'Deskripsi Materi 1',
-                'file_materi' => 'materi1.pdf',
-                'file_modul' => 'modul1.pdf',
-                'video_materi' => 'video1.mp4',
+                'judul' => 'Materi DKV MTK',
+                'deskripsi' => 'Deskripsi Materi DKV MTK',
+                'file_materi' => 'materi_dkv_mtk.pdf',
+                'file_modul' => 'modul_dkv_mtk.pdf',
+                'video_materi' => 'video_dkv_mtk.mp4',
                 'kelas_id' => 1,
                 'mapel_id' => 1,
+            ],
+            [
+                'judul' => 'Materi DKV BINDO',
+                'deskripsi' => 'Deskripsi Materi DKV BINDO',
+                'file_materi' => 'materi_dkv_bindo.pdf',
+                'file_modul' => 'modul_dkv_bindo.pdf',
+                'video_materi' => 'video_dkv_bindo.mp4',
+                'kelas_id' => 1,
+                'mapel_id' => 2,
+            ],
+            [
+                'judul' => 'Materi RPL BINDO',
+                'deskripsi' => 'Deskripsi Materi RPL BINDO',
+                'file_materi' => 'materi_rpl_bindo.pdf',
+                'file_modul' => 'modul_rpl_bindo.pdf',
+                'video_materi' => 'video_rpl_bindo.mp4',
+                'kelas_id' => 2,
+                'mapel_id' => 2,
             ]
         ];
 
