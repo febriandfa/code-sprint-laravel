@@ -47,13 +47,13 @@ export default function DashboardSiswa() {
                 <Container className="col-span-1">
                     <div className="mb-2 flex items-center justify-between">
                         <Subtitle subtitle="Data Diri" />
-                        <Link href="" className="text-primary text-sm">
+                        <Link href={route('profile.edit')} className="text-primary text-sm">
                             Lihat Detail
                         </Link>
                     </div>
                     <div className="flex gap-6">
-                        {user?.user_detail?.photo ? (
-                            <img src={user?.user_detail?.photo} alt="foto profil" className="size-40 rounded-lg object-cover" />
+                        {user?.user_detail?.foto ? (
+                            <img src={user?.user_detail?.foto} alt="foto profil" className="size-40 rounded-lg object-cover" />
                         ) : (
                             <div className="flex size-40 items-center justify-center rounded-lg bg-gray-200">
                                 <UserIcon size={96} className="text-gray-500" />

@@ -29,15 +29,38 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $userDetail = $request->user()->userDetail;
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user->fill($request->validated());
+
+        $foto = null;
+        if ($request->hasFile('foto')) {
+            $fileFoto = $request->file('foto');
+            $extension = $fileFoto->getClientOriginalName();
+            $fotoName = date('YmdHis') . "-" . $extension;
+            $fileFoto->move(storage_path('app/public/foto'), $fotoName);
+            $foto = '/storage/foto/' . $fotoName;
+            $userDetail->foto = $foto;
+        } else {
+            $foto = $userDetail->foto;
+            $userDetail->foto = $foto;
         }
 
-        $request->user()->save();
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
 
-        return to_route('profile.edit');
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        } else {
+            unset($user->password);
+        }
+
+        $user->save();
+        $userDetail->save();
+
+        return to_route('profile.edit')->with('success', 'Profil berhasil diubah');
     }
 
     /**

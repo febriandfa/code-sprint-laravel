@@ -1,4 +1,5 @@
 import { User } from '@/types';
+import { Link } from '@inertiajs/react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import UserIcon from './icons/user-icon';
@@ -40,9 +41,9 @@ export default function Header({ user }: { user?: User }) {
                         <div className="absolute top-12 right-0 z-50 mt-2 w-48 overflow-hidden rounded-lg bg-white shadow-md">
                             <ul className="py-2 text-sm text-gray-700">
                                 <li>
-                                    <a href="/profile" className="block px-4 py-2 hover:bg-gray-100">
+                                    <Link href={route('profile.edit')} className="block px-4 py-2 hover:bg-gray-100">
                                         Profil
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>

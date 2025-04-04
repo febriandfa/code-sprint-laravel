@@ -273,12 +273,14 @@ export interface User {
     email: string;
     role: 'admin' | 'guru' | 'siswa';
     email_verified_at: string | null;
+    last_login_at: string | null;
+    active_time: number;
     created_at: string;
     updated_at: string;
     user_detail?: {
         kelas?: Kelas;
         no_absen?: number;
-        photo?: string;
+        foto?: string;
     };
     [key: string]: unknown;
 }

@@ -33,6 +33,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = $request->user();
+        $user->last_login_at = now();
+        $user->save();
+
         return to_route('dashboard')->with('success', 'Login berhasil. Selamat datang di Code Sprint!');
     }
 
@@ -41,6 +45,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $user = $request->user();
+        if ($user->last_login_at) {
+            $lastLogin = \Carbon\Carbon::parse($user->last_login_at);
+            $user->active_time += $lastLogin->diffInSeconds(now());
+            $user->save();
+        }
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

@@ -34,3 +34,13 @@ export const getProyekAnswerStatusInfo = (step: number, jawaban?: ProyekJawaban)
 
     return statusMap[status] || { variant: 'info' as const, text: 'Sedang Diproses' };
 };
+
+export const convertSecondsToTime = (seconds: number) => {
+    if (!seconds || seconds < 0) return '0 detik';
+
+    const jam = Math.floor(seconds / 3600);
+    const menit = Math.floor((seconds % 3600) / 60);
+    const detik = seconds % 60;
+
+    return `${jam} jam ${menit} menit ${detik} detik`;
+};
