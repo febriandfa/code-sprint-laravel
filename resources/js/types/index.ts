@@ -106,6 +106,7 @@ export type Proyek = {
     is_completed?: boolean;
     is_processed?: boolean;
     nilai?: number;
+    refleksi?: string;
     status: 'belum' | 'berjalan' | 'selesai';
 };
 

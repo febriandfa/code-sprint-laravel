@@ -63,16 +63,52 @@ class ProyekService
     public function update(Request $request, string $id)
     {
         try {
-            $validator = $this->validateInput($request->all());
+            if ($request->refleksi) {
+                $validator = Validator::make($request->all(), [
+                    'refleksi' => 'required|string',
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->withInput();
+                }
+
+                $validatedData = $validator->validated();
+                $this->proyekRepository->update($validatedData, $id);
+
+                return redirect()->back()->with('success', 'Refleksi kelompok berhasil disimpan');
+            } else {
+                $validator = $this->validateInput($request->all());
+
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->withInput();
+                }
+                $validatedData = $validator->validated();
+
+                $this->proyekRepository->update($validatedData, $id);
+
+                return to_route('guru.proyek.index')->with('success', 'Proyek berhasil diubah');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function refleksi(Request $request, string $id)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'refleksi' => 'required|string',
+            ]);
 
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
+
             $validatedData = $validator->validated();
 
             $this->proyekRepository->update($validatedData, $id);
 
-            return to_route('guru.proyek.index')->with('success', 'Proyek berhasil diubah');
+            return redirect()->back()->with('success', 'Refleksi kelompok berhasil disimpan');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

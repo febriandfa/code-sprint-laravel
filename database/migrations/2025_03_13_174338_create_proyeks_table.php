@@ -19,6 +19,7 @@ return new class extends Migration
             $table->longText('deskripsi');
             $table->dateTime('tenggat');
             $table->enum('status', ProyekStatus::values())->default(ProyekStatus::BELUM);
+            $table->longText('refleksi')->nullable();
             $table->timestamps();
         });
     }

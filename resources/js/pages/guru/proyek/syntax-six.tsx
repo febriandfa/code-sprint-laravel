@@ -30,23 +30,23 @@ export default function SyntaxSix() {
     ];
 
     const { data, setData, patch, processing, errors } = useForm<Required<SyntaxSixForm>>({
-        refleksi: jawaban?.refleksi ?? '',
+        refleksi: proyek?.refleksi ?? '',
     });
 
     const handleOnSubmit = () => {
-        patch(route('guru.proyek.updateNilai', { proyekId: proyek?.id, id: jawaban?.id, step: 9 }), {
+        patch(route('guru.proyek.update', { id: proyek?.id, refleksi: true }), {
             onSuccess: () => {},
         });
     };
 
     useEffect(() => {
-        if (jawaban) {
+        if (proyek) {
             setData((prev) => ({
                 ...prev,
-                refleksi: jawaban.refleksi || '',
+                refleksi: proyek.refleksi || '',
             }));
         }
-    }, [jawaban]);
+    }, [proyek]);
 
     const columns = [
         {

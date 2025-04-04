@@ -91,7 +91,7 @@ export default function ProyekTemplate({ proyek, kelompok, columns, data, search
                     )}
                 </Container>
             </div>
-            <Container className="mt-4">
+            <Container className="my-4">
                 <div className="flex items-center gap-4">
                     <Title title={kelompok ? `Anggota ${kelompok.nama}` : 'Data Kelompok'} />
                     {view && kelompok && <LabelStatus variant={isFull ? 'danger' : 'success'} size="small" status={`Kuota: ${totalAnggota}`} />}

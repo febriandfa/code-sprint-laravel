@@ -89,7 +89,12 @@ class ProyekRepository
 
     public function update(array $data, string $id)
     {
-        return DB::table('proyeks')->where('id', $id)->update($data);
+        try {
+            return DB::table('proyeks')->where('id', $id)->update($data);
+        } catch (\Exception $e) {
+            dd($e);
+            return false;
+        }
     }
 
     public function delete(string $id)
