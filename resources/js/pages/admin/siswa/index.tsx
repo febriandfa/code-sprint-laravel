@@ -1,5 +1,6 @@
 import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
+import NoData from '@/components/no-data';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { UserDetail } from '@/types';
@@ -59,13 +60,13 @@ export default function IndexSiswa() {
     const searchBy = ['name', 'email', 'kelas'];
 
     return (
-        <AuthLayout title="Siswa" index isEmpty={!siswas?.length}>
+        <AuthLayout title="Siswa" index>
             <div className="mb-6 flex justify-end">
                 <Link href={route('admin.siswa.create')}>
                     <Button>Tambah Siswa</Button>
                 </Link>
             </div>
-            <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
+            {siswas?.length ? <DataTables columns={columns} data={data ?? []} searchBy={searchBy} /> : <NoData />}
         </AuthLayout>
     );
 }

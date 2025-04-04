@@ -1,5 +1,6 @@
 import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
+import NoData from '@/components/no-data';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { stripHtml } from '@/lib/helper';
@@ -53,13 +54,13 @@ export default function IndexMapel() {
     const searchBy = ['nama'];
 
     return (
-        <AuthLayout title="Mata Pelajaran" index isEmpty={!mapels?.length}>
+        <AuthLayout title="Mata Pelajaran" index>
             <div className="mb-6 flex justify-end">
                 <Link href={route('admin.mapel.create')}>
                     <Button>Tambah Mata Pelajaran</Button>
                 </Link>
             </div>
-            <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
+            {mapels?.length ? <DataTables columns={columns} data={data ?? []} searchBy={searchBy} /> : <NoData />}
         </AuthLayout>
     );
 }

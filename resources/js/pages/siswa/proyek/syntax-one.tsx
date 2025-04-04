@@ -44,8 +44,6 @@ export default function SyntaxOneProyek() {
     const siswaStatus = joinedKelompok?.status ?? 'anggota';
     const analisisMasalahRef = useRef<HTMLInputElement | null>(null);
 
-    console.log('jawaban', jawaban);
-
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
         { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },

@@ -1,5 +1,6 @@
 import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
+import NoData from '@/components/no-data';
 import Button from '@/components/ui/button';
 import LabelStatus from '@/components/ui/label-status';
 import AuthLayout from '@/layouts/auth-layout';
@@ -91,13 +92,13 @@ export default function IndexProyek() {
     const searchBy = ['nama', 'mapel', 'kelas', 'materi', 'tenggat'];
 
     return (
-        <AuthLayout title="Proyek" index isEmpty={!proyeks?.length}>
+        <AuthLayout title="Proyek" index>
             <div className="mb-6 flex justify-end">
                 <Link href={route('guru.proyek.create')}>
                     <Button>Tambah Proyek</Button>
                 </Link>
             </div>
-            <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
+            {proyeks?.length ? <DataTables columns={columns} data={data ?? []} searchBy={searchBy} /> : <NoData />}
         </AuthLayout>
     );
 }

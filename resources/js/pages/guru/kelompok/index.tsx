@@ -60,7 +60,7 @@ export default function IndexKelompok() {
     const searchBy = ['nama', 'ketua'];
 
     return (
-        <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs} siswa isEmpty={!kelompoks?.length}>
+        <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs} siswa>
             {proyek && kelompoks && <ProyekTemplate proyek={proyek} columns={columns} data={data ?? []} searchBy={searchBy} />}
         </AuthLayout>
     );

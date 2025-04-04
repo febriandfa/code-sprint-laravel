@@ -23,6 +23,8 @@ export default function DashboardGuru() {
         latestKuis?: Kuis[];
     };
 
+    console.log(latestKuis, latestMateri, latestProyek);
+
     const finishedProyek = proyeks?.filter((proyek) => proyek.status === 'selesai').length;
     const finishedKuis = kuises?.filter((kuis) => new Date(kuis.tanggal_selesai) <= new Date()).length;
 
@@ -63,8 +65,8 @@ export default function DashboardGuru() {
                 </Container>
                 <Container>
                     <Subtitle subtitle="Grafik Pembelajaran" className="mb-2" />
-                    {latestProyek?.length === 0 && latestKuis?.length === 0 && latestMateri?.length === 0 && (
-                        <p className="text-center text-lg text-slate-400 capitalize">Tidak ada data proyek, materi, kuis</p>
+                    {latestProyek?.length === 0 && latestKuis?.length === 0 && (
+                        <p className="text-center text-lg text-slate-400 capitalize">Tidak ada data proyek, kuis</p>
                     )}
                     <div className="flex justify-evenly gap-6">
                         {kuises?.length !== 0 && (

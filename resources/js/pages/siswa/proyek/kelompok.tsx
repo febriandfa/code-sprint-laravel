@@ -10,8 +10,6 @@ import { LoaderCircle } from 'lucide-react';
 export default function KelompokProyek() {
     const { kelompoks, proyek, joinedKelompok } = usePage().props as { kelompoks?: Kelompok[]; proyek?: Proyek; joinedKelompok?: JoinedKelompok };
 
-    console.log('kelompoks', joinedKelompok);
-
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
         { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },

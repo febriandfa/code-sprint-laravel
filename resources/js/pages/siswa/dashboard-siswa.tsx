@@ -34,8 +34,6 @@ export default function DashboardSiswa() {
         latestKuis?: Kuis[];
     };
 
-    console.log('latestMateri', proyeks);
-
     const user = auth?.user as User;
     const finishedMateri = materis?.filter((materi) => materi.is_read).length;
     const finishedProyek = proyeks?.filter((proyek) => proyek.is_completed).length;

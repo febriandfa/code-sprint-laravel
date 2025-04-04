@@ -1,9 +1,11 @@
 import DataTables from '@/components/data-tables';
+import NoData from '@/components/no-data';
 import Title from '@/components/ui/title';
 import AuthLayout from '@/layouts/auth-layout';
 import { Nilai } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Tooltip } from 'chart.js';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
@@ -75,12 +77,18 @@ export default function IndexNilai() {
     };
 
     return (
-        <AuthLayout title="Nilai" index isEmpty={!nilais?.length}>
-            <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
-            <div className="space-y-6">
-                <Title title="Grafik Nilai" />
-                <Bar options={options} data={dataGraph} />
-            </div>
+        <AuthLayout title="Nilai" index>
+            {nilais?.length ? (
+                <React.Fragment>
+                    <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
+                    <div className="space-y-6">
+                        <Title title="Grafik Nilai" />
+                        <Bar options={options} data={dataGraph} />
+                    </div>
+                </React.Fragment>
+            ) : (
+                <NoData />
+            )}
         </AuthLayout>
     );
 }

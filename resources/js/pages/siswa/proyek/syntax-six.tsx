@@ -15,8 +15,6 @@ export default function SyntaxSixProyek() {
         nilai?: ProyekNilai;
     };
 
-    console.log(nilai);
-
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
         { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },

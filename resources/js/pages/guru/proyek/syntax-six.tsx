@@ -23,8 +23,6 @@ export default function SyntaxSix() {
         nilais?: ProyekNilai[];
     };
 
-    console.log('jawaban', jawaban);
-
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('guru.proyek.index') },
         { title: 'Detail Project Based Learning', link: route('guru.proyek.show', proyek?.id) },

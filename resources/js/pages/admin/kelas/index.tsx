@@ -1,5 +1,6 @@
 import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
+import NoData from '@/components/no-data';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { Kelas } from '@/types';
@@ -44,7 +45,7 @@ export default function IndexKelas() {
                     <Button>Tambah Kelas</Button>
                 </Link>
             </div>
-            <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
+            {kelases?.length ? <DataTables columns={columns} data={data ?? []} searchBy={searchBy} /> : <NoData />}
         </AuthLayout>
     );
 }

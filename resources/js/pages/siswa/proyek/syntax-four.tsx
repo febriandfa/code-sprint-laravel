@@ -24,8 +24,6 @@ export default function SyntaxTwoProyek() {
     const siswaStatus = joinedKelompok?.status ?? 'anggota';
     const showSubmit = proyek?.status === 'berjalan' && jawaban?.status_tahap_7 !== 'diterima';
 
-    console.log('kelompok', kelompok);
-
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
         { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },

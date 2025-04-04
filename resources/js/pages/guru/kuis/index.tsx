@@ -1,5 +1,6 @@
 import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
+import NoData from '@/components/no-data';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { Kuis } from '@/types';
@@ -80,13 +81,13 @@ export default function IndexKuis() {
     const searchBy = ['judul', 'materi', 'tanggal_mulai', 'tanggal_selesai'];
 
     return (
-        <AuthLayout title="Kuis" index isEmpty={!kuises?.length}>
+        <AuthLayout title="Kuis" index>
             <div className="mb-6 flex justify-end">
                 <Link href={route('guru.kuis.create')}>
                     <Button>Tambah Kuis</Button>
                 </Link>
             </div>
-            <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
+            {kuises?.length ? <DataTables columns={columns} data={data ?? []} searchBy={searchBy} /> : <NoData />}
         </AuthLayout>
     );
 }

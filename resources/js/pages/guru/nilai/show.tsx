@@ -6,8 +6,6 @@ import { usePage } from '@inertiajs/react';
 export default function ShowNilai() {
     const { nilais, siswa } = usePage().props as { nilais?: Nilai[]; siswa?: UserDetail };
 
-    console.log(nilais);
-
     const breadcrumbs = [
         { title: 'Nilai', link: route('guru.nilai.index') },
         { title: 'Detail Nilai', link: route('guru.nilai.siswa', siswa?.kelas_id) },

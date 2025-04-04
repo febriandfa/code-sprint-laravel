@@ -1,6 +1,5 @@
 import FlashMessage from '@/components/flash-message';
 import Header from '@/components/header';
-import NoData from '@/components/no-data';
 import Sidebar from '@/components/sidebar';
 import Breadcrumb from '@/components/ui/breadcrumb';
 import Title from '@/components/ui/title';
@@ -13,17 +12,9 @@ interface AuthLayoutProps {
     breadcrumbs?: BreadcrumbItem[];
     index?: boolean;
     siswa?: boolean;
-    isEmpty?: boolean;
 }
 
-export default function AuthLayout({
-    children,
-    title,
-    breadcrumbs,
-    index = false,
-    siswa = false,
-    isEmpty = false,
-}: PropsWithChildren<AuthLayoutProps>) {
+export default function AuthLayout({ children, title, breadcrumbs, index = false, siswa = false }: PropsWithChildren<AuthLayoutProps>) {
     const { auth } = usePage().props as { auth?: Auth };
 
     const userRole: UserRole = auth?.user.role ?? 'siswa';
@@ -42,13 +33,7 @@ export default function AuthLayout({
                         <Breadcrumb items={breadcrumbs} />
                         <div className={`rounded-lg ${siswa ? '' : 'bg-white p-8'}`}>
                             {index && <Title title={title} />}
-                            {isEmpty ? (
-                                <div className="flex items-center justify-center" style={{ height: 'calc(100vh - 18rem)' }}>
-                                    <NoData />
-                                </div>
-                            ) : (
-                                <div className={`${index ? 'my-6' : ''} `}>{children}</div>
-                            )}
+                            <div className={`${index ? 'my-6' : ''} `}>{children}</div>
                         </div>
                     </div>
                 </main>

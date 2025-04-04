@@ -1,5 +1,6 @@
 import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
+import NoData from '@/components/no-data';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { getFileName, stripHtml } from '@/lib/helper';
@@ -88,13 +89,13 @@ export default function IndexMateri() {
     const searchBy = ['judul', 'kelas', 'mapel'];
 
     return (
-        <AuthLayout title="Materi" index isEmpty={!materis?.length}>
+        <AuthLayout title="Materi" index>
             <div className="mb-6 flex justify-end">
                 <Link href={route('guru.materi.create')}>
                     <Button>Tambah Materi</Button>
                 </Link>
             </div>
-            <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
+            {materis?.length ? <DataTables columns={columns} data={data ?? []} searchBy={searchBy} /> : <NoData />}
         </AuthLayout>
     );
 }

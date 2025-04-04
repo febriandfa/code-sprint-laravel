@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class NilaiRepository
@@ -12,8 +13,14 @@ class NilaiRepository
             ->where('user_details.user_id', $siswaId)
             ->first();
 
+        $mapelIds = DB::table('user_mapels')
+            ->where('guru_id', Auth::user()->id)
+            ->pluck('mapel_id')
+            ->toArray();
+
         $materis = DB::table('materis')
             ->where('materis.kelas_id', $user->kelas_id)
+            ->whereIn('materis.mapel_id', $mapelIds)
             ->select('materis.id', 'materis.judul', 'materis.kelas_id', 'materis.created_at', 'materis.updated_at')
             ->get();
 

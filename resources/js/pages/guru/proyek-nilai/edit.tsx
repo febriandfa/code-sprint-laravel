@@ -29,8 +29,6 @@ export default function EditProyekNilai() {
         nilai?: ProyekNilai;
     };
 
-    console.log('nilai', nilai);
-
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('guru.proyek.index') },
         { title: 'Detail Project Based Learning', link: route('guru.proyek.show', proyek?.id) },

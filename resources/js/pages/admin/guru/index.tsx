@@ -1,5 +1,6 @@
 import ActionButton from '@/components/action-button';
 import DataTables from '@/components/data-tables';
+import NoData from '@/components/no-data';
 import Button from '@/components/ui/button';
 import AuthLayout from '@/layouts/auth-layout';
 import { GuruDetail, UserDetail } from '@/types';
@@ -59,13 +60,13 @@ export default function IndexGuru() {
     const searchBy = ['name', 'email', 'mapel'];
 
     return (
-        <AuthLayout title="Guru" index isEmpty={!gurus?.length}>
+        <AuthLayout title="Guru" index>
             <div className="mb-6 flex justify-end">
                 <Link href={route('admin.guru.create')}>
                     <Button>Tambah Guru</Button>
                 </Link>
             </div>
-            <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
+            {gurus?.length ? <DataTables columns={columns} data={data ?? []} searchBy={searchBy} /> : <NoData />}
         </AuthLayout>
     );
 }
