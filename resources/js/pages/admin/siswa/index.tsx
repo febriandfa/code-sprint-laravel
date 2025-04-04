@@ -59,7 +59,7 @@ export default function IndexSiswa() {
     const searchBy = ['name', 'email', 'kelas'];
 
     return (
-        <AuthLayout title="Siswa" index>
+        <AuthLayout title="Siswa" index isEmpty={!siswas?.length}>
             <div className="mb-6 flex justify-end">
                 <Link href={route('admin.siswa.create')}>
                     <Button>Tambah Siswa</Button>

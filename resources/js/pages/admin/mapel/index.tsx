@@ -53,7 +53,7 @@ export default function IndexMapel() {
     const searchBy = ['nama'];
 
     return (
-        <AuthLayout title="Mata Pelajaran" index>
+        <AuthLayout title="Mata Pelajaran" index isEmpty={!mapels?.length}>
             <div className="mb-6 flex justify-end">
                 <Link href={route('admin.mapel.create')}>
                     <Button>Tambah Mata Pelajaran</Button>

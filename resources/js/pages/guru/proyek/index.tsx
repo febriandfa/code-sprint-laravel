@@ -91,7 +91,7 @@ export default function IndexProyek() {
     const searchBy = ['nama', 'mapel', 'kelas', 'materi', 'tenggat'];
 
     return (
-        <AuthLayout title="Proyek" index>
+        <AuthLayout title="Proyek" index isEmpty={!proyeks?.length}>
             <div className="mb-6 flex justify-end">
                 <Link href={route('guru.proyek.create')}>
                     <Button>Tambah Proyek</Button>

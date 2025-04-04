@@ -7,7 +7,7 @@ export default function IndexMateri() {
     const { materis } = usePage().props as { materis?: Materi[] };
 
     return (
-        <AuthLayout title="Materi" index siswa>
+        <AuthLayout title="Materi" index siswa isEmpty={!materis?.length}>
             <div className="grid grid-cols-3 gap-5">
                 {materis?.map((materi, index) => {
                     return (

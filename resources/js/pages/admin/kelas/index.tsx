@@ -30,7 +30,7 @@ export default function IndexKelas() {
 
     const data = kelases?.map((kelas) => ({
         id: kelas.id,
-        guru_id: kelas.guru_id,
+        wali_kelas_id: kelas.wali_kelas_id,
         nama: kelas.nama,
         wali_kelas: kelas.wali_kelas,
     }));

@@ -80,7 +80,7 @@ export default function IndexKuis() {
     const searchBy = ['judul', 'materi', 'tanggal_mulai', 'tanggal_selesai'];
 
     return (
-        <AuthLayout title="Kuis" index>
+        <AuthLayout title="Kuis" index isEmpty={!kuises?.length}>
             <div className="mb-6 flex justify-end">
                 <Link href={route('guru.kuis.create')}>
                     <Button>Tambah Kuis</Button>

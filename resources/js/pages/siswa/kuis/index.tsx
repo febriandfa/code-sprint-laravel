@@ -7,7 +7,7 @@ export default function IndexKuis() {
     const { kuises } = usePage().props as { kuises?: Kuis[] };
 
     return (
-        <AuthLayout title="Kuis" index siswa>
+        <AuthLayout title="Kuis" index siswa isEmpty={!kuises?.length}>
             <div className="grid grid-cols-3 gap-5">
                 {kuises?.map((kuis, index) => {
                     return (

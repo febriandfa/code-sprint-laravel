@@ -59,7 +59,7 @@ export default function IndexGuru() {
     const searchBy = ['name', 'email', 'mapel'];
 
     return (
-        <AuthLayout title="Guru" index>
+        <AuthLayout title="Guru" index isEmpty={!gurus?.length}>
             <div className="mb-6 flex justify-end">
                 <Link href={route('admin.guru.create')}>
                     <Button>Tambah Guru</Button>

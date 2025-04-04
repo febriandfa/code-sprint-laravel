@@ -88,7 +88,7 @@ export default function IndexMateri() {
     const searchBy = ['judul', 'kelas', 'mapel'];
 
     return (
-        <AuthLayout title="Materi" index>
+        <AuthLayout title="Materi" index isEmpty={!materis?.length}>
             <div className="mb-6 flex justify-end">
                 <Link href={route('guru.materi.create')}>
                     <Button>Tambah Materi</Button>

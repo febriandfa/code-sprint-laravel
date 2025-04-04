@@ -75,7 +75,7 @@ export default function IndexNilai() {
     };
 
     return (
-        <AuthLayout title="Nilai" index>
+        <AuthLayout title="Nilai" index isEmpty={!nilais?.length}>
             <DataTables columns={columns} data={data ?? []} searchBy={searchBy} />
             <div className="space-y-6">
                 <Title title="Grafik Nilai" />
