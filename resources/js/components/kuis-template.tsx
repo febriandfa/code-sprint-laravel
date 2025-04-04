@@ -2,7 +2,7 @@ import { formatTwoDigit } from '@/lib/helper';
 import { Kuis, KuisJawaban, KuisSoal } from '@/types';
 import { router, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
 import Button from './ui/button';
 import RichText from './ui/rich-text';
@@ -20,6 +20,9 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
     const [currentNumber, setCurrentNumber] = useState(1);
     const [currentSoal, setCurrentSoal] = useState<KuisSoal | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Store answers in a ref to ensure we always have the latest value
+    const latestAnswersRef = useRef<{ [key: number]: string }>({});
 
     const getInitialTimeRemaining = () => {
         if (view) return 0;
@@ -45,19 +48,32 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
     const [answers, setAnswers] = useState<{ [key: number]: string }>(getStoredAnswers());
     const [timeRemaining, setTimeRemaining] = useState(getInitialTimeRemaining);
 
+    // Update ref whenever answers change
+    useEffect(() => {
+        latestAnswersRef.current = answers;
+    }, [answers]);
+
     const { setData, post, processing } = useForm({
         kuis_id: kuis?.id,
         jawabans: answers,
     });
 
+    // Update form data whenever answers change
     useEffect(() => {
         setData('jawabans', answers);
-    }, [answers]);
+    }, [answers, setData]);
 
     const autoSubmit = useCallback(() => {
         if (isSubmitting || view) return;
 
         setIsSubmitting(true);
+
+        // Get the most current answers from our ref
+        const currentAnswers = latestAnswersRef.current;
+
+        // Set data right before submission to ensure latest answers
+        setData('jawabans', currentAnswers);
+
         post(route('siswa.kuis.answer'), {
             onSuccess: () => {
                 localStorage.removeItem(`kuis_${kuis?.id}_answers`);
@@ -67,8 +83,12 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
                     router.visit(route('siswa.kuis.index'));
                 }, 1500);
             },
+            onError: (errors) => {
+                console.error('Submission errors:', errors);
+                setIsSubmitting(false);
+            },
         });
-    }, [kuis?.id, isSubmitting, post, view]);
+    }, [kuis?.id, isSubmitting, setData, post, view]);
 
     useEffect(() => {
         if (kuis && !view) {
@@ -102,7 +122,7 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [kuis?.id, view]);
+    }, [kuis?.id, isSubmitting, autoSubmit, view]);
 
     const formatTimer = (seconds: number) => {
         const minutes = Math.floor(seconds / 60);
@@ -126,10 +146,18 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
         if (view) return;
 
         if (currentSoal) {
-            setAnswers((prev) => ({
-                ...prev,
-                [currentSoal.urutan]: label,
-            }));
+            setAnswers((prev) => {
+                const newAnswers = {
+                    ...prev,
+                    [currentSoal.urutan]: label,
+                };
+
+                if (kuis) {
+                    localStorage.setItem(`kuis_${kuis.id}_answers`, JSON.stringify(newAnswers));
+                }
+
+                return newAnswers;
+            });
         }
     };
 
@@ -146,16 +174,7 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                post(route('siswa.kuis.answer'), {
-                    onSuccess: () => {
-                        localStorage.removeItem(`kuis_${kuis?.id}_answers`);
-                        localStorage.removeItem(`kuis_${kuis?.id}_end_time`);
-
-                        setTimeout(() => {
-                            router.visit(route('siswa.kuis.index'));
-                        }, 1500);
-                    },
-                });
+                autoSubmit();
             }
         });
     };
@@ -234,8 +253,8 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
                 )}
                 {currentNumber < (soals?.length ?? 0) && <Button onClick={handleNext}>Selanjutnya</Button>}
                 {currentNumber === soals?.length && !view && (
-                    <Button variant="primary" onClick={handleOnSubmit} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                    <Button variant="primary" onClick={handleOnSubmit} disabled={processing || isSubmitting}>
+                        {(processing || isSubmitting) && <LoaderCircle className="h-4 w-4 animate-spin" />}
                         Selesai
                     </Button>
                 )}

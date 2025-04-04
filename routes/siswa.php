@@ -42,6 +42,7 @@ Route::prefix('siswa')->name('siswa.')->middleware('role:siswa')->group(function
     Route::middleware(['kuis_answered'])->group(function () {
         Route::get('/kuis/{kuis}/show', [KuisController::class, 'show'])->name('kuis.show');
         Route::post('/kuis/answer', [KuisController::class, 'answer'])->name('kuis.answer');
+        Route::get('/kuis/{kuis}/hasil', [KuisController::class, 'hasil'])->name('kuis.hasil');
     });
 
     Route::post('/kelompok/{kelompokId}/join', [KelompokController::class, 'join'])->name('kelompok.join');

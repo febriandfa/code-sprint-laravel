@@ -13,7 +13,7 @@ export default function Sidebar({ userRole = 'siswa' }: { userRole: UserRole }) 
             <AppLogo />
             <div className="flex h-full w-full flex-col justify-between">
                 <nav className="w-full">
-                    <p className="text-lg text-slate-400">Menu Siswa</p>
+                    <p className="text-lg text-slate-400 capitalize">Menu {userRole}</p>
                     <ul className="space-y-2">
                         {menus.map((menu, index) => (
                             <li>

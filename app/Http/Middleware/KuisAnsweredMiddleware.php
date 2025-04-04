@@ -24,8 +24,12 @@ class KuisAnsweredMiddleware
             ->where('user_id', Auth::user()->id)
             ->first();
 
-        if ($existingResult) {
-            return redirect()->route('siswa.kuis.index')->with('warning', 'Kuis sudah dikerjakan');
+        if ($existingResult && $request->routeIs('siswa.kuis.show')) {
+            return to_route('siswa.kuis.hasil', $kuisId)->with('warning', 'Anda sudah mengerjakan kuis ini.');
+        }
+
+        if (!$existingResult && $request->routeIs('siswa.kuis.hasil')) {
+            return to_route('siswa.kuis.index')->with('warning', 'Anda belum mengerjakan kuis ini.');
         }
 
         return $next($request);

@@ -70,11 +70,6 @@ class ProyekService
             }
             $validatedData = $validator->validated();
 
-            $proyekExistInMateri = $this->materiRepository->checkKuisOrProyek($validatedData['materi_id'], 'kuis');
-            if ($proyekExistInMateri) {
-                return redirect()->back()->with('warning', 'Materi ini sudah memiliki proyek');
-            }
-
             $this->proyekRepository->update($validatedData, $id);
 
             return to_route('guru.proyek.index')->with('success', 'Proyek berhasil diubah');

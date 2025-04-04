@@ -159,6 +159,8 @@ export default function DashboardSiswa() {
                                 totalPoin={latestKuis?.[0]?.total_poin ?? '-'}
                                 duration={latestKuis?.[0]?.durasi ?? 0}
                                 isCompleted={latestKuis?.[0]?.is_completed ?? false}
+                                startDate={latestKuis?.[0]?.tanggal_mulai ?? ''}
+                                endDate={latestKuis?.[0]?.tanggal_selesai ?? ''}
                             />
                         )}
 

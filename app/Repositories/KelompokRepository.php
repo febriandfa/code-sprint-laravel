@@ -50,7 +50,15 @@ class KelompokRepository
 
     public function getKetuaCandidate(string $proyekId)
     {
+        $proyek = DB::table('proyeks')
+            ->leftJoin('materis', 'proyeks.materi_id', '=', 'materis.id')
+            ->where('proyeks.id', $proyekId)
+            ->select('materis.kelas_id as kelas_id')
+            ->first();
+
         return DB::table('users')
+            ->leftJoin('user_details', 'users.id', '=', 'user_details.user_id')
+            ->where('user_details.kelas_id', $proyek->kelas_id)
             ->where('users.role', RoleType::SISWA)
             ->whereNotExists(function($query) use ($proyekId) {
                 $query->select(DB::raw(1))
@@ -60,6 +68,7 @@ class KelompokRepository
                     // ->where('kelompok_anggotas.status', 'ketua')
                     ->where('kelompoks.proyek_id', $proyekId);
             })
+            ->select('users.*')
             ->get();
     }
 

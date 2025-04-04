@@ -81,11 +81,6 @@ class KuisService
             }
             $validatedData = $validator->validated();
 
-            $kuisExistInMateri = $this->materiRepository->checkKuisOrProyek($validatedData['materi_id'], 'kuis');
-            if ($kuisExistInMateri) {
-                return redirect()->back()->with('warning', 'Materi ini sudah memiliki kuis');
-            }
-
             $this->kuisRepository->update($validatedData, $id);
 
             return to_route('guru.kuis.index')->with('success', 'Kuis berhasil diubah');

@@ -21,6 +21,8 @@ export default function IndexKuis() {
                                 totalPoin={kuis.total_poin ?? '-'}
                                 duration={kuis.durasi}
                                 isCompleted={kuis.is_completed ?? false}
+                                startDate={kuis.tanggal_mulai}
+                                endDate={kuis.tanggal_selesai}
                             />
                         );
                     })}

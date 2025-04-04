@@ -9,6 +9,32 @@ export const formatDate = (dateString: string) => {
     return date.toLocaleDateString('id-ID');
 };
 
+export const formatDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+
+    const options: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Jakarta',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    };
+
+    const parts = new Intl.DateTimeFormat('id-ID', options).formatToParts(date);
+
+    const getPart = (type: string) => parts.find((p) => p.type === type)?.value || '';
+
+    const day = getPart('day');
+    const month = getPart('month');
+    const year = getPart('year');
+    const hour = getPart('hour');
+    const minute = getPart('minute');
+
+    return `${day}/${month}/${year} ${hour}:${minute} WIB`;
+};
+
 export const formatTwoDigit = (number: number) => {
     return number.toString().padStart(2, '0');
 };
