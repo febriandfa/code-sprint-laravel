@@ -24,7 +24,7 @@ export default function SyntaxFour() {
 
     const breadcrumbs = [
         { title: 'Project Based Learning', link: route('siswa.proyek.index') },
-        { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },
+        { title: 'Detail Project Based Learning', link: route('guru.proyek.show', proyek?.id) },
         { title: `Progress Kelompok ${kelompok?.nama}`, link: '#' },
     ];
 
