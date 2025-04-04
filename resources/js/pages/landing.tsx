@@ -22,7 +22,7 @@ export default function Landing() {
             <div className="min-h-screen bg-white">
                 <nav className="flex h-20 w-full items-center justify-between px-32">
                     <AppLogo />
-                    <ul className="grid grid-cols-4 items-center gap-4">
+                    <ul className="grid w-2/5 grid-cols-4 items-center gap-4">
                         <li>Beranda</li>
                         <li>Tentang</li>
                         <li>Kontak</li>
