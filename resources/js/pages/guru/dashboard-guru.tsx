@@ -23,8 +23,6 @@ export default function DashboardGuru() {
         latestKuis?: Kuis[];
     };
 
-    console.log(latestKuis, latestMateri, latestProyek);
-
     const finishedProyek = proyeks?.filter((proyek) => proyek.status === 'selesai').length;
     const finishedKuis = kuises?.filter((kuis) => new Date(kuis.tanggal_selesai) <= new Date()).length;
 

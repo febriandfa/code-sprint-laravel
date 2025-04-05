@@ -29,8 +29,6 @@ export default function Landing() {
         { label: 'Tentang PJBL', href: '#tentang' },
     ];
 
-    console.log(auth);
-
     const [isAuth, setIsAuth] = useState(false);
     const items = [
         'Materi dibuat dengan terstruktur memudahkan pembelajaran',

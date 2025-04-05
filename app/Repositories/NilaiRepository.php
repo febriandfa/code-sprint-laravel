@@ -10,19 +10,28 @@ class NilaiRepository
     public function getAllBySiswa(string $siswaId)
     {
         $user = DB::table('user_details')
+            ->leftJoin('users', 'user_details.user_id', '=', 'users.id')
+            ->select('user_details.kelas_id', 'users.role')
             ->where('user_details.user_id', $siswaId)
             ->first();
 
-        $mapelIds = DB::table('user_mapels')
-            ->where('guru_id', Auth::user()->id)
-            ->pluck('mapel_id')
-            ->toArray();
+        if ($user->role === 'guru') {
+            $mapelIds = DB::table('user_mapels')
+                ->where('guru_id', Auth::user()->id)
+                ->pluck('mapel_id')
+                ->toArray();
 
-        $materis = DB::table('materis')
-            ->where('materis.kelas_id', $user->kelas_id)
-            ->whereIn('materis.mapel_id', $mapelIds)
-            ->select('materis.id', 'materis.judul', 'materis.kelas_id', 'materis.created_at', 'materis.updated_at')
-            ->get();
+            $materis = DB::table('materis')
+                ->where('materis.kelas_id', $user->kelas_id)
+                ->whereIn('materis.mapel_id', $mapelIds)
+                ->select('materis.id', 'materis.judul', 'materis.kelas_id', 'materis.created_at', 'materis.updated_at')
+                ->get();
+        } else {
+            $materis = DB::table('materis')
+                ->where('materis.kelas_id', $user->kelas_id)
+                ->select('materis.id', 'materis.judul', 'materis.kelas_id', 'materis.created_at', 'materis.updated_at')
+                ->get();
+        }
 
         foreach ($materis as $materi) {
             $nilaiKuis = DB::table('kuises')
