@@ -29,22 +29,24 @@ export default function Login() {
             <Head title={'Login'} />
             <FlashMessage />
             <div className="min-h-svh">
-                <div className="grid min-h-svh grid-cols-2 bg-gray-200">
-                    <div className="flex h-full flex-col items-center justify-center gap-32">
-                        <img src="/assets/images/illust-login.svg" alt="illust login" className="size-80" />
-                        <div className="space-y-6">
+                <div className="grid min-h-svh grid-cols-1 bg-gray-50 md:grid-cols-2">
+                    {/* KANAN - Gambar & Teks (Hanya tampil di desktop, dengan animasi fade-in) */}
+                    <div className="hidden flex-col items-center justify-center gap-12 opacity-0 transition-all duration-500 ease-in-out md:flex md:opacity-100">
+                        <img src="/assets/images/hero-3.svg" alt="illust login" className="size-98" />
+                        <div className="space-y-2 text-center">
                             <AppLogo />
-                            <p className="text-2xl">
-                                Code Sprint menghadirkan pengalaman
-                                <br /> belajar interaktif dengan pendekatan
-                                <br /> Project-Based Learning (PjBL).
+                            <p className="text-base">
+                                Code Sprint menghadirkan pengalaman belajar
+                                <br /> interaktif dengan pendekatan Project-Based Learning (PjBL).
                             </p>
                         </div>
                     </div>
-                    <div className="flex items-center justify-center rounded-l-lg bg-white shadow">
+
+                    {/* KIRI - Form login (Selalu tampil) */}
+                    <div className="flex items-center justify-center bg-white shadow transition-all duration-500 ease-in-out md:rounded-l-lg">
                         <div className="flex w-3/4 flex-col">
-                            <h4 className="text-3xl font-medium">Welcome to CodeSprint!👋🏻</h4>
-                            <p className="mb-9 text-2xl">
+                            <h4 className="text-3xl font-medium">Selamat Datang CodeSprint!👋🏻</h4>
+                            <p className="mb-9 text-base">
                                 Silahkan masuk ke akun Anda
                                 <br /> dan mulai pembelajaran
                             </p>

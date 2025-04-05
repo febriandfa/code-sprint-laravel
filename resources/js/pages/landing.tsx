@@ -1,16 +1,43 @@
 import AppLogo from '@/components/app-logo';
+import Arrow from '@/components/icons/arrow';
+import Collabs from '@/components/icons/collabs';
+import Creative from '@/components/icons/creative';
+import Globe from '@/components/icons/creative copy';
+import IconMateri from '@/components/icons/icon-materi';
+import Kuis from '@/components/icons/kuis';
+import Nilai from '@/components/icons/nilai';
+import Proyek from '@/components/icons/proyek';
+import Navbar from '@/components/navbar-landing';
 import Button from '@/components/ui/button';
+import Checklist from '@/components/ui/checklist';
+
 import { Auth } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { AppWindow, BookIcon, Smartphone, UsersIcon } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 export default function Landing() {
     const { auth } = usePage().props as { auth?: Auth };
+    // const [hasScrolled, setHasScrolled] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    useEffect(() => {
+        // Smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+    }, []);
+    const menuItems = [
+        { label: 'Beranda', href: '#beranda' },
+        { label: 'Fitur', href: '#fitur' },
+        { label: 'Tentang PJBL', href: '#tentang' },
+    ];
 
     console.log(auth);
 
     const [isAuth, setIsAuth] = useState(false);
+    const items = [
+        'Materi dibuat dengan terstruktur memudahkan pembelajaran',
+        'Belajar Pemrograman langsung melalui proyek nyata untuk meningkatkan keterampilan',
+        'Bekerja sama dalam tim, diskusikan solusi, dan tingkatkan pemahaman melalui interaksi',
+        'Belajar kapan saja dan di mana saja dengan platform berbasis web yang fleksibel',
+    ];
 
     useEffect(() => {
         setIsAuth(!!auth?.user);
@@ -20,93 +47,254 @@ export default function Landing() {
         <React.Fragment>
             <Head title={'Beranda'} />
             <div className="min-h-screen bg-white">
-                <nav className="flex h-20 w-full items-center justify-between px-32">
-                    <AppLogo />
-                    <ul className="grid w-2/5 grid-cols-4 items-center gap-4">
-                        <li>Beranda</li>
-                        <li>Tentang</li>
-                        <li>Kontak</li>
-                        <li>
-                            <Link href={route(isAuth ? 'dashboard' : 'login')}>
-                                <Button>{isAuth ? 'Dashboard' : 'Login'}</Button>
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
-                <section className="grid grid-cols-2 items-center px-32" style={{ height: 'calc(100vh - 80px)' }}>
-                    <div className="space-y-7">
-                        <h1 className="text-4xl font-semibold">
-                            Tingkatkan Kompetensi
-                            <br /> Pemrograman dengan
-                            <br /> Pembelajaran Berbasis Proyek
-                        </h1>
-                        <p className="text-xl text-slate-400">
-                            Code Sprint menghadirkan pengalaman
-                            <br /> belajar interaktif dengan pendekatan
-                            <br /> Project-Based Learning (PjBL).
-                        </p>
-                        <Link href={route(isAuth ? 'dashboard' : 'login')}>
-                            <Button>Belajar Sekarang</Button>
+                {/* Navbar */}
+                <Navbar />
+
+                {/* Hero Section */}
+                <section id="beranda" className="Hero grid items-center gap-8 px-6 py-12 md:grid-cols-2 md:px-32">
+                    {/* Gambar di atas saat mobile */}
+                    <div className="order-1 place-self-center md:order-2">
+                        <img src="/assets/images/hero-3.png" alt="illust login" className="w-64 sm:w-64 md:w-96" />
+                    </div>
+
+                    {/* Teks rata kiri di semua ukuran */}
+                    <div className="order-2 text-left md:order-1">
+                        <div className="mb-6">
+                            <h1 className="font-base mb-2 text-xl sm:text-2xl md:text-4xl">
+                                Tingkatkan Kompetensi <span className="font-semibold">Pemrograman</span> dengan <br />
+                                Pembelajaran Berbasis <span className="font-semibold">Proyek</span>
+                            </h1>
+                            <p className="text-sm text-slate-400 sm:text-base">
+                                Code Sprint menghadirkan pengalaman belajar interaktif dengan pendekatan{' '}
+                                <span className="italic">Project-Based Learning</span> (PjBL).
+                            </p>
+                        </div>
+                        <Link className="mt-4 inline-block" href={route(isAuth ? 'dashboard' : 'login')}>
+                            <Button className="text-sm sm:text-base">Belajar Sekarang</Button>
                         </Link>
                     </div>
-                    <div className="place-self-center">
-                        <img src="/assets/images/illust-login.svg" alt="illust login" className="size-96" />
-                    </div>
                 </section>
-                <section className="bg-primary-50 h-fit w-full p-32">
-                    <h1 className="text-center text-3xl font-semibold">Kenapa Code Sprint</h1>
-                    <div className="bg-primary mx-auto mt-1.5 mb-14 h-1.5 w-32"></div>
-                    <div className="grid grid-cols-4 gap-6">
-                        <div className="space-y-4">
-                            <div className="w-fit rounded-2xl bg-orange-400 p-4">
-                                <BookIcon size={24} className="text-white" />
-                            </div>
-                            <h3 className="text-2xl font-semibold">Materi Terstruktur</h3>
-                            <p className="text-lg text-slate-400">
-                                Materi dibuat dengan
-                                <br /> terstruktur memudahkan
-                                <br /> pembelajaran
-                            </p>
+
+                {/* Menu Section */}
+                <section id="fitur" className="Fitur items-center gap-12 px-6 py-32 md:grid-cols-2 md:px-32">
+                    <div className="text mx-auto mb-8 text-center">
+                        <h1 className="mb-2 text-xl font-medium sm:text-2xl md:text-3xl">
+                            Jelajahi Pembelajaran Terstruktur <br className="hidden md:block" /> dengan CodeSprint
+                        </h1>
+
+                        <p className="text-sm text-slate-400 sm:text-base">
+                            CodeSprint menyediakan fitur utama untuk
+                            <br className="hidden md:block" />
+                            pembelajaran yang lebih sistematis dan efektif.
+                        </p>
+                    </div>
+
+                    <section className="grid grid-cols-1 gap-4 px-0 sm:grid-cols-2 lg:grid-cols-4">
+                        <div className="flex w-full items-center gap-4 rounded-xl bg-white px-6 py-6 shadow-sm">
+                            <IconMateri />
+                            <span className="text-lg font-medium">Materi</span>
                         </div>
-                        <div className="space-y-4">
-                            <div className="bg-warning-400 w-fit rounded-2xl p-4">
-                                <AppWindow size={24} className="text-white" />
-                            </div>
-                            <h3 className="text-2xl font-semibold">Berbasis Proyek</h3>
-                            <p className="text-lg text-slate-400">
-                                Belajar Pemrograman
-                                <br /> langsung melalui proyek
-                                <br /> nyata untuk meningkatkan
-                                <br /> keterampilan
-                            </p>
+
+                        <div className="flex w-full items-center gap-4 rounded-xl bg-white px-6 py-6 shadow-sm">
+                            <Kuis />
+                            <span className="text-lg font-medium">Kuis</span>
                         </div>
-                        <div className="space-y-4">
-                            <div className="bg-primary-400 w-fit rounded-2xl p-4">
-                                <UsersIcon size={24} className="text-white" />
-                            </div>
-                            <h3 className="text-2xl font-semibold">Kolaborasi</h3>
-                            <p className="text-lg text-slate-400">
-                                Bekerja sama dalam tim,
-                                <br /> diskusikan solusi, dan
-                                <br /> tingkatkan pemahaman
-                                <br /> melalui interaksi
-                            </p>
+                        <div className="flex w-full items-center gap-4 rounded-xl bg-white px-6 py-6 shadow-sm">
+                            <Proyek />
+                            <span className="text-lg font-medium">Project</span>
                         </div>
-                        <div className="space-y-4">
-                            <div className="bg-danger-400 w-fit rounded-2xl p-4">
-                                <Smartphone size={24} className="text-white" />
-                            </div>
-                            <h3 className="text-2xl font-semibold">Akses Mudah</h3>
-                            <p className="text-lg text-slate-400">
-                                Belajar kapan saja dan di
-                                <br /> mana saja dengan platform
-                                <br /> berbasis web yang fleksibel
-                            </p>
+                        <div className="flex w-full items-center gap-4 rounded-xl bg-white px-6 py-4 shadow-sm">
+                            <Nilai />
+                            <span className="text-lg font-medium">Nilai</span>
+                        </div>
+                    </section>
+                </section>
+
+                {/* lIST */}
+                <section className="Hero grid items-center gap-8 px-6 py-8 md:grid-cols-2 md:px-32">
+                    {/* Gambar di atas saat mobile */}
+                    <div className="order-1 place-self-center md:order-1">
+                        <div className="order-1 place-self-center md:sticky md:top-20 md:order-1">
+                            <img src="/assets/images/hero-2.png" alt="illust login" className="w-64 sm:w-64 md:w-96" />
                         </div>
                     </div>
+
+                    {/* Teks rata kiri di semua ukuran */}
+                    <div className="order-2 text-left md:order-2">
+                        <div className="mb-6">
+                            <h1 className="mb-6 text-xl font-light sm:text-2xl md:text-3xl">
+                                Mengapa <span className="font-medium">belajar</span> dengan
+                                <span className="font-medium italic"> CodeSprint?</span>
+                            </h1>
+
+                            <Checklist items={items} />
+                        </div>
+                    </div>
                 </section>
-                <footer className="flex items-center justify-center p-4">
-                    <p>© 2025 Code Sprint. All rights reserved.</p>
+
+                {/* Accordion */}
+                <section id="tentang" className="px-6 py-32 md:px-32">
+                    <div className="text mb-12 text-center">
+                        <h1 className="text-xl font-light sm:text-2xl md:text-3xl">
+                            Belajar Melalui <span className="font-medium">Pengalaman Nyata</span> <br className="hidden md:block" /> dengan
+                            <span className="font-medium italic"> Project-Based Learning</span>
+                        </h1>
+                        <p className="text-sm text-slate-400 sm:text-base">
+                            CodeSprint menyediakan fitur utama untuk pembelajaran
+                            <br className="hidden md:block" />
+                            yang lebih sistematis dan efektif.
+                        </p>
+                    </div>
+
+                    {/* Flex Container */}
+                    <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
+                        {/* Gambar di Atas pada Mobile, di Kanan pada Desktop */}
+                        <div className="order-1 flex w-full justify-center place-self-center md:order-2 md:w-1/2 md:justify-end">
+                            <img src="/assets/images/img-hero.svg" alt="illust login" className="w-64 sm:w-64 md:w-96" />
+                        </div>
+
+                        {/* Accordion di Bawah pada Mobile, di Kiri pada Desktop */}
+                        <div className="order-2 w-full max-w-xl space-y-4 place-self-center md:order-1 md:w-1/2">
+                            <h1 className="text-lg font-medium sm:text-2xl md:text-xl">
+                                Mengapa <span className="italic">Project Based Learning?</span>
+                            </h1>
+                            <details className="group rounded-xl border p-4">
+                                <summary className="flex cursor-pointer items-center justify-between text-lg font-medium">
+                                    <div className="flex items-center gap-2 text-base">
+                                        <Proyek />
+                                        <span>Pembelajaran Berbasis Masalah</span>
+                                    </div>
+                                    <Arrow />
+                                </summary>
+                                <div className="mt-2 translate-y-[-8px] text-gray-600 opacity-0 transition-all duration-500 ease-in-out group-open:translate-y-0 group-open:opacity-100">
+                                    Siswa belajar dengan memecahkan masalah nyata, sehingga mereka lebih memahami konsep dan relevansinya dalam
+                                    kehidupan sehari-hari.
+                                </div>
+                            </details>
+
+                            <details className="group rounded-xl border p-4">
+                                <summary className="flex cursor-pointer items-center justify-between text-lg font-medium">
+                                    <div className="flex items-center gap-2 text-base">
+                                        <Collabs />
+                                        <span>Kolaborasi dan Keterampilan Komunikasi</span>
+                                    </div>
+                                    <Arrow />
+                                </summary>
+                                <div className="mt-2 translate-y-[-8px] text-gray-600 opacity-0 transition-all duration-500 ease-in-out group-open:translate-y-0 group-open:opacity-100">
+                                    PBL mendorong kerja tim, komunikasi efektif, dan pengembangan keterampilan interpersonal yang penting untuk dunia
+                                    kerja.
+                                </div>
+                            </details>
+
+                            <details className="group rounded-xl border p-4">
+                                <summary className="flex cursor-pointer items-center justify-between text-lg font-medium">
+                                    <div className="flex items-center gap-2 text-base">
+                                        <Creative />
+                                        <span> Kreativitas dan Inovasi</span>
+                                    </div>
+                                    <Arrow />
+                                </summary>
+                                <div className="mt-2 translate-y-[-8px] text-gray-600 opacity-0 transition-all duration-500 ease-in-out group-open:translate-y-0 group-open:opacity-100">
+                                    Siswa diberikan kebebasan untuk mengeksplorasi solusi kreatif, memecahkan masalah secara mandiri, dan berpikir
+                                    inovatif.
+                                </div>
+                            </details>
+
+                            <details className="group rounded-xl border p-4">
+                                <summary className="flex cursor-pointer items-center justify-between text-lg font-medium">
+                                    <div className="flex items-center gap-2 text-base">
+                                        <Globe />
+                                        <span>Persiapan Dunia Kerja</span>
+                                    </div>
+                                    <Arrow />
+                                </summary>
+                                <div className="mt-2 translate-y-[-8px] text-gray-600 opacity-0 transition-all duration-500 ease-in-out group-open:translate-y-0 group-open:opacity-100">
+                                    Dengan simulasi proyek nyata, siswa lebih siap menghadapi tantangan profesional dan memiliki pengalaman praktis
+                                    sebelum terjun ke industri.
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+                </section>
+
+                {/* CTA */}
+                <section className="CTA">
+                    <div className="mx-auto max-w-7xl sm:px-6 sm:py-32 lg:px-8">
+                        <div className="relative isolate overflow-hidden bg-gray-50 px-6 pt-16 shadow-lg sm:rounded-xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
+                            <svg
+                                viewBox="0 0 1024 1024"
+                                aria-hidden="true"
+                                className="absolute top-1/2 left-1/2 -z-10 size-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
+                            >
+                                <circle r={512} cx={512} cy={512} fill="url(#blue-gradient)" fillOpacity="0.7" />
+                                <defs>
+                                    <radialGradient id="blue-gradient">
+                                        <stop stopColor="#3B82F6" /> {/* Biru Muda */}
+                                        <stop offset={1} stopColor="#3B82F6" /> {/* Biru Tua */}
+                                    </radialGradient>
+                                </defs>
+                            </svg>
+
+                            <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
+                                <h1 className="text-xl font-light sm:text-2xl md:text-3xl">
+                                    Mulai Perjalanan <span className="font-medium">Belajarmu</span> <br className="hidden md:block" /> dengan
+                                    <span className="font-medium italic"> CodeSpirnt!</span>
+                                </h1>
+                                <p className="text-sm text-slate-400 sm:text-base">
+                                    Jelajahi pengalaman belajar yang interaktif, aplikatif, dan <br className="hidden md:block" /> menyenangkan.
+                                    Kembangkan keterampilan abad 21 dan siap <br className="hidden md:block" /> hadapi tantangan dunia nyata!
+                                </p>
+                                <Link className="mt-4 inline-block" href={route(isAuth ? 'dashboard' : 'login')}>
+                                    <Button className="text-sm sm:text-base">Belajar Sekarang</Button>
+                                </Link>
+                            </div>
+                            <div className="relative mt-16 h-80 lg:mt-8">
+                                <img
+                                    alt="App screenshot"
+                                    src="/assets/images/siswa-dash.svg"
+                                    width={1824}
+                                    height={1080}
+                                    className="absolute top-0 left-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Footer */}
+                <footer className="pt- w-full px-6">
+                    <div className="flex w-full flex-row flex-wrap items-center justify-center gap-x-12 gap-y-3 text-center md:justify-between">
+                        {/* <img src="" alt="brand" className="w-8" /> */}
+                        <AppLogo />
+                        <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                            <li>
+                                <a
+                                    href="#beranda"
+                                    className="cursor-pointer text-sm text-slate-800 transition-all duration-300 hover:font-medium hover:text-blue-500 hover:underline hover:underline-offset-4"
+                                >
+                                    Beranda
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#fitur"
+                                    className="cursor-pointer text-sm text-slate-800 transition-all duration-300 hover:font-medium hover:text-blue-500 hover:underline hover:underline-offset-4"
+                                >
+                                    Fitur
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="#tentang"
+                                    className="cursor-pointer text-sm text-slate-800 transition-all duration-300 hover:font-medium hover:text-blue-500 hover:underline hover:underline-offset-4"
+                                >
+                                    Tentang PjBL
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr className="my-4 border-slate-200" />
+                    <p className="text-center font-sans text-base text-current antialiased">© 2025 Code Sprint. All rights reserved</p>
                 </footer>
             </div>
         </React.Fragment>
