@@ -43,9 +43,9 @@ export default function SyntaxSixProyek() {
                 </div>
                 <InputField id="nilai" label="Nilai" value={nilai?.nilai ?? 'Belum dinilai'} disabled />
                 <RichTextView label="Evaluasi" value={nilai?.evaluasi ?? '<p>Tidak ada evaluasi</p>'} />
-                {jawaban && jawaban.refleksi && (
+                {jawaban && proyek?.refleksi && (
                     <div>
-                        <RichTextView label="Refleksi" value={jawaban.refleksi} />
+                        <RichTextView label="Refleksi" value={proyek?.refleksi} />
                     </div>
                 )}
                 <div className="flex justify-end">
