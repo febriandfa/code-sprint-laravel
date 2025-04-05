@@ -47,7 +47,7 @@ class ProyekService
             $validatedData['created_at'] = now();
             $validatedData['updated_at'] = now();
 
-            $proyekExistInMateri = $this->materiRepository->checkKuisOrProyek($validatedData['materi_id'], 'kuis');
+            $proyekExistInMateri = $this->materiRepository->checkKuisOrProyek($validatedData['materi_id'], 'proyek');
             if ($proyekExistInMateri) {
                 return redirect()->back()->with('warning', 'Materi ini sudah memiliki proyek');
             }
