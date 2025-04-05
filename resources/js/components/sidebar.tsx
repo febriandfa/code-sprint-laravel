@@ -23,7 +23,7 @@ export default function Sidebar({ userRole = 'siswa' }: { userRole: UserRole }) 
                                     className={`hover:bg-primary-50 hover:*:text-primary flex items-center gap-3 rounded-lg p-4 ${menu.active ? 'bg-primary-50 *:text-primary border-primary border' : '*:text-slate-400'}`}
                                 >
                                     {menu.icon}
-                                    <p className="text-lg">{menu.name}</p>
+                                    <p className="text-base">{menu.name}</p>
                                 </Link>
                             </li>
                         ))}

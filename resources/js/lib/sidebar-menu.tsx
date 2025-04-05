@@ -1,4 +1,13 @@
+import Book from '@/components/icons/book';
 import Category from '@/components/icons/category-icon';
+import IconGuru from '@/components/icons/icon-guru';
+import IconKelas from '@/components/icons/icon-kelas';
+import IconKuis from '@/components/icons/icon-kuis';
+import IconMapel from '@/components/icons/icon-mapel';
+import IconNilai from '@/components/icons/icon-nilai';
+import IconProyek from '@/components/icons/icon-proyek';
+import IconSiswa from '@/components/icons/icon-siswa';
+
 import { UserRole } from '@/types';
 
 export const sidebarMenus = (userRole: UserRole) => {
@@ -14,25 +23,25 @@ export const sidebarMenus = (userRole: UserRole) => {
             },
             {
                 name: 'Guru',
-                icon: <Category />,
+                icon: <IconGuru />,
                 link: route('admin.guru.index'),
                 active: currentRoute.startsWith('admin.guru'),
             },
             {
                 name: 'Siswa',
-                icon: <Category />,
+                icon: <IconSiswa />,
                 link: route('admin.siswa.index'),
                 active: currentRoute.startsWith('admin.siswa'),
             },
             {
                 name: 'Mata Pelajaran',
-                icon: <Category />,
+                icon: <IconMapel />,
                 link: route('admin.mapel.index'),
                 active: currentRoute.startsWith('admin.mapel'),
             },
             {
                 name: 'Kelas',
-                icon: <Category />,
+                icon: <IconKelas />,
                 link: route('admin.kelas.index'),
                 active: currentRoute.startsWith('admin.kelas'),
             },
@@ -46,25 +55,25 @@ export const sidebarMenus = (userRole: UserRole) => {
             },
             {
                 name: 'Materi',
-                icon: <Category />,
+                icon: <Book />,
                 link: route('guru.materi.index'),
                 active: currentRoute.startsWith('guru.materi'),
             },
             {
                 name: 'Kuis',
-                icon: <Category />,
+                icon: <IconKuis />,
                 link: route('guru.kuis.index'),
                 active: currentRoute.startsWith('guru.kuis'),
             },
             {
                 name: 'Project Based Learning',
-                icon: <Category />,
+                icon: <IconProyek />,
                 link: route('guru.proyek.index'),
                 active: currentRoute.startsWith('guru.proyek'),
             },
             {
                 name: 'Nilai',
-                icon: <Category />,
+                icon: <IconNilai />,
                 link: route('guru.nilai.index'),
                 active: currentRoute.startsWith('guru.nilai'),
             },
@@ -78,25 +87,25 @@ export const sidebarMenus = (userRole: UserRole) => {
             },
             {
                 name: 'Materi',
-                icon: <Category />,
+                icon: <Book />,
                 link: route('siswa.materi.index'),
                 active: currentRoute.startsWith('siswa.materi'),
             },
             {
                 name: 'Kuis',
-                icon: <Category />,
+                icon: <IconKuis />,
                 link: route('siswa.kuis.index'),
                 active: currentRoute.startsWith('siswa.kuis'),
             },
             {
                 name: 'Project Based Learning',
-                icon: <Category />,
+                icon: <IconProyek />,
                 link: route('siswa.proyek.index'),
                 active: currentRoute.startsWith('siswa.proyek'),
             },
             {
                 name: 'Nilai',
-                icon: <Category />,
+                icon: <IconNilai />,
                 link: route('siswa.nilai.index'),
                 active: currentRoute.startsWith('siswa.nilai'),
             },

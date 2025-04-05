@@ -23,9 +23,9 @@ export default function Header({ user }: { user?: User }) {
                             Selamat Datang di {user?.user_detail?.kelas?.nama}, {user?.name}!
                         </h5>
                     ) : (
-                        <h5 className="text-2xl font-medium text-black capitalize">Halo, {user?.name}!</h5>
+                        <h5 className="text-xl font-medium text-black capitalize">Halo, {user?.name}!</h5>
                     )}
-                    <p className="text-slate-400">{currentDate}</p>
+                    <p className="text-sm text-slate-400">{currentDate}</p>
                 </div>
                 <div className="relative flex items-center">
                     {/* <Bell className="mr-6 cursor-pointer" /> */}

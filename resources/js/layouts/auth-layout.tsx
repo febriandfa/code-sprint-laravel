@@ -23,7 +23,7 @@ export default function AuthLayout({ children, title, breadcrumbs, index = false
         <React.Fragment>
             <Head title={title} />
             <FlashMessage />
-            <div className="min-h-screen bg-gray-200">
+            <div className="min-h-screen bg-gray-100">
                 <Sidebar userRole={userRole} />
                 <Header user={auth?.user} />
                 <main className="pl-72">
