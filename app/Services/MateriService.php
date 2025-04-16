@@ -110,13 +110,13 @@ class MateriService
                 $materiName = date('YmdHis') . "-" . $extension;
 
                 if ($materi->file_materi) {
-                    $oldPath = storage_path('app/public') . $materi->file_materi;
+                    $oldPath = storage_path('app/public/') . $materi->file_materi;
                     if (file_exists($oldPath)) {
                         unlink($oldPath);
                     }
                 }
 
-                $fileMateri->move(storage_path('app/public/materi'), $materiName);
+                $fileMateri->move(storage_path('app/public/materi/materi'), $materiName);
                 $materiPath = 'materi/materi/' . $materiName;
             } else {
                 $materiPath = $materi->file_materi;
@@ -128,13 +128,13 @@ class MateriService
                 $modulName = date('YmdHis') . "-" . $extension;
 
                 if ($materi->file_modul) {
-                    $oldPath = storage_path('app/public') . $materi->file_modul;
+                    $oldPath = storage_path('app/public/') . $materi->file_modul;
                     if (file_exists($oldPath)) {
                         unlink($oldPath);
                     }
                 }
 
-                $fileModul->move(storage_path('app/public/modul'), $modulName);
+                $fileModul->move(storage_path('app/public/materi/modul'), $modulName);
                 $modulPath = 'materi/modul/' . $modulName;
             } else {
                 $modulPath = $materi->file_modul;
@@ -146,13 +146,13 @@ class MateriService
                 $videoName = date('YmdHis') . "-" . $extension;
 
                 if ($materi->video_materi) {
-                    $oldPath = storage_path('app/public') . $materi->video_materi;
+                    $oldPath = storage_path('app/public/') . $materi->video_materi;
                     if (file_exists($oldPath)) {
                         unlink($oldPath);
                     }
                 }
 
-                $fileVideo->move(storage_path('app/public/video'), $videoName);
+                $fileVideo->move(storage_path('app/public/materi/video'), $videoName);
                 $videoPath = 'materi/video/' . $videoName;
             } else {
                 $videoPath = $materi->video_materi;
@@ -180,21 +180,21 @@ class MateriService
             $materi = $this->materiRepository->getById($id);
 
             if ($materi->file_materi) {
-                $oldPath = storage_path('app/public') . $materi->file_materi;
+                $oldPath = storage_path('app/public/') . $materi->file_materi;
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }
             }
 
             if ($materi->file_modul) {
-                $oldPath = storage_path('app/public') . $materi->file_modul;
+                $oldPath = storage_path('app/public/') . $materi->file_modul;
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }
             }
 
             if ($materi->video_materi) {
-                $oldPath = storage_path('app/public') . $materi->video_materi;
+                $oldPath = storage_path('app/public/') . $materi->video_materi;
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }

@@ -33,7 +33,7 @@ export default function Sidebar({ userRole = 'siswa' }: { userRole: UserRole }) 
                     <ul className="space-y-2">
                         <li>
                             <Link
-                                href=""
+                                href={route('panduan')}
                                 className="hover:bg-primary-50 hover:*:text-primary flex items-center gap-3 rounded-lg p-4 *:text-slate-400"
                             >
                                 <Guide />

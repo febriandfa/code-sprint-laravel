@@ -40,7 +40,8 @@ export const formatTwoDigit = (number: number) => {
 };
 
 export const getFileName = (filePath: string, folderName: string) => {
-    const regex = new RegExp(`/${folderName}/(.+?)(\\?|$)`);
+    // const regex = new RegExp(`/${folderName}/(.+?)(\\?|$)`);
+    const regex = new RegExp(`${folderName}/(.+)$`);
     const match = filePath.match(regex);
     return match ? match[1] : '';
 };

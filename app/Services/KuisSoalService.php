@@ -81,7 +81,7 @@ class KuisSoalService
             $kuisSoal = $this->kuisSoalRepository->getById($id);
 
             if ($request->hapus_lampiran) {
-                $oldPath = storage_path('app/public') . $kuisSoal->lampiran;
+                $oldPath = storage_path('app/public/') . $kuisSoal->lampiran;
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }
@@ -93,7 +93,7 @@ class KuisSoalService
                     $lampiranName = date('YmdHis') . "-" . $extension;
 
                     if ($kuisSoal->lampiran) {
-                        $oldPath = storage_path('app/public') . $kuisSoal->lampiran;
+                        $oldPath = storage_path('app/public/') . $kuisSoal->lampiran;
                         if (file_exists($oldPath)) {
                             unlink($oldPath);
                         }
@@ -121,7 +121,7 @@ class KuisSoalService
             $kuisSoal = $this->kuisSoalRepository->getById($id);
 
             if ($kuisSoal->lampiran) {
-                $oldPath = storage_path('app/public') . $kuisSoal->lampiran;
+                $oldPath = storage_path('app/public/') . $kuisSoal->lampiran;
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }

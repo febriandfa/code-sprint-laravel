@@ -178,7 +178,7 @@ class ProyekJawabanService
                         $fileMasalahName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_4) {
-                            $oldPath = storage_path('app/public') .  $jawaban->jawaban_tahap_4;
+                            $oldPath = storage_path('app/public/') .  $jawaban->jawaban_tahap_4;
                             if (file_exists($oldPath)) {
                                 unlink($oldPath);
                             }
@@ -207,7 +207,7 @@ class ProyekJawabanService
                         $fileJadwalName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_6) {
-                            $oldPath = storage_path('app/public') . $jawaban->jawaban_tahap_6;
+                            $oldPath = storage_path('app/public/') . $jawaban->jawaban_tahap_6;
                             if (file_exists($oldPath)) {
                                 unlink($oldPath);
                             }
@@ -235,7 +235,7 @@ class ProyekJawabanService
                         $fileProyekName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_6) {
-                            $oldPath = storage_path('app/public') . $jawaban->jawaban_tahap_6;
+                            $oldPath = storage_path('app/public/') . $jawaban->jawaban_tahap_6;
                             if (file_exists($oldPath)) {
                                 unlink($oldPath);
                             }
@@ -254,7 +254,7 @@ class ProyekJawabanService
                         $fileLaporanName = date('YmdHis') . "-" . $extension;
 
                         if ($jawaban->jawaban_tahap_6) {
-                            $oldPath = storage_path('app/public') . $jawaban->jawaban_tahap_6;
+                            $oldPath = storage_path('app/public/') . $jawaban->jawaban_tahap_6;
                             if (file_exists($oldPath)) {
                                 unlink($oldPath);
                             }
@@ -372,7 +372,7 @@ class ProyekJawabanService
                 $fileKegiatanName = date('YmdHis') . "-" . $extension;
 
                 if ($jadwal->file_kegiatan) {
-                    $oldPath = storage_path('app/public') . $jadwal->file_kegiatan;
+                    $oldPath = storage_path('app/public/') . $jadwal->file_kegiatan;
                     if (file_exists($oldPath)) {
                         unlink($oldPath);
                     }
@@ -399,7 +399,7 @@ class ProyekJawabanService
             $jadwal = $this->proyekJawabanRepository->getJadwalById($id);
 
             if ($jadwal->file_kegiatan) {
-                $oldPath = storage_path('app/public') . $jadwal->file_kegiatan;
+                $oldPath = storage_path('app/public/') . $jadwal->file_kegiatan;
                 if (file_exists($oldPath)) {
                     unlink($oldPath);
                 }

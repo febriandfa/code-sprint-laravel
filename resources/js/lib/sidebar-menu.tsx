@@ -1,5 +1,6 @@
 import Book from '@/components/icons/book';
 import Category from '@/components/icons/category-icon';
+import Guide from '@/components/icons/guide';
 import IconGuru from '@/components/icons/icon-guru';
 import IconKelas from '@/components/icons/icon-kelas';
 import IconKuis from '@/components/icons/icon-kuis';
@@ -7,7 +8,6 @@ import IconMapel from '@/components/icons/icon-mapel';
 import IconNilai from '@/components/icons/icon-nilai';
 import IconProyek from '@/components/icons/icon-proyek';
 import IconSiswa from '@/components/icons/icon-siswa';
-
 import { UserRole } from '@/types';
 
 export const sidebarMenus = (userRole: UserRole) => {
@@ -44,6 +44,12 @@ export const sidebarMenus = (userRole: UserRole) => {
                 icon: <IconKelas />,
                 link: route('admin.kelas.index'),
                 active: currentRoute.startsWith('admin.kelas'),
+            },
+            {
+                name: 'Panduan',
+                icon: <Guide />,
+                link: route('admin.panduan.index'),
+                active: currentRoute.startsWith('admin.panduan'),
             },
         ],
         guru: [

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PanduanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -10,6 +11,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/panduan', [PanduanController::class, 'panduan'])->name('panduan');
 
     // Admin Routes
     require __DIR__.'/admin.php';
@@ -19,10 +21,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Siswa Routes
     require __DIR__.'/siswa.php';
-
-    Route::get('/panduan', function () {
-        return Inertia::render('auth/panduan');
-    })->name('panduan');
 });
 
 require __DIR__.'/settings.php';

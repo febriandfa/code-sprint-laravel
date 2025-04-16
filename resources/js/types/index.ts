@@ -25,6 +25,15 @@ export type Mapel = {
     updated_at: string;
 };
 
+export type Panduan = {
+    id: number;
+    judul: string;
+    role: string;
+    file: string;
+    created_at: string;
+    updated_at: string;
+};
+
 export type Materi = {
     id: number;
     kelas_id: string;

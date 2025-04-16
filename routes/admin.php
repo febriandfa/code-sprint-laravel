@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\GuruController;
 use App\Http\Controllers\Admin\KelasController;
 use App\Http\Controllers\Admin\MapelController;
+use App\Http\Controllers\Admin\PanduanController;
 use App\Http\Controllers\Admin\SiswaController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,5 +13,6 @@ Route::prefix('admin')->name('admin.')->middleware('role:admin')->group(function
         'mapel' => MapelController::class,
         'siswa' => SiswaController::class,
         'guru' => GuruController::class,
+        'panduan' => PanduanController::class,
     ]);
 });
