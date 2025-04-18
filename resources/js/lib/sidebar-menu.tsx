@@ -46,7 +46,7 @@ export const sidebarMenus = (userRole: UserRole) => {
                 active: currentRoute.startsWith('admin.kelas'),
             },
             {
-                name: 'Panduan',
+                name: 'Tambah Panduan',
                 icon: <Guide />,
                 link: route('admin.panduan.index'),
                 active: currentRoute.startsWith('admin.panduan'),

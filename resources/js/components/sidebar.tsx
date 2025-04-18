@@ -11,7 +11,7 @@ export default function Sidebar({ userRole = 'siswa' }: { userRole: UserRole }) 
     return (
         <aside className="fixed left-0 z-10 flex h-screen w-72 flex-col items-center gap-9 border-r border-gray-200 bg-white p-8">
             <AppLogo />
-            <div className="flex h-full w-full flex-col justify-between">
+            <div className="scroll-thin flex h-full w-full flex-col justify-between overflow-y-auto pr-2">
                 <nav className="w-full">
                     <p className="text-lg text-slate-400 capitalize">Menu {userRole}</p>
                     <ul className="space-y-2">

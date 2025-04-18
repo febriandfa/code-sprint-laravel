@@ -233,14 +233,14 @@ export default function Landing() {
                                 </defs>
                             </svg>
 
-                            <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
-                                <h1 className="text-xl font-light sm:text-2xl md:text-3xl">
+                            <div className="mx-auto max-w-md text-start lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
+                                <h1 className="mb-4 text-xl font-light sm:text-2xl md:text-3xl">
                                     Mulai Perjalanan <span className="font-medium">Belajarmu</span> <br className="hidden md:block" /> dengan
                                     <span className="font-medium italic"> CodeSpirnt!</span>
                                 </h1>
-                                <p className="text-sm text-slate-400 sm:text-base">
+                                <p className="text-start text-sm text-slate-400 sm:text-base">
                                     Jelajahi pengalaman belajar yang interaktif, aplikatif, dan <br className="hidden md:block" /> menyenangkan.
-                                    Kembangkan keterampilan abad 21 dan siap <br className="hidden md:block" /> hadapi tantangan dunia nyata!
+                                    Kembangkan keterampilan abad 21 dan siap hadapi tantangan dunia nyata!
                                 </p>
                                 <Link className="mt-4 inline-block" href={route(isAuth ? 'dashboard' : 'login')}>
                                     <Button className="text-sm sm:text-base">Belajar Sekarang</Button>
