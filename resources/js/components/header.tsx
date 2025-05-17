@@ -30,9 +30,16 @@ export default function Header({ user }: { user?: User }) {
                 <div className="relative flex items-center">
                     {/* <Bell className="mr-6 cursor-pointer" /> */}
                     <div className="relative flex cursor-pointer items-center gap-3" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                        <div className="rounded bg-slate-100 p-2">
+                        {user?.user_detail?.foto ? (
+                            <img src={`/storage/${user?.user_detail?.foto}`} alt="foto profil" className="size-10 rounded object-cover" />
+                        ) : (
+                            <div className="flex size-10 items-center justify-center rounded bg-blue-100">
+                                <UserIcon />
+                            </div>
+                        )}
+                        {/* <div className="rounded bg-slate-100 p-2">
                             <UserIcon />
-                        </div>
+                        </div> */}
                         <p className="capitalize">{user?.name}</p>
                         {isDropdownOpen ? <ChevronUp /> : <ChevronDown />}
                     </div>

@@ -25,28 +25,28 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Siswa DKV Ketua 1',
+                'name' => 'Siswa X-RPL Ketua 1',
                 'email' => 'siswa1@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
                 'kelas_id' => 1,
             ],
             [
-                'name' => 'Siswa DKV Anggota 1',
+                'name' => 'Siswa RPL Anggota 1',
                 'email' => 'siswa2@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
                 'kelas_id' => 1,
             ],
             [
-                'name' => 'Siswa DKV Ketua 2',
+                'name' => 'Siswa RPL Ketua 2',
                 'email' => 'siswa3@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
                 'kelas_id' => 1,
             ],
             [
-                'name' => 'Siswa DKV Anggota 2',
+                'name' => 'Siswa RPL Anggota 2',
                 'email' => 'siswa4@csprint.com',
                 'password' => bcrypt('siswa123'),
                 'role' => RoleType::SISWA,
@@ -60,7 +60,7 @@ class UserSeeder extends Seeder
                 'kelas_id' => 2,
             ],
             [
-                'name' => 'Guru DKV MTK',
+                'name' => 'Guru-Fidan RPL Progli',
                 'email' => 'guru1@csprint.com',
                 'password' => bcrypt('guru123'),
                 'role' => RoleType::GURU,
@@ -68,7 +68,7 @@ class UserSeeder extends Seeder
                 'kelas_id' => 1,
             ],
             [
-                'name' => 'Guru DKV BINDO',
+                'name' => 'Guru-Nizar Id&MTK',
                 'email' => 'guru2@csprint.com',
                 'password' => bcrypt('guru123'),
                 'role' => RoleType::GURU,
@@ -76,12 +76,12 @@ class UserSeeder extends Seeder
                 'kelas_id' => 1,
             ],
             [
-                'name' => 'Guru RPL BINDO',
+                'name' => 'Guru-Zaima Hakim ING',
                 'email' => 'guru3@csprint.com',
                 'password' => bcrypt('guru123'),
                 'role' => RoleType::GURU,
                 'mapel_id' => 2,
-                'kelas_id' => 2,
+                'kelas_id' => 3,
             ],
             [
                 'name' => 'Admin',

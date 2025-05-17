@@ -2,12 +2,14 @@ import CardKuis from '@/components/card-kuis';
 import CardMateri from '@/components/card-materi';
 import CardProyek from '@/components/card-proyek';
 import DoughnutChart from '@/components/doughnut-chart';
+import IconKelasDash from '@/components/icons/icon-KelasDash';
+import IconMapelDash from '@/components/icons/icon-MapelDash';
+import IconSiswaDash from '@/components/icons/icon-SiswaDash';
 import Container from '@/components/ui/container';
 import Subtitle from '@/components/ui/subtitle';
 import AuthLayout from '@/layouts/auth-layout';
 import { Kuis, Materi, Proyek } from '@/types';
 import { usePage } from '@inertiajs/react';
-import { Book, School, Users } from 'lucide-react';
 import React from 'react';
 
 export default function DashboardGuru() {
@@ -33,29 +35,26 @@ export default function DashboardGuru() {
                     <Subtitle subtitle="Data Guru" className="mb-2" />
                     <div className="grid grid-cols-3">
                         <div className="flex items-center gap-4">
-                            <div className="bg-success-200 flex size-12 items-center justify-center rounded p-2">
+                            <IconKelasDash />
+                            {/* <div className="bg-success-200 flex size-12 items-center justify-center rounded p-2">
                                 <School size={24} className="text-success" />
-                            </div>
+                            </div> */}
                             <div>
-                                <p className="text-sm text-slate-400">Kelas Diajar</p>
+                                <p className="text-sm text-slate-400">Kelas yang Diampu</p>
                                 <p className="text-lg font-medium">{kelases ?? 0}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
-                            <div className="bg-primary-200 flex size-12 items-center justify-center rounded p-2">
-                                <Book size={24} className="text-primary" />
-                            </div>
+                            <IconMapelDash />
                             <div>
-                                <p className="text-sm text-slate-400">Mapel Diajar</p>
+                                <p className="text-sm text-slate-400">Mata Pelajaran Diampu</p>
                                 <p className="text-lg font-medium">{mapels ?? 0}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
-                            <div className="bg-danger-200 flex size-12 items-center justify-center rounded p-2">
-                                <Users size={24} className="text-danger" />
-                            </div>
+                            <IconSiswaDash />
                             <div>
-                                <p className="text-sm text-slate-400">Siswa Diajar</p>
+                                <p className="text-sm text-slate-400">Siswa yang Dibimbing</p>
                                 <p className="text-lg font-medium">{siswas ?? 0}</p>
                             </div>
                         </div>

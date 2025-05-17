@@ -2,12 +2,14 @@ import CardKuis from '@/components/card-kuis';
 import CardMateri from '@/components/card-materi';
 import CardProyek from '@/components/card-proyek';
 import DoughnutChart from '@/components/doughnut-chart';
+import IconKuisDash from '@/components/icons/icon-KuisDash';
+import IconProyekDash from '@/components/icons/icon-ProyekDash';
 import Container from '@/components/ui/container';
 import Subtitle from '@/components/ui/subtitle';
 import AuthLayout from '@/layouts/auth-layout';
 import { Auth, Kuis, Materi, Proyek, User } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Files, MessageCircleQuestion, User as UserIcon } from 'lucide-react';
+import { User as UserIcon } from 'lucide-react';
 
 type ProyekNilai = {
     nama: string;
@@ -54,7 +56,7 @@ export default function DashboardSiswa() {
                             <img src={`/storage/${user?.user_detail?.foto}`} alt="foto profil" className="size-40 rounded-lg object-cover" />
                         ) : (
                             <div className="flex size-40 items-center justify-center rounded-lg bg-gray-200">
-                                <UserIcon size={96} className="text-gray-500" />
+                                <UserIcon size={82} className="text-gray-500" />
                             </div>
                         )}
                         <div>
@@ -76,18 +78,14 @@ export default function DashboardSiswa() {
                     <Subtitle subtitle="Tugas Terbaru" />
                     <div className="flex h-full flex-col justify-center space-y-6">
                         <div className="flex items-center gap-4">
-                            <div className="bg-success-200 flex size-12 items-center justify-center rounded p-2">
-                                <MessageCircleQuestion size={24} className="text-success" />
-                            </div>
+                            <IconKuisDash />
                             <div>
                                 <p className="text-sm text-slate-400">Kuis {latestKuisNilai?.judul}</p>
                                 <p className="text-lg font-medium">{latestKuisNilai?.total_poin ?? '-'}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
-                            <div className="bg-warning-200 flex size-12 items-center justify-center rounded p-2">
-                                <Files size={24} className="text-warning" />
-                            </div>
+                            <IconProyekDash />
                             <div>
                                 <p className="text-sm text-slate-400">Proyek {latestProyekNilai?.nama}</p>
                                 <p className="text-lg font-medium">{latestProyekNilai?.nilai ?? '-'}</p>

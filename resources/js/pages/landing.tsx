@@ -52,7 +52,7 @@ export default function Landing() {
                 <section id="beranda" className="Hero grid items-center gap-8 px-6 py-12 md:grid-cols-2 md:px-32">
                     {/* Gambar di atas saat mobile */}
                     <div className="order-1 place-self-center md:order-2">
-                        <img src="/assets/images/hero-3.png" alt="illust login" className="w-64 sm:w-64 md:w-96" />
+                        <img src="/assets/images/hero-3.png" alt="illust login" className="w-[50dvh] sm:w-[50dvh] md:w-dvh" />
                     </div>
 
                     {/* Teks rata kiri di semua ukuran */}
@@ -74,7 +74,7 @@ export default function Landing() {
                 </section>
 
                 {/* Menu Section */}
-                <section id="fitur" className="Fitur items-center gap-12 px-6 py-32 md:grid-cols-2 md:px-32">
+                <section id="fitur" className="Fitur items-center gap-12 bg-blue-100 px-6 py-32 md:grid-cols-2 md:px-32">
                     <div className="text mx-auto mb-8 text-center">
                         <h1 className="mb-2 text-xl font-medium sm:text-2xl md:text-3xl">
                             Jelajahi Pembelajaran Terstruktur <br className="hidden md:block" /> dengan CodeSprint
@@ -113,7 +113,7 @@ export default function Landing() {
                     {/* Gambar di atas saat mobile */}
                     <div className="order-1 place-self-center md:order-1">
                         <div className="order-1 place-self-center md:sticky md:top-20 md:order-1">
-                            <img src="/assets/images/hero-2.png" alt="illust login" className="w-64 sm:w-64 md:w-96" />
+                            <img src="/assets/images/hero-2.png" alt="illust login" className="w-dvh" />
                         </div>
                     </div>
 
@@ -148,7 +148,7 @@ export default function Landing() {
                     <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
                         {/* Gambar di Atas pada Mobile, di Kanan pada Desktop */}
                         <div className="order-1 flex w-full justify-center place-self-center md:order-2 md:w-1/2 md:justify-end">
-                            <img src="/assets/images/img-hero.svg" alt="illust login" className="w-64 sm:w-64 md:w-96" />
+                            <img src="/assets/images/img-hero.svg" alt="illust login" className="w-dhv sm:w-[50dvh] md:w-96" />
                         </div>
 
                         {/* Accordion di Bawah pada Mobile, di Kiri pada Desktop */}
@@ -260,11 +260,11 @@ export default function Landing() {
                 </section>
 
                 {/* Footer */}
-                <footer className="pt- w-full px-6">
-                    <div className="flex w-full flex-row flex-wrap items-center justify-center gap-x-12 gap-y-3 text-center md:justify-between">
+                <footer className="mt-8 w-full px-6 pt-6">
+                    <div className="flex w-full flex-col flex-wrap items-start justify-start gap-4 md:flex-row md:items-center md:justify-between">
                         {/* <img src="" alt="brand" className="w-8" /> */}
                         <AppLogo />
-                        <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                        <ul className="flex flex-col items-start gap-2 md:flex-row md:items-center md:gap-x-6">
                             <li>
                                 <a
                                     href="#beranda"
@@ -292,7 +292,7 @@ export default function Landing() {
                         </ul>
                     </div>
                     <hr className="my-4 border-slate-200" />
-                    <p className="text-center font-sans text-base text-current antialiased">© 2025 Code Sprint. All rights reserved</p>
+                    <p className="text-light text-center font-sans text-sm antialiased">© 2025 Code Sprint. All rights reserved</p>
                 </footer>
             </div>
         </React.Fragment>

@@ -40,6 +40,7 @@ export type Materi = {
     kelas: string;
     mapel_id: string;
     mapel: string;
+    guruName: string;
     judul: string;
     deskripsi: string;
     file_materi: string;

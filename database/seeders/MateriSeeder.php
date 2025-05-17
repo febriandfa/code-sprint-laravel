@@ -14,31 +14,31 @@ class MateriSeeder extends Seeder
     {
         $datas = [
             [
-                'judul' => 'Materi DKV MTK',
-                'deskripsi' => 'Deskripsi Materi DKV MTK',
-                'file_materi' => 'materi_dkv_mtk.pdf',
-                'file_modul' => 'modul_dkv_mtk.pdf',
-                'video_materi' => 'video_dkv_mtk.mp4',
+                'judul' => 'Judul Materi Progli',
+                'deskripsi' => 'Deskripsi Materi Progli',
+                'file_materi' => 'materi_progli.pdf',
+                'file_modul' => 'modul_progli.pdf',
+                'video_materi' => 'video_progli.mp4',
                 'kelas_id' => 1,
                 'mapel_id' => 1,
             ],
             [
-                'judul' => 'Materi DKV BINDO',
-                'deskripsi' => 'Deskripsi Materi DKV BINDO',
-                'file_materi' => 'materi_dkv_bindo.pdf',
-                'file_modul' => 'modul_dkv_bindo.pdf',
-                'video_materi' => 'video_dkv_bindo.mp4',
+                'judul' => 'Judul Materi IND',
+                'deskripsi' => 'Deskripsi Materi BINDO',
+                'file_materi' => 'materi_bindo.pdf',
+                'file_modul' => 'modul_bindo.pdf',
+                'video_materi' => 'video_bindo.mp4',
                 'kelas_id' => 1,
                 'mapel_id' => 2,
             ],
             [
-                'judul' => 'Materi RPL BINDO',
-                'deskripsi' => 'Deskripsi Materi RPL BINDO',
-                'file_materi' => 'materi_rpl_bindo.pdf',
-                'file_modul' => 'modul_rpl_bindo.pdf',
-                'video_materi' => 'video_rpl_bindo.mp4',
-                'kelas_id' => 2,
-                'mapel_id' => 2,
+                'judul' => 'Judul Materi ING',
+                'deskripsi' => 'Deskripsi Materi ING',
+                'file_materi' => 'materi_ing.pdf',
+                'file_modul' => 'modul_ing.pdf',
+                'video_materi' => 'video_ing.mp4',
+                'kelas_id' => 3,
+                'mapel_id' => 3,
             ]
         ];
 

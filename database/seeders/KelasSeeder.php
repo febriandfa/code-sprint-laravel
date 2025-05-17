@@ -14,14 +14,23 @@ class KelasSeeder extends Seeder
     {
         $datas = [
             [
-                'nama' => 'XII DKV 1',
+                'nama' => 'X RPL 2',
             ],
+            [
+                'nama' => 'X RPL 3',
+
+            ],
+
             [
                 'nama' => 'XII RPL 1',
             ],
             [
-                'nama' => 'XII TKJ 3',
+                'nama' => 'XII RPL 2',
             ],
+            [
+                'nama' => 'XII DKV 3',
+            ],
+
         ];
 
         foreach ($datas as $data) {

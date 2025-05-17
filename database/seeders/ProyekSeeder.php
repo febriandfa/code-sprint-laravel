@@ -14,8 +14,8 @@ class ProyekSeeder extends Seeder
     {
         $datas = [
             [
-                'nama' => 'Proyek Materi DKV MTK',
-                'deskripsi' => 'Deskripsi Proyek Materi DKV MTK',
+                'nama' => 'Proyek  RPL-Progli',
+                'deskripsi' => 'Deskripsi Proyek Materi RPL-Progli',
                 'tenggat' => '2025-03-03 08:00:00',
                 // 'kelas_id' => 1,
                 // 'mapel_id' => 1,

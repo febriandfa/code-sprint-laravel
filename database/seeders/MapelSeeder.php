@@ -14,8 +14,8 @@ class MapelSeeder extends Seeder
     {
         $datas = [
             [
-                'nama' => 'Matematika',
-                'deskripsi' => 'Pelajaran Matematika',
+                'nama' => 'Progli',
+                'deskripsi' => 'Pelajaran Progli',
                 'semester' => 'ganjil',
                 'tahun_ajaran' => '2021/2022',
             ],
@@ -31,18 +31,7 @@ class MapelSeeder extends Seeder
                 'semester' => 'ganjil',
                 'tahun_ajaran' => '2021/2022',
             ],
-            [
-                'nama' => 'IPA',
-                'deskripsi' => 'Pelajaran IPA',
-                'semester' => 'genap',
-                'tahun_ajaran' => '2021/2022',
-            ],
-            [
-                'nama' => 'IPS',
-                'deskripsi' => 'Pelajaran IPS',
-                'semester' => 'ganjil',
-                'tahun_ajaran' => '2021/2022',
-            ],
+
         ];
 
         foreach ($datas as $data) {
