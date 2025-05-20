@@ -1,4 +1,5 @@
 import KuisTemplate from '@/components/kuis-template';
+import RichText from '@/components/ui/rich-text';
 import AuthLayout from '@/layouts/auth-layout';
 import { Kuis, KuisSoal } from '@/types';
 import { usePage } from '@inertiajs/react';
@@ -16,12 +17,8 @@ export default function ShowKuis() {
 
     return (
         <AuthLayout title={kuis?.judul ?? 'Kuis'} breadcrumbs={breadcrumbs}>
-            {/* {kuis && soals && <KuisTemplate kuis={kuis} soals={soals} view checkedBy="kuis_answer" />} */}
-            {kuis && Array.isArray(soals) && soals.length > 0 ? (
-                <KuisTemplate kuis={kuis} soals={soals} view checkedBy="kuis_answer" />
-            ) : (
-                <p className="text-center text-gray-400">Data kuis atau soal tidak tersedia.</p>
-            )}
+            {kuis && soals && <KuisTemplate kuis={kuis} soals={soals} view checkedBy="kuis_answer" />}
+            {soals?.map((soal) => <RichText content={soal?.soal} />)}
         </AuthLayout>
     );
 }
