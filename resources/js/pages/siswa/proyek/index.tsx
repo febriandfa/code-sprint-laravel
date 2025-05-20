@@ -14,6 +14,8 @@ export default function IndexProyek() {
             {proyeks?.length ? (
                 <div className="grid grid-cols-3 gap-5">
                     {proyeks?.map((proyek, index) => {
+                        const isCompleted = Number(proyek.is_completed) === 1;
+                        const isProcessed = Number(proyek.is_processed) === 1;
                         return (
                             <CardProyek
                                 key={index}
@@ -21,8 +23,8 @@ export default function IndexProyek() {
                                 title={proyek.nama}
                                 deadline={proyek.tenggat}
                                 score={proyek.nilai ?? '-'}
-                                isCompleted={proyek.is_completed ?? false}
-                                isProcessed={proyek.is_processed ?? false}
+                                isCompleted={isCompleted ?? false}
+                                isProcessed={isProcessed ?? false}
                             />
                         );
                     })}
