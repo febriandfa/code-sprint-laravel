@@ -68,7 +68,7 @@ export default function SoalKuis() {
     const lampiranRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
-        const soalTerpilih = soals?.find((soal) => soal.urutan === currentNumber);
+        const soalTerpilih = soals?.find((soal) => soal.urutan == currentNumber);
         setCurrentLampiran(soalTerpilih?.lampiran ?? null);
         if (soalTerpilih) {
             setIsEdit(true);
