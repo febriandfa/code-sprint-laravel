@@ -23,6 +23,7 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
 
     console.log('soals template', soals);
     console.log('kuis template', kuis);
+    console.log('currentSoal template', currentSoal);
 
     // Store answers in a ref to ensure we always have the latest value
     const latestAnswersRef = useRef<{ [key: number]: string }>({});
