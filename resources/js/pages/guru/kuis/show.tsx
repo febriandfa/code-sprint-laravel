@@ -16,8 +16,12 @@ export default function ShowKuis() {
 
     return (
         <AuthLayout title={kuis?.judul ?? 'Kuis'} breadcrumbs={breadcrumbs}>
-            {kuis && soals && <KuisTemplate kuis={kuis} soals={soals} view checkedBy="kuis_answer" />}
-            <ul>{soals?.map((s) => <li key={s.id}>{s.soal}</li>)}</ul>
+            {/* {kuis && soals && <KuisTemplate kuis={kuis} soals={soals} view checkedBy="kuis_answer" />} */}
+            {kuis && Array.isArray(soals) && soals.length > 0 ? (
+                <KuisTemplate kuis={kuis} soals={soals} view checkedBy="kuis_answer" />
+            ) : (
+                <p className="text-center text-gray-400">Data kuis atau soal tidak tersedia.</p>
+            )}
         </AuthLayout>
     );
 }
