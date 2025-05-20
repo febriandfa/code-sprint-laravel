@@ -7,6 +7,8 @@ import { usePage } from '@inertiajs/react';
 export default function IndexProyek() {
     const { proyeks } = usePage().props as { proyeks?: Proyek[] };
 
+    console.log('proyek siswa', proyeks);
+
     return (
         <AuthLayout title="Project Based Learning" index siswa>
             {proyeks?.length ? (
