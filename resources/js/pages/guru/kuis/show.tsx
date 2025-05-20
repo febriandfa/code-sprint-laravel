@@ -17,6 +17,7 @@ export default function ShowKuis() {
     return (
         <AuthLayout title={kuis?.judul ?? 'Kuis'} breadcrumbs={breadcrumbs}>
             {kuis && soals && <KuisTemplate kuis={kuis} soals={soals} view checkedBy="kuis_answer" />}
+            <ul>{soals?.map((s) => <li key={s.id}>{s.soal}</li>)}</ul>
         </AuthLayout>
     );
 }
