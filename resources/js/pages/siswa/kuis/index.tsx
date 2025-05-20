@@ -14,7 +14,8 @@ export default function IndexKuis() {
             {kuises?.length ? (
                 <div className="grid grid-cols-3 gap-5">
                     {kuises?.map((kuis, index) => {
-                        const isCompleted = Boolean(kuis.is_completed);
+                        const isCompleted = Number(kuis.is_completed) === 1;
+
                         return (
                             <CardKuis
                                 key={index}
