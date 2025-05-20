@@ -27,6 +27,9 @@ export default function SoalKuis() {
     const [currentLampiran, setCurrentLampiran] = useState<string | null>(null);
     const [isEdit, setIsEdit] = useState(false);
 
+    console.log('kuis soal', kuis);
+    console.log('soals soal', soals);
+
     const { data, setData, post, processing, errors } = useForm<Required<KuisSoalForm>>({
         _method: 'POST',
         soal: '',

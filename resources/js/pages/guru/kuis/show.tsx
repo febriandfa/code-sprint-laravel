@@ -12,8 +12,8 @@ export default function ShowKuis() {
         { title: kuis?.judul ?? 'Detail Kuis', link: '#' },
     ];
 
-    console.log('kuis', kuis);
-    console.log('soals', soals);
+    console.log('kuis show', kuis);
+    console.log('soals show', soals);
 
     return (
         <AuthLayout title={kuis?.judul ?? 'Kuis'} breadcrumbs={breadcrumbs}>
