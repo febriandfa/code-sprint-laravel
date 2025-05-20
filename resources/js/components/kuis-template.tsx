@@ -107,7 +107,7 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
 
     useEffect(() => {
         if (soals && soals.length > 0) {
-            const soal = soals.find((s) => s.urutan === currentNumber);
+            const soal = soals.find((s) => s.urutan == currentNumber);
             setCurrentSoal(soal || null);
         }
     }, [currentNumber, soals]);
