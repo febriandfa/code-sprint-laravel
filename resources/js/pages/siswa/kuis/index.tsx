@@ -14,6 +14,7 @@ export default function IndexKuis() {
             {kuises?.length ? (
                 <div className="grid grid-cols-3 gap-5">
                     {kuises?.map((kuis, index) => {
+                        const isCompleted = Boolean(kuis.is_completed);
                         return (
                             <CardKuis
                                 key={index}
@@ -22,7 +23,7 @@ export default function IndexKuis() {
                                 totalSoal={kuis.total_soal}
                                 totalPoin={kuis.total_poin ?? '-'}
                                 duration={kuis.durasi}
-                                isCompleted={kuis.is_completed ?? false}
+                                isCompleted={isCompleted ?? false}
                                 startDate={kuis.tanggal_mulai}
                                 endDate={kuis.tanggal_selesai}
                             />
