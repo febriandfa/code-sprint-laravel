@@ -21,6 +21,9 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
     const [currentSoal, setCurrentSoal] = useState<KuisSoal | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    console.log('soals template', soals);
+    console.log('kuis template', kuis);
+
     // Store answers in a ref to ensure we always have the latest value
     const latestAnswersRef = useRef<{ [key: number]: string }>({});
 
