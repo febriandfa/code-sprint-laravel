@@ -182,6 +182,10 @@ export default function KuisTemplate({ kuis, soals, jawabans, view = false, chec
         });
     };
 
+    useEffect(() => {
+        console.log('Hydrated on client:', document?.body?.innerHTML?.slice(0, 100));
+    }, []);
+
     return (
         <React.Fragment>
             <div className="flex items-center justify-between">
