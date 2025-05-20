@@ -7,6 +7,8 @@ import { usePage } from '@inertiajs/react';
 export default function IndexKuis() {
     const { kuises } = usePage().props as { kuises?: Kuis[] };
 
+    console.log('kuis siswa', kuises);
+
     return (
         <AuthLayout title="Kuis" index siswa>
             {kuises?.length ? (
