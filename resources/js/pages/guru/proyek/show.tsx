@@ -35,7 +35,7 @@ export default function ShowProyek() {
         {
             name: 'Progres Saat Ini',
             cell: (row: Kelompok) => {
-                const kelompokJawaban = jawabans?.find((jawaban) => jawaban.kelompok_id === row.id) as ProyekJawaban;
+                const kelompokJawaban = jawabans?.find((jawaban) => jawaban.kelompok_id == row.id) as ProyekJawaban;
                 const progressMap: Record<string, string> = {
                     refleksi: 'Selesai',
                     status_tahap_8: 'Sintaks 5',
