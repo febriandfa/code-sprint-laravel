@@ -36,8 +36,8 @@ export default function ShowProyek() {
             name: 'Progres Saat Ini',
             cell: (row: Kelompok) => {
                 const kelompokJawaban = jawabans?.find((jawaban) => jawaban.kelompok_id == row.id) as ProyekJawaban;
+
                 const progressMap: Record<string, string> = {
-                    refleksi: 'Selesai',
                     status_tahap_8: 'Sintaks 5',
                     status_tahap_7: 'Sintaks 4',
                     status_tahap_6: 'Sintaks 3',
@@ -47,11 +47,18 @@ export default function ShowProyek() {
                     status_tahap_2: 'Sintaks 1 Tahap 2',
                     status_tahap_1: 'Sintaks 1 Tahap 1',
                 };
+
                 let progres = 'Sintaks 1 Tahap 1';
+
                 if (kelompokJawaban) {
-                    progres = Object.keys(progressMap).find((key) => kelompokJawaban[key as keyof ProyekJawaban])
-                        ? progressMap[Object.keys(progressMap).find((key) => kelompokJawaban[key as keyof ProyekJawaban])!]
-                        : progres;
+                    if (proyek?.refleksi && kelompokJawaban.status_tahap_8) {
+                        progres = 'Selesai';
+                    } else {
+                        const latestKey = Object.keys(progressMap).find((key) => kelompokJawaban[key as keyof ProyekJawaban]);
+                        if (latestKey) {
+                            progres = progressMap[latestKey];
+                        }
+                    }
                 }
 
                 return progres;
