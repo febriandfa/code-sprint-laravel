@@ -18,6 +18,7 @@ export default function Navbar() {
         { label: 'Beranda', href: '#beranda' },
         { label: 'Fitur', href: '#fitur' },
         { label: 'Tentang PJBL', href: '#tentang' },
+        { label: 'Panduan', href: '#demo' },
     ];
 
     return (

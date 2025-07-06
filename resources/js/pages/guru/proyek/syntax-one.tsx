@@ -56,7 +56,7 @@ export default function SyntaxOne() {
         { description: 'Orientasi Masalah' },
         { description: 'Rumusan Masalah' },
         { description: 'Menentukan Indikator' },
-        { description: 'Analisis Masalah' },
+        { description: 'Analisis Solusi' },
     ];
 
     const statusOptions = [

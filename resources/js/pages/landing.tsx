@@ -40,6 +40,8 @@ export default function Landing() {
     useEffect(() => {
         setIsAuth(!!auth?.user);
     }, [auth]);
+    
+    const [activeTab, setActiveTab] = useState('tab1');
 
     return (
         <React.Fragment>
@@ -211,6 +213,100 @@ export default function Landing() {
                                     sebelum terjun ke industri.
                                 </div>
                             </details>
+                        </div>
+                    </div>
+                </section>
+                
+                
+                
+                {/* Demo */}
+                <section id="demo" className="px-6 py-32 md:px-32">
+                    <div className="text mb-12 text-center">
+                        <h1 className="text-xl font-light sm:text-2xl md:text-3xl">
+                            Belajar Melalui{' '}
+                            <span className="font-medium">
+                                Tutorial <br />
+                                Lengkap dan Praktis
+                            </span>{' '}
+                            untuk
+                            <span className="font-medium italic"> Guru & Murid</span>
+                        </h1>
+                        <p className="text-sm text-slate-400 sm:text-base">
+                            Belajar dan mengajar jadi makin gampang dengan panduan
+                            <br className="hidden md:block" />
+                            step-by-step dari CodeSprint.
+                        </p>
+                    </div>
+
+                    {/* Horizontal layout: Tabs + Video */}
+                    <div className="mx-auto flex flex-col gap-6 md:flex-row md:items-start md:justify-center">
+                        {/* Tabs */}
+                        <div className="flex justify-center pr-0 md:sticky md:top-32 md:flex-col md:items-start md:justify-start md:space-y-4 md:border-r md:border-b-0 md:pr-6">
+                            {/* Tab Guru */}
+                            <div className="w-56">
+                                <button
+                                    className={`w-full px-4 py-3 text-left transition ${
+                                        activeTab === 'tab1'
+                                            ? 'border-l-4 border-blue-500 bg-blue-50 font-semibold text-blue-500 md:border-r-4 md:border-l-0'
+                                            : 'border-r-4 border-gray-500 bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                    }`}
+                                    onClick={() => setActiveTab('tab1')}
+                                >
+                                    Panduan untuk Guru
+                                </button>
+                                {activeTab === 'tab1' && (
+                                    <p className="mt-2 px-4 py-3 text-sm text-gray-600">
+                                        Panduan lengkap untuk membantu guru mengelola kelas dan konten pembelajaran.
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Tab Siswa */}
+                            <div className="w-56">
+                                <button
+                                    className={`w-full px-4 py-3 text-left transition ${
+                                        activeTab === 'tab2'
+                                            ? 'border-l-4 border-blue-500 bg-blue-50 font-semibold text-blue-500 md:border-r-4 md:border-l-0'
+                                            : 'border-r-4 border-gray-500 bg-gray-50 text-gray-600 hover:bg-gray-100'
+                                    }`}
+                                    onClick={() => setActiveTab('tab2')}
+                                >
+                                    Panduan untuk Siswa
+                                </button>
+                                {activeTab === 'tab2' && (
+                                    <p className="mt-2 px-4 py-3 text-sm text-gray-600">
+                                        Petunjuk praktis bagi siswa untuk memahami fitur dan mengikuti pelajaran dengan mudah.
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Video */}
+                        <div className="w-full rounded-xl md:w-[600px]">
+                            {activeTab === 'tab1' && (
+                                <div className="relative w-full overflow-hidden rounded-xl" style={{ paddingTop: '56.25%' }}>
+                                    <iframe
+                                        className="absolute top-0 left-0 h-full w-full rounded-xl"
+                                        src="https://www.youtube.com/embed/f-o0upDIk3Q"
+                                        title="YouTube video player"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
+                                    ></iframe>
+                                </div>
+                            )}
+                            {activeTab === 'tab2' && (
+                                <div className="relative w-full overflow-hidden rounded-xl" style={{ paddingTop: '56.25%' }}>
+                                    <iframe
+                                        className="absolute top-0 left-0 h-full w-full rounded-xl"
+                                        src="https://www.youtube.com/embed/f-o0upDIk3Q"
+                                        title="YouTube video player"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
+                                    ></iframe>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>

@@ -25,12 +25,12 @@ export default function SiswaKuis() {
             sortable: true,
             wrap: true,
         },
-        {
-            name: 'Waktu Pengumpulan',
-            selector: (row: HasilKuis) => row.created_at ?? '-',
-            sortable: true,
-            wrap: true,
-        },
+        // {
+        //     name: 'Waktu Pengumpulan',
+        //     selector: (row: HasilKuis) => row.created_at ?? '-',
+        //     sortable: true,
+        //     wrap: true,
+        // },
         {
             name: 'Aksi',
             cell: (row: HasilKuis) => <ActionButton routeShow={route('guru.kuis.hasil', { kuisId: kuis?.id, siswaId: row.user_id })} />,

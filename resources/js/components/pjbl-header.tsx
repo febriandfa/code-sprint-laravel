@@ -77,8 +77,57 @@ export default function PjblHeader({
 
     return (
         <React.Fragment>
-            <Title title={kelompok?.nama ?? 'Kelompok'} className="mb-2" />
-            <LabelStatus variant="danger" status={proyek?.tenggat ?? '-'} />
+             <div className="flex items-start justify-between">
+                <div>
+                    <Title title={kelompok?.nama ?? 'Kelompok'} className="mb-2" />
+                    <LabelStatus variant="danger" status={proyek?.tenggat ?? '-'} />
+                </div>
+                <div>
+                    <h4 className="text-base font-semibold">Status Pengerjaan Proyek</h4>
+                    {jawaban && (
+                        <div className="my-2 min-w-[120px]">
+                            <div className="font-base mb-1 text-sm">
+                                {(() => {
+                                    const progressSteps = [
+                                        { key: 'status_tahap_1', label: 'Sintaks 1 Tahap 1', percent: 0 },
+                                        { key: 'status_tahap_2', label: 'Sintaks 1 Tahap 2', percent: 12.5 },
+                                        { key: 'status_tahap_3', label: 'Sintaks 1 Tahap 3', percent: 25 },
+                                        { key: 'status_tahap_4', label: 'Sintaks 1 Tahap 4', percent: 37.5 },
+                                        { key: 'status_tahap_5', label: 'Sintaks 2', percent: 50 },
+                                        { key: 'status_tahap_6', label: 'Sintaks 3', percent: 62.5 },
+                                        { key: 'status_tahap_7', label: 'Sintaks 4', percent: 75 },
+                                        { key: 'status_tahap_8', label: 'Sintaks 5', percent: 87.5 },
+                                    ];
+
+                                    let progres = { label: 'Sintaks 1 Tahap 1', percent: 0 };
+
+                                    if (proyek?.refleksi && jawaban.status_tahap_8) {
+                                        progres = { label: 'Evaluasi - Selesai', percent: 100 };
+                                    } else {
+                                        const latest = [...progressSteps].reverse().find((step) => jawaban[step.key as keyof ProyekJawaban]);
+                                        if (latest) {
+                                            progres = latest;
+                                        }
+                                    }
+
+                                    return (
+                                        <>
+                                            Kemajuan Saat Ini: {progres.percent}%
+                                            <div className="mt-1 h-2 w-full rounded bg-gray-200">
+                                                <div
+                                                    className={`h-full rounded transition-all duration-300 ${progres.percent === 100 ? 'bg-green-400' : 'bg-blue-500'}`}
+                                                    style={{ width: `${progres.percent}%` }}
+                                                />
+                                            </div>
+                                            <div className="mt-1 text-sm font-normal">Tahapan Saat Ini: {progres.label}</div>
+                                        </>
+                                    );
+                                })()}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
             <div className="w-full overflow-x-auto">
                 <div className="flex items-center gap-4 border-b-2 border-b-gray-300 py-5">
                     {syntaxDatas.map((data, index) => {
