@@ -118,6 +118,7 @@ export type Proyek = {
     nilai?: number;
     refleksi?: string;
     status: 'belum' | 'berjalan' | 'selesai';
+    pertemuan: ProyekPertemuan;
 };
 
 export type Kelompok = {
@@ -155,6 +156,23 @@ export type JoinedKelompok = {
 };
 
 export type ProyekAnswerStatus = 'diterima' | 'ditolak' | 'direvisi' | 'diproses';
+
+export type ProyekPertemuan = {
+    id: number;
+    proyek_id: string;
+    nama_pertemuan_1: string;
+    tanggal_mulai_1: string;
+    tanggal_selesai_1: string;
+    nama_pertemuan_2: string;
+    tanggal_mulai_2: string;
+    tanggal_selesai_2: string;
+    nama_pertemuan_3: string;
+    tanggal_mulai_3: string;
+    tanggal_selesai_3: string;
+    nama_pertemuan_4: string;
+    tanggal_mulai_4: string;
+    tanggal_selesai_4: string;
+};
 
 export type ProyekJawaban = {
     id: number;

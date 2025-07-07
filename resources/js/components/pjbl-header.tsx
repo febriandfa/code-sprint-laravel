@@ -1,4 +1,5 @@
-import { Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
+import { formatDateTime } from '@/lib/helper';
+import { Kelompok, Proyek, ProyekJawaban, ProyekNilai, ProyekPertemuan } from '@/types';
 import { Link } from '@inertiajs/react';
 import { CircleCheck, Lock } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
@@ -60,9 +61,55 @@ export default function PjblHeader({
     const [canProceedToSyntax6, setCanProceedToSyntax6] = useState<boolean>(false);
     const [canProceedResult, setCanProceedResult] = useState<boolean>(false);
 
+    const pertemuanList = [1, 2, 3, 4].map((i) => ({
+        nama: proyek?.pertemuan[`nama_pertemuan_${i}` as keyof ProyekPertemuan],
+        mulai: proyek?.pertemuan[`tanggal_mulai_${i}` as keyof ProyekPertemuan],
+        selesai: proyek?.pertemuan[`tanggal_selesai_${i}` as keyof ProyekPertemuan],
+    }));
+
+    const canAccessBasedOnMeetingDate = (syntaxIndex: number): boolean => {
+        if (view) return true;
+
+        const today = new Date();
+
+        let requiredMeetingIndex: number;
+        switch (syntaxIndex) {
+            case 0:
+                requiredMeetingIndex = 0;
+                break;
+            case 1:
+            case 2:
+                requiredMeetingIndex = 1;
+                break;
+            case 3:
+                requiredMeetingIndex = 2;
+                break;
+            case 4:
+                requiredMeetingIndex = 3;
+                break;
+            case 5:
+                requiredMeetingIndex = 3;
+                break;
+            default:
+                return false;
+        }
+
+        const requiredMeeting = pertemuanList[requiredMeetingIndex];
+        if (!requiredMeeting?.mulai) return false;
+
+        return today >= new Date(requiredMeeting.mulai);
+    };
+
     const canNilai = view ? true : nilai !== null || proyek?.status === 'selesai';
     const isCompleted = [canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, canProceedToSyntax6, canProceedResult];
-    const canProceedNextSyntax = [true, canProceedToSyntax2, canProceedToSyntax3, canProceedToSyntax4, canProceedToSyntax5, canNilai];
+    const canProceedNextSyntax = [
+        true,
+        canProceedToSyntax2 && canAccessBasedOnMeetingDate(1),
+        canProceedToSyntax3 && canAccessBasedOnMeetingDate(2),
+        canProceedToSyntax4 && canAccessBasedOnMeetingDate(3),
+        canProceedToSyntax5 && canAccessBasedOnMeetingDate(4),
+        canNilai && canAccessBasedOnMeetingDate(5),
+    ];
 
     useEffect(() => {
         if (jawaban) {
@@ -73,11 +120,11 @@ export default function PjblHeader({
             setCanProceedToSyntax6(jawaban.status_tahap_8 === 'diterima' || proyek?.status === 'selesai');
             setCanProceedResult(canNilai);
         }
-    }, [jawaban, nilai]);
+    }, [jawaban, nilai, canNilai, proyek?.status]);
 
     return (
         <React.Fragment>
-             <div className="flex items-start justify-between">
+            <div className="flex items-start justify-between">
                 <div>
                     <Title title={kelompok?.nama ?? 'Kelompok'} className="mb-2" />
                     <LabelStatus variant="danger" status={proyek?.tenggat ?? '-'} />
@@ -126,6 +173,30 @@ export default function PjblHeader({
                             </div>
                         </div>
                     )}
+                </div>
+            </div>
+            <div className="w-full overflow-x-auto">
+                <div className="flex items-center gap-4 border-b-2 border-b-gray-300 py-5">
+                    {pertemuanList.map((pertemuan, index) => {
+                        const isActive = pertemuan.mulai && new Date(pertemuan.mulai) <= new Date();
+                        const isPassed = pertemuan.selesai && new Date(pertemuan.selesai) < new Date();
+
+                        return (
+                            <div
+                                key={index}
+                                className={`min-w-60 rounded border p-2 text-lg font-medium ${isActive ? 'bg-primary-100 border-primary text-primary' : 'border-slate-100 bg-slate-100 text-gray-400'}`}
+                            >
+                                <p className="flex items-center gap-2">
+                                    {pertemuan.nama}
+                                    {isPassed ? <CircleCheck size={18} /> : !isActive ? <Lock size={18} /> : null}
+                                </p>
+                                <p className="text-xs">
+                                    {pertemuan.mulai ? formatDateTime(pertemuan.mulai) : '-'} -{' '}
+                                    {pertemuan.selesai ? formatDateTime(pertemuan.selesai) : '-'}
+                                </p>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             <div className="w-full overflow-x-auto">

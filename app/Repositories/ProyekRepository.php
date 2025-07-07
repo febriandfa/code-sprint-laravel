@@ -73,13 +73,19 @@ class ProyekRepository
 
     public function getById(string $id)
     {
-        return DB::table('proyeks')
+        $proyek = DB::table('proyeks')
             ->leftJoin('materis', 'proyeks.materi_id', '=', 'materis.id')
             ->leftJoin('kelases', 'materis.kelas_id', '=', 'kelases.id')
             ->leftJoin('mapels', 'materis.mapel_id', '=', 'mapels.id')
             ->select('proyeks.*', 'kelases.nama as kelas', 'mapels.nama as mapel', 'materis.judul as materi')
             ->where('proyeks.id', $id)
             ->first();
+
+        $proyek->pertemuan = DB::table('proyek_pertemuans')
+            ->where('proyek_id', $id)
+            ->first();
+
+        return $proyek;
     }
 
     public function create(array $data)

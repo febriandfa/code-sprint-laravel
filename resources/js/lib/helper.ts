@@ -9,7 +9,7 @@ export const formatDate = (dateString: string) => {
     return date.toLocaleDateString('id-ID');
 };
 
-export const formatDateTime = (dateString: string) => {
+export const formatDateTime = (dateString: string | Date | number) => {
     const date = new Date(dateString);
 
     const options: Intl.DateTimeFormatOptions = {
