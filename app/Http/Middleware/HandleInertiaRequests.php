@@ -43,7 +43,12 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user() ? $request->user()->load('userDetail.kelas') : null,
+            ],
+            'flash' => [
+                'error' => $request->session()->get('error'),
+                'success' => $request->session()->get('success'),
+                'warning' => $request->session()->get('warning'),
             ],
         ];
     }

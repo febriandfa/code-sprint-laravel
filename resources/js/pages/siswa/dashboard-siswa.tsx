@@ -1,0 +1,181 @@
+import CardKuis from '@/components/card-kuis';
+import CardMateri from '@/components/card-materi';
+import CardProyek from '@/components/card-proyek';
+import DoughnutChart from '@/components/doughnut-chart';
+import IconKuisDash from '@/components/icons/icon-KuisDash';
+import IconProyekDash from '@/components/icons/icon-ProyekDash';
+import Container from '@/components/ui/container';
+import Subtitle from '@/components/ui/subtitle';
+import AuthLayout from '@/layouts/auth-layout';
+import { Auth, Kuis, Materi, Proyek, User } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { User as UserIcon } from 'lucide-react';
+
+type ProyekNilai = {
+    nama: string;
+    nilai: number;
+    created_at: string;
+};
+
+type KuisNilai = {
+    judul: string;
+    total_poin: number;
+    created_at: string;
+};
+
+export default function DashboardSiswa() {
+    const { auth, latestProyekNilai, latestKuisNilai, materis, proyeks, kuises, latestProyek, latestMateri, latestKuis } = usePage().props as {
+        auth?: Auth;
+        latestProyekNilai?: ProyekNilai;
+        latestKuisNilai?: KuisNilai;
+        materis?: Materi[];
+        proyeks?: Proyek[];
+        kuises?: Kuis[];
+        latestProyek?: Proyek[];
+        latestMateri?: Materi[];
+        latestKuis?: Kuis[];
+    };
+
+    const user = auth?.user as User;
+    const finishedMateri = materis?.filter((materi) => materi.is_read).length;
+    const finishedProyek = proyeks?.filter((proyek) => proyek.is_completed).length;
+    const finishedKuis = kuises?.filter((kuis) => kuis.is_completed).length;
+
+    return (
+        <AuthLayout title="Dashboard" siswa>
+            <div className="grid grid-cols-2 gap-4">
+                <Container className="col-span-1">
+                    <div className="mb-2 flex items-center justify-between">
+                        <Subtitle subtitle="Data Diri" />
+                        <Link href={route('profile.edit')} className="text-primary text-sm">
+                            Lihat Detail
+                        </Link>
+                    </div>
+                    <div className="flex gap-6">
+                        {user?.user_detail?.foto ? (
+                            <img src={`/storage/${user?.user_detail?.foto}`} alt="foto profil" className="size-40 rounded-lg object-cover" />
+                        ) : (
+                            <div className="flex size-40 items-center justify-center rounded-lg bg-gray-200">
+                                <UserIcon size={82} className="text-gray-500" />
+                            </div>
+                        )}
+                        <div>
+                            <p className="text-2xl font-medium">{user?.name}</p>
+                            <div className="mt-2 grid grid-cols-2 gap-16">
+                                <div>
+                                    <p className="text-sm text-slate-400">Kelas</p>
+                                    <p className="text-lg font-medium">{user?.user_detail?.kelas?.nama}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-slate-400">No Absen</p>
+                                    <p className="text-lg font-medium">{user?.user_detail?.no_absen}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+                <Container className="col-span-1">
+                    <Subtitle subtitle="Tugas Terbaru" />
+                    <div className="flex h-full flex-col justify-center space-y-6">
+                        <div className="flex items-center gap-4">
+                            <IconKuisDash />
+                            <div>
+                                <p className="text-sm text-slate-400">Kuis {latestKuisNilai?.judul}</p>
+                                <p className="text-lg font-medium">{latestKuisNilai?.total_poin ?? '-'}</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <IconProyekDash />
+                            <div>
+                                <p className="text-sm text-slate-400">Proyek {latestProyekNilai?.nama}</p>
+                                <p className="text-lg font-medium">{latestProyekNilai?.nilai ?? '-'}</p>
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+                <Container className="col-span-2">
+                    <Subtitle subtitle="Grafik Pembelajaran" className="mb-2" />
+                    {latestProyek?.length === 0 && latestKuis?.length === 0 && latestMateri?.length === 0 && (
+                        <p className="text-center text-lg text-slate-400 capitalize">Tidak ada data proyek, materi, kuis</p>
+                    )}
+                    <div className="grid grid-cols-3 gap-6">
+                        {materis?.length !== 0 && (
+                            <div>
+                                <DoughnutChart
+                                    datas={[finishedMateri ?? 0, (materis?.length ?? 0) - (finishedMateri ?? 0)]}
+                                    title="Materi"
+                                    labels={['Selesai', 'Belum Selesai']}
+                                />
+                            </div>
+                        )}
+                        {kuises?.length !== 0 && (
+                            <div>
+                                <DoughnutChart
+                                    datas={[finishedKuis ?? 0, (kuises?.length ?? 0) - (finishedKuis ?? 0)]}
+                                    title="Kuis"
+                                    labels={['Selesai', 'Belum Selesai']}
+                                    colors={['#22c55e', '#d5d9e2']}
+                                />
+                            </div>
+                        )}
+                        {proyeks?.length !== 0 && (
+                            <div>
+                                <DoughnutChart
+                                    datas={[finishedProyek ?? 0, (proyeks?.length ?? 0) - (finishedProyek ?? 0)]}
+                                    title="Proyek"
+                                    labels={['Selesai', 'Belum Selesai']}
+                                    colors={['#fac215', '#d5d9e2']}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </Container>
+                <Container className="col-span-2">
+                    <Subtitle subtitle="Pembelajaran Terbaru" className="mb-2" />
+                    {latestProyek?.length === 0 && latestKuis?.length === 0 && latestMateri?.length === 0 && (
+                        <p className="text-center text-lg text-slate-400 capitalize">Tidak ada data proyek, materi, kuis</p>
+                    )}
+                    <div className="grid grid-cols-3 gap-6">
+                        {/* Card Proyek */}
+                        {latestProyek?.length !== 0 && (
+                            <CardProyek
+                                proyekId={latestProyek?.[0]?.id ?? 1}
+                                title={latestProyek?.[0]?.nama ?? ''}
+                                deadline={latestProyek?.[0]?.tenggat ?? ''}
+                                score={latestProyek?.[0]?.nilai ?? '-'}
+                                isCompleted={latestProyek?.[0]?.is_completed ?? false}
+                                isProcessed={latestProyek?.[0]?.is_processed ?? false}
+                            />
+                        )}
+
+                        {/* Card Kuis */}
+                        {latestKuis?.length !== 0 && (
+                            <CardKuis
+                                kuisId={latestKuis?.[0]?.id ?? 1}
+                                title={latestKuis?.[0]?.judul ?? ''}
+                                totalSoal={latestKuis?.[0]?.total_soal ?? 0}
+                                totalPoin={latestKuis?.[0]?.total_poin ?? '-'}
+                                duration={latestKuis?.[0]?.durasi ?? 0}
+                                isCompleted={latestKuis?.[0]?.is_completed ?? false}
+                                startDate={latestKuis?.[0]?.tanggal_mulai ?? ''}
+                                endDate={latestKuis?.[0]?.tanggal_selesai ?? ''}
+                            />
+                        )}
+
+                        {/* Card Materi */}
+                        {latestMateri?.length !== 0 && (
+                            <CardMateri
+                                materiId={latestMateri?.[0]?.id ?? 1}
+                                title={latestMateri?.[0]?.judul ?? ''}
+                                description={latestMateri?.[0]?.deskripsi ?? ''}
+                                mapel={latestMateri?.[0]?.mapel ?? ''}
+                                createdAt={latestMateri?.[0]?.created_at ?? ''}
+                                isRead={latestMateri?.[0]?.is_read ?? false}
+                            />
+                        )}
+                    </div>
+                </Container>
+            </div>
+        </AuthLayout>
+    );
+}

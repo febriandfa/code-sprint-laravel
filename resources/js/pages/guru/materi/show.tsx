@@ -1,0 +1,41 @@
+import InputField from '@/components/input-field';
+import Button from '@/components/ui/button';
+import Embed from '@/components/ui/embed';
+import RichTextView from '@/components/ui/rich-text-view';
+import AuthLayout from '@/layouts/auth-layout';
+import { Materi } from '@/types';
+import { router, usePage } from '@inertiajs/react';
+
+export default function ShowMateri() {
+    const { materi } = usePage().props as { materi?: Materi };
+
+    const breadcrumbs = [
+        {
+            title: 'Materi',
+            link: route('guru.materi.index'),
+        },
+        {
+            title: materi?.judul ?? 'Lihat Materi',
+            link: '#',
+        },
+    ];
+
+    return (
+        <AuthLayout title="Lihat Materi" breadcrumbs={breadcrumbs}>
+            <div className="space-y-6">
+                <InputField id="kelas" label="Kelas" value={materi?.kelas} disabled />
+                <InputField id="mapel" label="Mata Pelajaran" value={materi?.mapel} disabled />
+                <InputField id="judul" label="Nama Materi" value={materi?.judul} disabled />
+                <RichTextView label="Deskripsi" value={materi?.deskripsi} />
+                <Embed label="File Materi" src={`/storage/${materi?.file_materi ?? ''}`} />
+                <Embed label="File Modul" src={`/storage/${materi?.file_modul ?? ''}`} />
+                <Embed label="Video Materi" src={`/storage/${materi?.video_materi ?? ''}`} />
+                <div className="mt-3 w-fit">
+                    <Button className="w-full" onClick={() => router.visit(route('guru.materi.index'))}>
+                        Kembali
+                    </Button>
+                </div>
+            </div>
+        </AuthLayout>
+    );
+}

@@ -1,34 +1,23 @@
+import AppLogo from '@/components/app-logo';
+import FlashMessage from '@/components/flash-message';
+import InputField from '@/components/input-field';
+import Button from '@/components/ui/button';
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
-
-import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
+import React, { FormEventHandler } from 'react';
 
 type LoginForm = {
     email: string;
     password: string;
-    remember: boolean;
 };
 
-interface LoginProps {
-    status?: string;
-    canResetPassword: boolean;
-}
-
-export default function Login({ status, canResetPassword }: LoginProps) {
+export default function Login() {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
         email: '',
         password: '',
-        remember: false,
     });
 
-    const submit: FormEventHandler = (e) => {
+    const handleOnSubmit: FormEventHandler = (e) => {
         e.preventDefault();
         post(route('login'), {
             onFinish: () => reset('password'),
@@ -36,69 +25,65 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     };
 
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
-            <Head title="Log in" />
-
-            <form className="flex flex-col gap-6" onSubmit={submit}>
-                <div className="grid gap-6">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email address</Label>
-                        <Input
-                            id="email"
-                            type="email"
-                            required
-                            autoFocus
-                            tabIndex={1}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
-                        />
-                        <InputError message={errors.email} />
-                    </div>
-
-                    <div className="grid gap-2">
-                        <div className="flex items-center">
-                            <Label htmlFor="password">Password</Label>
-                            {canResetPassword && (
-                                <TextLink href={route('password.request')} className="ml-auto text-sm" tabIndex={5}>
-                                    Forgot password?
-                                </TextLink>
-                            )}
+        <React.Fragment>
+            <Head title={'Login'} />
+            <FlashMessage />
+            <div className="min-h-svh">
+                <div className="grid min-h-svh grid-cols-1 bg-gray-50 md:grid-cols-2">
+                    {/* KANAN - Gambar & Teks (Hanya tampil di desktop, dengan animasi fade-in) */}
+                    <div className="hidden flex-col items-center justify-center gap-12 opacity-0 transition-all duration-500 ease-in-out md:flex md:opacity-100">
+                        <img src="/assets/images/hero-3.svg" alt="illust login" className="size-98" />
+                        <div className="space-y-2 text-center">
+                            <AppLogo />
+                            <p className="text-base">
+                                Code Sprint menghadirkan pengalaman belajar
+                                <br /> interaktif dengan pendekatan Project-Based Learning (PjBL).
+                            </p>
                         </div>
-                        <Input
-                            id="password"
-                            type="password"
-                            required
-                            tabIndex={2}
-                            autoComplete="current-password"
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            placeholder="Password"
-                        />
-                        <InputError message={errors.password} />
                     </div>
 
-                    <div className="flex items-center space-x-3">
-                        <Checkbox id="remember" name="remember" checked={data.remember} onClick={() => setData('remember', !data.remember)} tabIndex={3} />
-                        <Label htmlFor="remember">Remember me</Label>
+                    {/* KIRI - Form login (Selalu tampil) */}
+                    <div className="flex items-center justify-center bg-white shadow transition-all duration-500 ease-in-out md:rounded-l-lg">
+                        <div className="flex w-3/4 flex-col">
+                            <h4 className="text-3xl font-medium">Selamat Datang CodeSprint!👋🏻</h4>
+                            <p className="mb-9 text-base">
+                                Silahkan masuk ke akun Anda
+                                <br /> dan mulai pembelajaran
+                            </p>
+                            <form className="space-y-6" onSubmit={handleOnSubmit}>
+                                <InputField
+                                    id="email"
+                                    type="email"
+                                    label="Email"
+                                    placeholder="Masukkan email anda"
+                                    required
+                                    autoFocus
+                                    autoComplete="email"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    error={errors.email}
+                                />
+                                <InputField
+                                    id="password"
+                                    type="password"
+                                    label="Password"
+                                    placeholder="Masukkan password anda"
+                                    required
+                                    value={data.password}
+                                    onChange={(e) => setData('password', e.target.value)}
+                                    error={errors.password}
+                                />
+                                <div className="mt-3 w-full">
+                                    <Button type="submit" disabled={processing} className="w-full">
+                                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                                        Login
+                                    </Button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
-                    <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                        Log in
-                    </Button>
                 </div>
-
-                <div className="text-muted-foreground text-center text-sm">
-                    Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={5}>
-                        Sign up
-                    </TextLink>
-                </div>
-            </form>
-
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
-        </AuthLayout>
+            </div>
+        </React.Fragment>
     );
 }

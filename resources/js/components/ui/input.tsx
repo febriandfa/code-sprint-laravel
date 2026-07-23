@@ -1,21 +1,45 @@
-import * as React from "react"
+import { Eye, EyeOff } from 'lucide-react';
+import React, { forwardRef, useState } from 'react';
+import Label from './label';
 
-import { cn } from "@/lib/utils"
-
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
-  return (
-    <input
-      type={type}
-      data-slot="input"
-      className={cn(
-        "border-input file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
-        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-        className
-      )}
-      {...props}
-    />
-  )
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    id: string;
+    label: string;
 }
 
-export { Input }
+const Input = forwardRef<HTMLInputElement, InputProps>(({ id, placeholder, label, type, value, required = false, ...props }, ref) => {
+    const [showPassword, setShowPassword] = useState(false);
+
+    return (
+        <React.Fragment>
+            <Label id={id} label={label} required={required} />
+            <div className="relative">
+                <input
+                    id={id}
+                    type={type === 'password' && showPassword ? 'text' : type}
+                    className={`w-full rounded-md border border-gray-200 bg-white file:mr-3 file:rounded-l-md file:bg-gray-600 file:px-4 file:py-2 file:text-white ${
+                        type === 'file' ? 'cursor-pointer pr-4' : 'px-4 py-2'
+                    }`}
+                    placeholder={placeholder}
+                    ref={ref}
+                    value={type !== 'file' ? value : undefined}
+                    {...props}
+                />
+                {type === 'password' && (
+                    <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute top-1/2 right-3 -translate-y-1/2 transform text-gray-500"
+                    >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                )}
+            </div>
+            {type === 'file' && value && <p className="text-sm text-slate-400">File: {value}</p>}
+        </React.Fragment>
+    );
+});
+
+Input.displayName = 'Input';
+
+export default Input;

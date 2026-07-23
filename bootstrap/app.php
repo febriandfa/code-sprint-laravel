@@ -21,6 +21,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'kuis_answered' => \App\Http\Middleware\KuisAnsweredMiddleware::class,
+            'already_joined' => \App\Http\Middleware\AlreadyJoinedMiddleware::class,
+            'next_syntax' => \App\Http\Middleware\NextSyntaxMiddleware::class,
+            'read_materi' => \App\Http\Middleware\ReadMateriMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

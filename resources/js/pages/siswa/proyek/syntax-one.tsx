@@ -1,0 +1,270 @@
+import InputField from '@/components/input-field';
+import InputQuill from '@/components/input-quill';
+import PjblFooter from '@/components/pjbl-footer';
+import PjblHeader from '@/components/pjbl-header';
+import Button from '@/components/ui/button';
+import Label from '@/components/ui/label';
+import LabelStatus from '@/components/ui/label-status';
+import RichTextView from '@/components/ui/rich-text-view';
+import AuthLayout from '@/layouts/auth-layout';
+import { getFileName, getProyekAnswerStatusInfo } from '@/lib/helper';
+import { JoinedKelompok, Kelompok, Proyek, ProyekJawaban, ProyekNilai } from '@/types';
+import { useForm, usePage } from '@inertiajs/react';
+import { CircleCheck, Lock } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+
+type StepOneForm = {
+    kelompok_id?: string;
+    rumusan_masalah?: string;
+};
+
+type StepTwoForm = {
+    indikator?: string;
+};
+
+type StepThreeForm = {
+    _method?: 'POST' | 'PATCH';
+    analisis_masalah?: File | null;
+};
+
+export default function SyntaxOneProyek() {
+    const { currentSyntax, proyek, kelompok, joinedKelompok, jawaban, nilai } = usePage().props as {
+        currentSyntax?: number;
+        proyek?: Proyek;
+        kelompok?: Kelompok;
+        joinedKelompok?: JoinedKelompok;
+        jawaban?: ProyekJawaban;
+        nilai?: ProyekNilai;
+    };
+
+    const [currentStep, setCurrentStep] = useState<number>(1);
+    const [canProceedToStep3, setCanProceedToStep3] = useState<boolean>(false);
+    const [canProceedToStep4, setCanProceedToStep4] = useState<boolean>(false);
+    const [canProceedToStep5, setCanProceedToStep5] = useState<boolean>(false);
+    const siswaStatus = joinedKelompok?.status ?? 'anggota';
+    const analisisMasalahRef = useRef<HTMLInputElement | null>(null);
+
+    const breadcrumbs = [
+        { title: 'Project Based Learning', link: route('siswa.proyek.index') },
+        { title: 'Detail Project Based Learning', link: route('siswa.proyek.show', proyek?.id) },
+        { title: 'Pengerjaan Project Based Learning', link: '#' },
+    ];
+
+    const stepDatas = [
+        { description: 'Orientasi Masalah' },
+        { description: 'Rumusan Masalah' },
+        { description: 'Menentukan Indikator' },
+        { description: 'Analisis Solusi' },
+    ];
+
+    const {
+        data: dataOne,
+        setData: setDataOne,
+        post: postOne,
+        patch: patchOne,
+        processing: processingOne,
+        errors: errorsOne,
+    } = useForm<Required<StepOneForm>>({
+        kelompok_id: kelompok?.id.toString() ?? '',
+        rumusan_masalah: '',
+    });
+
+    const {
+        data: dataTwo,
+        setData: setDataTwo,
+        patch: patchTwo,
+        processing: processingTwo,
+        errors: errorsTwo,
+    } = useForm<Required<StepTwoForm>>({
+        indikator: '',
+    });
+
+    const {
+        setData: setDataThree,
+        post: postThree,
+        processing: processingThree,
+        errors: errorsThree,
+    } = useForm<Required<StepThreeForm>>({
+        _method: 'PATCH',
+        analisis_masalah: null,
+    });
+
+    const isProcessing = processingOne || processingTwo || processingThree;
+
+    const handleOnSubmit = () => {
+        switch (currentStep) {
+            case 2:
+                submitRumusanMasalah();
+                break;
+            case 3:
+                submitIndikator();
+                break;
+            case 4:
+                submitAnalisisMasalah();
+                break;
+            default:
+                break;
+        }
+    };
+
+    const submitRumusanMasalah = () => {
+        const method = jawaban ? patchOne : postOne;
+        const routeName = jawaban
+            ? route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 2 })
+            : route('siswa.proyek.storeAnswer', proyek?.id);
+        method(routeName, {
+            onSuccess: () => {},
+        });
+    };
+
+    const submitIndikator = () => {
+        patchTwo(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 3 }), {
+            onSuccess: () => {},
+        });
+    };
+
+    const submitAnalisisMasalah = () => {
+        postThree(route('siswa.proyek.updateAnswer', { proyekId: proyek?.id, id: jawaban?.id, step: 4 }), {
+            onSuccess: () => {},
+        });
+    };
+
+    const handleNextStep = () => {
+        if (currentStep < stepDatas.length) {
+            setCurrentStep(currentStep + 1);
+        }
+    };
+
+    const handlePrevStep = () => {
+        if (currentStep > 1) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
+
+    const handleJumpStep = (step: number) => {
+        if (step > 0 && step <= stepDatas.length) {
+            setCurrentStep(step);
+        }
+    };
+
+    const isCompleted = [true, canProceedToStep3, canProceedToStep4, canProceedToStep5];
+    const canProceedNextStep = [true, true, canProceedToStep3, canProceedToStep4];
+    const showSubmit = currentStep > 1 && proyek?.status === 'berjalan' && jawaban?.[`status_tahap_${currentStep}`] !== 'diterima';
+
+    useEffect(() => {
+        if (jawaban) {
+            setDataOne((prev) => ({
+                ...prev,
+                rumusan_masalah: jawaban.jawaban_tahap_2 || '',
+            }));
+
+            setDataTwo((prev) => ({
+                ...prev,
+                indikator: jawaban.jawaban_tahap_3 || '',
+            }));
+
+            setCanProceedToStep3(jawaban.status_tahap_2 === 'diterima');
+            setCanProceedToStep4(jawaban.status_tahap_3 === 'diterima');
+            setCanProceedToStep5(jawaban.status_tahap_4 === 'diterima');
+        }
+    }, [jawaban]);
+
+    return (
+        <AuthLayout title="Project Based Learning" breadcrumbs={breadcrumbs}>
+            <PjblHeader kelompok={kelompok} proyek={proyek} jawaban={jawaban} nilai={nilai} currentSyntax={currentSyntax ?? 1} />
+            <div className="my-5 space-y-6">
+                <div className="item-center flex gap-6">
+                    {stepDatas.map((data, index) => {
+                        const isActive = index + 1 <= (currentStep ?? 1);
+                        const canJump = index === 0 || canProceedNextStep[index];
+
+                        return (
+                            <div
+                                onClick={canJump ? () => handleJumpStep(index + 1) : undefined}
+                                className={`w-48 cursor-pointer rounded border p-2 ${isActive ? 'bg-primary-100 border-primary text-primary' : 'border-slate-100 bg-slate-100 text-gray-400'}`}
+                            >
+                                <p className="flex items-center gap-2 font-medium">
+                                    Tahap {index + 1}
+                                    {isCompleted[index] && <CircleCheck size={18} />}
+                                    {!isActive && !canProceedNextStep[index] && <Lock size={18} />}
+                                </p>
+                                <p>{data.description}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+                {currentStep === 1 && <RichTextView label="Studi Kasus" value={kelompok?.masalah} />}
+                {currentStep === 2 && (
+                    <InputQuill
+                        id="rumusan_masalah"
+                        label="Rumusan Masalah"
+                        placeholder="Masukkan jawaban anda"
+                        required
+                        value={dataOne.rumusan_masalah}
+                        onChange={(value: string) => setDataOne('rumusan_masalah', value)}
+                        error={errorsOne.rumusan_masalah}
+                    />
+                )}
+                {currentStep === 3 && (
+                    <InputQuill
+                        id="indikator"
+                        label="Menentukan Indikator"
+                        placeholder="Masukkan jawaban anda"
+                        required
+                        value={dataTwo.indikator}
+                        onChange={(value: string) => setDataTwo('indikator', value)}
+                        error={errorsTwo.indikator}
+                    />
+                )}
+                {currentStep === 4 && (
+                    <div>
+                        <InputField
+                            id="analisis_masalah"
+                            label="Analisis Masalah"
+                            type="file"
+                            ref={analisisMasalahRef}
+                            required
+                            onChange={(e) => setDataThree('analisis_masalah', e.target.files?.[0] ?? null)}
+                            error={errorsThree.analisis_masalah}
+                        />
+                        {jawaban && jawaban.jawaban_tahap_4 && (
+                            <p className="text-sm text-slate-500">File Saat Ini: {getFileName(jawaban.jawaban_tahap_4, 'analisis_masalah')}</p>
+                        )}
+                    </div>
+                )}
+                {currentStep !== 1 && (
+                    <React.Fragment>
+                        <div>
+                            <Label id={`status_tahap_${currentStep}`} label="Status Pengerjaan" />
+                            <LabelStatus
+                                variant={getProyekAnswerStatusInfo(currentStep, jawaban).variant}
+                                status={getProyekAnswerStatusInfo(currentStep, jawaban).text}
+                            />
+                        </div>
+                        {jawaban && jawaban[`feedback_tahap_${currentStep}` as keyof ProyekJawaban] && (
+                            <RichTextView label="Feedback Guru" value={jawaban[`feedback_tahap_${currentStep}` as keyof ProyekJawaban] as string} />
+                        )}
+                    </React.Fragment>
+                )}
+                <div className="flex justify-between">
+                    <div className="flex gap-2">
+                        {currentStep > 1 && (
+                            <Button variant="outline-primary" onClick={handlePrevStep}>
+                                Sebelumnya
+                            </Button>
+                        )}
+                        {currentStep < stepDatas.length && (
+                            <Button
+                                onClick={handleNextStep}
+                                disabled={isProcessing || (currentStep === 2 && !canProceedToStep3) || (currentStep === 3 && !canProceedToStep4)}
+                            >
+                                Berikutnya
+                            </Button>
+                        )}
+                    </div>
+                    {showSubmit && <PjblFooter role={siswaStatus} onSubmit={handleOnSubmit} disabled={isProcessing} />}
+                </div>
+            </div>
+        </AuthLayout>
+    );
+}
