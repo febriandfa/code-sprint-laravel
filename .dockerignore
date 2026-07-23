@@ -1,0 +1,11 @@
+/vendor
+/node_modules
+/public/build
+/storage/*.key
+.env
+.git
+.github
+.idea
+.vscode
+tests
+README.md
