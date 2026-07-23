@@ -7,7 +7,8 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Install PHP dependencies with Composer
-FROM composer:2-php8.3 AS vendor
+FROM php:8.3-cli-alpine AS vendor
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
