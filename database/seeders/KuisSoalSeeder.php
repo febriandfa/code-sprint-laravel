@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\KuisOpsi;
 use App\Models\KuisSoal;
+use Illuminate\Database\Seeder;
 
 class KuisSoalSeeder extends Seeder
 {
