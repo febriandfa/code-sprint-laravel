@@ -14,15 +14,15 @@ class KelompokSeeder extends Seeder
     {
         $dataKelompoks = [
             [
-                'nama' => 'Javascript',
+                'nama' => 'Kelompok Web Craftsmen',
                 'jumlah_anggota' => 2,
-                'masalah' => 'Lonjakan pengguna aplikasi',
+                'masalah' => 'Pengrajin batik lokal kesulitan memasarkan produk secara online dan membutuhkan platform E-Commerce katalog interaktif.',
                 'proyek_id' => 1,
             ],
             [
-                'nama' => 'Laravel',
-                'jumlah_anggota' => 3,
-                'masalah' => 'Error pada aplikasi',
+                'nama' => 'Kelompok Code Ninjas',
+                'jumlah_anggota' => 2,
+                'masalah' => 'Toko kelontong daerah membutuhkan sistem e-commerce sederhana dengan integrasi pesan otomatis ke WhatsApp.',
                 'proyek_id' => 1,
             ],
         ];
@@ -30,22 +30,22 @@ class KelompokSeeder extends Seeder
         $dataAnggotas = [
             [
                 'kelompok_id' => 1,
-                'anggota_id' => 1,
+                'anggota_id' => 4, // Andi Pratama
                 'status' => 'ketua',
             ],
             [
                 'kelompok_id' => 1,
-                'anggota_id' => 2,
+                'anggota_id' => 5, // Bambang Wijaya
                 'status' => 'anggota',
             ],
             [
                 'kelompok_id' => 2,
-                'anggota_id' => 3,
+                'anggota_id' => 6, // Citra Lestari
                 'status' => 'ketua',
             ],
             [
                 'kelompok_id' => 2,
-                'anggota_id' => 4,
+                'anggota_id' => 7, // Dewi Anggraini
                 'status' => 'anggota',
             ],
         ];

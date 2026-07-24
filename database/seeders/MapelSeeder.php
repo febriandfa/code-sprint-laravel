@@ -14,24 +14,23 @@ class MapelSeeder extends Seeder
     {
         $datas = [
             [
-                'nama' => 'Progli',
-                'deskripsi' => 'Pelajaran Progli',
+                'nama' => 'Pemrograman Web dan Perangkat Bergerak',
+                'deskripsi' => 'Pengembangan aplikasi web berbasis Laravel dan API untuk perangkat bergerak.',
                 'semester' => 'ganjil',
-                'tahun_ajaran' => '2021/2022',
+                'tahun_ajaran' => '2024/2025',
             ],
             [
-                'nama' => 'Bahasa Indonesia',
-                'deskripsi' => 'Pelajaran Bahasa Indonesia',
+                'nama' => 'Pemrograman Berbasis Objek',
+                'deskripsi' => 'Konsep Object-Oriented Programming (OOP) dan perancangan perangkat lunak.',
+                'semester' => 'ganjil',
+                'tahun_ajaran' => '2024/2025',
+            ],
+            [
+                'nama' => 'Basis Data & Desain Sistem',
+                'deskripsi' => 'Perancangan ERD, normalisasi, dan implementasi MySQL database.',
                 'semester' => 'genap',
-                'tahun_ajaran' => '2021/2022',
+                'tahun_ajaran' => '2024/2025',
             ],
-            [
-                'nama' => 'Bahasa Inggris',
-                'deskripsi' => 'Pelajaran Bahasa Inggris',
-                'semester' => 'ganjil',
-                'tahun_ajaran' => '2021/2022',
-            ],
-
         ];
 
         foreach ($datas as $data) {

@@ -25,70 +25,67 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Siswa X-RPL Ketua 1',
-                'email' => 'siswa1@csprint.com',
-                'password' => bcrypt('siswa123'),
-                'role' => RoleType::SISWA,
-                'kelas_id' => 1,
+                'name' => 'Administrator System',
+                'email' => 'admin@codesprint.com',
+                'password' => bcrypt('password123'),
+                'role' => RoleType::ADMIN,
             ],
             [
-                'name' => 'Siswa RPL Anggota 1',
-                'email' => 'siswa2@csprint.com',
-                'password' => bcrypt('siswa123'),
-                'role' => RoleType::SISWA,
-                'kelas_id' => 1,
+                'name' => 'Budi Santoso, S.Kom. (Guru PWPB)',
+                'email' => 'guru.budi@codesprint.com',
+                'password' => bcrypt('password123'),
+                'role' => RoleType::GURU,
+                'mapel_ids' => [1],
+                'kelas_ids' => [1, 2, 3],
             ],
             [
-                'name' => 'Siswa RPL Ketua 2',
-                'email' => 'siswa3@csprint.com',
-                'password' => bcrypt('siswa123'),
-                'role' => RoleType::SISWA,
-                'kelas_id' => 1,
+                'name' => 'Siti Rahmawati, M.T. (Guru PBO)',
+                'email' => 'guru.siti@codesprint.com',
+                'password' => bcrypt('password123'),
+                'role' => RoleType::GURU,
+                'mapel_ids' => [2, 3],
+                'kelas_ids' => [1, 3],
             ],
             [
-                'name' => 'Siswa RPL Anggota 2',
-                'email' => 'siswa4@csprint.com',
-                'password' => bcrypt('siswa123'),
+                'name' => 'Andi Pratama',
+                'email' => 'siswa.andi@codesprint.com',
+                'password' => bcrypt('password123'),
                 'role' => RoleType::SISWA,
                 'kelas_id' => 1,
+                'no_absen' => 1,
             ],
             [
-                'name' => 'Siswa RPL',
-                'email' => 'siswa5@csprint.com',
-                'password' => bcrypt('siswa123'),
+                'name' => 'Bambang Wijaya',
+                'email' => 'siswa.bambang@codesprint.com',
+                'password' => bcrypt('password123'),
+                'role' => RoleType::SISWA,
+                'kelas_id' => 1,
+                'no_absen' => 2,
+            ],
+            [
+                'name' => 'Citra Lestari',
+                'email' => 'siswa.citra@codesprint.com',
+                'password' => bcrypt('password123'),
+                'role' => RoleType::SISWA,
+                'kelas_id' => 1,
+                'no_absen' => 3,
+            ],
+            [
+                'name' => 'Dewi Anggraini',
+                'email' => 'siswa.dewi@codesprint.com',
+                'password' => bcrypt('password123'),
+                'role' => RoleType::SISWA,
+                'kelas_id' => 1,
+                'no_absen' => 4,
+            ],
+            [
+                'name' => 'Eko Prasetyo',
+                'email' => 'siswa.eko@codesprint.com',
+                'password' => bcrypt('password123'),
                 'role' => RoleType::SISWA,
                 'kelas_id' => 2,
+                'no_absen' => 1,
             ],
-            [
-                'name' => 'Guru-Fidan RPL Progli',
-                'email' => 'guru1@csprint.com',
-                'password' => bcrypt('guru123'),
-                'role' => RoleType::GURU,
-                'mapel_id' => 1,
-                'kelas_id' => 1,
-            ],
-            [
-                'name' => 'Guru-Nizar Id&MTK',
-                'email' => 'guru2@csprint.com',
-                'password' => bcrypt('guru123'),
-                'role' => RoleType::GURU,
-                'mapel_id' => 2,
-                'kelas_id' => 1,
-            ],
-            [
-                'name' => 'Guru-Zaima Hakim ING',
-                'email' => 'guru3@csprint.com',
-                'password' => bcrypt('guru123'),
-                'role' => RoleType::GURU,
-                'mapel_id' => 2,
-                'kelas_id' => 3,
-            ],
-            [
-                'name' => 'Admin',
-                'email' => 'admin@csprint.com',
-                'password' => bcrypt('admin123'),
-                'role' => RoleType::ADMIN,
-            ]
         ];
 
         foreach ($users as $user) {
@@ -101,21 +98,25 @@ class UserSeeder extends Seeder
             $createdUser->assignRole($user['role']);
 
             if ($user['role'] === RoleType::GURU) {
-                \App\Models\UserMapel::create([
-                    'guru_id' => $createdUser->id,
-                    'mapel_id' => $user['mapel_id'],
-                ]);
+                foreach ($user['mapel_ids'] as $mapelId) {
+                    \App\Models\UserMapel::create([
+                        'guru_id' => $createdUser->id,
+                        'mapel_id' => $mapelId,
+                    ]);
+                }
 
-                \App\Models\UserKelas::create([
-                    'guru_id' => $createdUser->id,
-                    'kelas_id' => $user['kelas_id'],
-                ]);
+                foreach ($user['kelas_ids'] as $kelasId) {
+                    \App\Models\UserKelas::create([
+                        'guru_id' => $createdUser->id,
+                        'kelas_id' => $kelasId,
+                    ]);
+                }
             }
 
             if ($user['role'] === RoleType::SISWA) {
                 \App\Models\UserDetail::create([
                     'user_id' => $createdUser->id,
-                    'no_absen' => $this->userRepository->getUserCount(RoleType::SISWA, 1) + 1,
+                    'no_absen' => $user['no_absen'],
                     'kelas_id' => $user['kelas_id'],
                 ]);
             }

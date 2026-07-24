@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use App\Enums\ProyekStatus;
+
 class ProyekSeeder extends Seeder
 {
     /**
@@ -14,11 +16,10 @@ class ProyekSeeder extends Seeder
     {
         $datas = [
             [
-                'nama' => 'Proyek  RPL-Progli',
-                'deskripsi' => 'Deskripsi Proyek Materi RPL-Progli',
-                'tenggat' => '2025-03-03 08:00:00',
-                // 'kelas_id' => 1,
-                // 'mapel_id' => 1,
+                'nama' => 'Pengembangan Aplikasi Web E-Commerce UMKM Lokal',
+                'deskripsi' => 'Proyek PjBL merancang dan membangun aplikasi web E-Commerce UMKM lokal berbasis Laravel 11. Siswa dibagi ke dalam kelompok untuk menyelesaikan 8 sintaks pengerjaan PjBL.',
+                'tenggat' => '2026-12-31 23:59:59',
+                'status' => ProyekStatus::BERJALAN,
                 'materi_id' => 1,
             ]
         ];

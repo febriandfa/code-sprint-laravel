@@ -14,10 +14,10 @@ class KuisSeeder extends Seeder
     {
         $datas = [
             [
-                'judul' => 'Kuis Materi PROGLI',
-                'durasi' => 60,
-                'tanggal_mulai' => '2025-03-01 08:00:00',
-                'tanggal_selesai' => '2025-05-01 09:00:00',
+                'judul' => 'Kuis Evaluasi Pemrograman Web & Laravel 11',
+                'durasi' => 45,
+                'tanggal_mulai' => '2026-01-01 08:00:00',
+                'tanggal_selesai' => '2026-12-31 23:59:59',
                 'materi_id' => 1,
             ]
         ];
