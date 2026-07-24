@@ -11,9 +11,9 @@ FROM php:8.3-cli-alpine AS vendor
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
+RUN composer install --no-scripts --no-autoloader --prefer-dist
 COPY . .
-RUN composer dump-autoload --optimize --no-dev
+RUN composer dump-autoload --optimize
 
 # Stage 3: Production runner with FrankenPHP
 FROM dunglas/frankenphp:latest-php8.3-alpine AS runner
